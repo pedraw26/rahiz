@@ -496,6 +496,88 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
   .pmodal-buy h3{font-size:clamp(26px,6vw,36px)}
 }
 
+/* ———— CART DRAWER ———— */
+.drawer-backdrop{
+  position:fixed;inset:0;z-index:8999;background:rgba(0,0,0,.45);
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;
+}
+.drawer-backdrop.open{opacity:1;visibility:visible}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:9000;
+  width:min(420px,90vw);background:var(--bg-2);
+  border-left:1px solid var(--rule);
+  transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.drawer.open{transform:translateX(0)}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;border-bottom:1px solid var(--rule);flex-shrink:0;
+}
+.drawer-head h3{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;
+}
+.drawer-close{
+  width:36px;height:36px;display:grid;place-items:center;
+  font-size:22px;color:var(--ink);transition:transform .3s ease;
+}
+.drawer-close:hover{transform:rotate(90deg)}
+.drawer-body{flex:1;overflow-y:auto;padding:0 24px}
+.drawer-empty{
+  padding:60px 0;text-align:center;font-size:14px;color:var(--muted);
+}
+.drawer-item{
+  display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:start;
+  padding:20px 0;border-bottom:1px solid var(--rule);
+}
+.drawer-item .drawer-thumb{
+  width:72px;height:72px;background:var(--bg-2) center/cover no-repeat;
+}
+.drawer-item .drawer-name{font-size:14px;font-weight:500;letter-spacing:-.005em}
+.drawer-item .drawer-meta{font-size:12px;color:var(--muted);margin-top:3px}
+.drawer-item .drawer-item-actions{display:flex;align-items:center;gap:8px;margin-top:8px}
+.drawer-item .drawer-qty{
+  display:flex;align-items:center;border:1px solid var(--rule);
+}
+.drawer-item .drawer-qty button{
+  width:28px;height:28px;font-size:13px;color:var(--ink);transition:background .2s;
+}
+.drawer-item .drawer-qty button:hover{background:var(--paper)}
+.drawer-item .drawer-qty span{
+  width:24px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums;
+}
+.drawer-item .drawer-remove{
+  font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 0;transition:color .2s;
+}
+.drawer-item .drawer-remove:hover{color:var(--ink)}
+.drawer-item .drawer-price{
+  font-size:14px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.drawer-footer{
+  flex-shrink:0;padding:20px 24px;border-top:1px solid var(--rule);background:var(--paper);
+}
+.drawer-totals{display:grid;gap:2px;margin-bottom:16px}
+.drawer-total-line{
+  display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+  padding:5px 0;font-variant-numeric:tabular-nums;
+}
+.drawer-total-line.grand{
+  font-size:16px;color:var(--ink);font-weight:600;
+  padding-top:12px;border-top:1px solid var(--rule);margin-top:6px;
+}
+.drawer-checkout{
+  display:block;width:100%;padding:18px;background:var(--ink);color:#fff;
+  font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  transition:transform .25s ease;text-align:center;
+}
+.drawer-checkout:hover{transform:translateY(-2px)}
+.drawer-checkout:disabled{opacity:.4;pointer-events:none}
+.drawer-secure{
+  font-size:11px;color:var(--muted);margin-top:10px;text-align:center;letter-spacing:.04em;
+}
+
 /* ———— BOOKING — EDITORIAL DARK LIST ———— */
 .booking{background:#0a0a0a;color:#f5f5f7;padding:clamp(90px,9vw,140px) var(--pad);border-bottom:0!important}
 .booking .bk-head{
@@ -855,6 +937,21 @@ footer .wordmark img{
 </section>
 
 
+<!-- CART DRAWER -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>— Your cart</h3>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-footer" id="drawerFooter">
+    <div class="drawer-totals" id="drawerTotals"></div>
+    <button class="drawer-checkout" id="drawerCheckout">Checkout &rarr;</button>
+    <div class="drawer-secure">🔒 Secured by Stripe &middot; 14-day returns</div>
+  </div>
+</div>
+
 <!-- SOCIAL -->
 <!-- FOOTER -->
 <footer id="subscribe">
@@ -1059,22 +1156,164 @@ document.querySelectorAll('.pmodal-qty button').forEach(btn=>{
     pCart.textContent=`Add to cart — €${price*pqty}`;
   });
 });
-let cartCount=0;
+/* ———— Cart system ———— */
+const cart=[];
 const cartBadge=document.getElementById('cartBadge');
+const drawer=document.getElementById('drawer');
+const drawerBackdrop=document.getElementById('drawerBackdrop');
+const drawerBody=document.getElementById('drawerBody');
+const drawerTotals=document.getElementById('drawerTotals');
+const drawerFooter=document.getElementById('drawerFooter');
+const drawerClose=document.getElementById('drawerClose');
+const drawerCheckout=document.getElementById('drawerCheckout');
+let currentProductKey='';
+
+// Product thumbnails for the drawer
+const THUMBS={
+  tee:'linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),url("https://res.cloudinary.com/dzgqzeebg/image/upload/v1775725104/Asset_2_cxrimm.webp") center/103% no-repeat,#f5f5f7',
+  hat:'url("https://res.cloudinary.com/dzgqzeebg/image/upload/v1775687012/hf_20260408_222108_c40e7001-d0cc-4459-a2f6-baf4a58bcafa_k5mozi.png") center/cover no-repeat,#f5f5f7',
+  hoodie:'repeating-linear-gradient(0deg,#1a1a1c 0 2px,transparent 2px 14px),#0a0a0a'
+};
+const NAMES={tee:'RAHIZ Tour Tee — Bone',hat:'RAHIZ Hat — Black & White',hoodie:'Kriolu Hoodie — Black'};
+
 function updateBadge(){
-  cartBadge.textContent=cartCount;
-  cartBadge.classList.toggle('show',cartCount>0);
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  cartBadge.textContent=total;
+  cartBadge.classList.toggle('show',total>0);
 }
+
+function openDrawer(){
+  renderDrawer();
+  drawer.classList.add('open');
+  drawerBackdrop.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  drawer.classList.remove('open');
+  drawerBackdrop.classList.remove('open');
+  if(!pmodal.classList.contains('open'))document.body.style.overflow='';
+}
+
+function renderDrawer(){
+  if(cart.length===0){
+    drawerBody.innerHTML='<div class="drawer-empty">Your cart is empty</div>';
+    drawerFooter.style.display='none';
+    return;
+  }
+  drawerFooter.style.display='';
+  drawerBody.innerHTML=cart.map((item,i)=>`
+    <div class="drawer-item">
+      <div class="drawer-thumb" style="background:${THUMBS[item.id]}"></div>
+      <div>
+        <div class="drawer-name">${NAMES[item.id]}</div>
+        <div class="drawer-meta">Size ${item.size} &middot; Qty ${item.qty}</div>
+        <div class="drawer-item-actions">
+          <div class="drawer-qty">
+            <button data-idx="${i}" data-d="-1">&minus;</button>
+            <span>${item.qty}</span>
+            <button data-idx="${i}" data-d="1">+</button>
+          </div>
+          <button class="drawer-remove" data-idx="${i}">Remove</button>
+        </div>
+      </div>
+      <div class="drawer-price">&euro;${(item.price*item.qty).toFixed(2)}</div>
+    </div>
+  `).join('');
+
+  // Qty buttons
+  drawerBody.querySelectorAll('.drawer-qty button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const idx=parseInt(btn.dataset.idx),d=parseInt(btn.dataset.d);
+      cart[idx].qty=Math.max(1,cart[idx].qty+d);
+      updateBadge();renderDrawer();
+    });
+  });
+  // Remove buttons
+  drawerBody.querySelectorAll('.drawer-remove').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cart.splice(parseInt(btn.dataset.idx),1);
+      updateBadge();renderDrawer();
+    });
+  });
+
+  // Totals
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const shipping=subtotal>=80?0:5.90;
+  const vat=subtotal*0.20;
+  const total=subtotal+shipping+vat;
+  drawerTotals.innerHTML=`
+    <div class="drawer-total-line"><span>Subtotal</span><span>&euro;${subtotal.toFixed(2)}</span></div>
+    <div class="drawer-total-line"><span>Shipping</span><span>${shipping===0?'Free':'€'+shipping.toFixed(2)}</span></div>
+    <div class="drawer-total-line"><span>VAT (20%)</span><span>&euro;${vat.toFixed(2)}</span></div>
+    <div class="drawer-total-line grand"><span>Total</span><span>&euro;${total.toFixed(2)}</span></div>
+  `;
+  drawerCheckout.textContent=`Checkout — €${total.toFixed(2)} →`;
+  drawerCheckout.disabled=false;
+}
+
+// "Add to cart" in product modal
 pCart.addEventListener('click',()=>{
-  cartCount+=pqty;
+  const activeSize=pSizes.querySelector('.on');
+  const size=activeSize?activeSize.textContent:'M';
+  const price=parseInt(pCart.dataset.price||42);
+
+  // Check if same product+size already in cart
+  const existing=cart.find(i=>i.id===currentProductKey&&i.size===size);
+  if(existing){existing.qty+=pqty}
+  else{cart.push({id:currentProductKey,size,qty:pqty,price})}
+
   updateBadge();
   pCart.classList.add('added');
   pCart.textContent='✓ Added to cart';
   setTimeout(()=>{
-    pCart.classList.remove('added');
-    const price=parseInt(pCart.dataset.price||42);
-    pCart.textContent=`Add to cart — €${price*pqty}`;
-  },1800);
+    closeProduct();
+    openDrawer();
+  },600);
+});
+
+// Store current product key when opening modal
+const _origOpenProduct=openProduct;
+// Patch: track which product is open
+(function(){
+  const origItems=document.querySelectorAll('.merch .item[data-product]');
+  origItems.forEach(item=>{
+    item.addEventListener('click',()=>{currentProductKey=item.dataset.product});
+  });
+})();
+
+// Drawer close handlers
+drawerClose.addEventListener('click',closeDrawer);
+drawerBackdrop.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&drawer.classList.contains('open'))closeDrawer();
+});
+
+// Cart icon opens drawer
+document.querySelector('a.cart').addEventListener('click',(e)=>{
+  e.preventDefault();
+  openDrawer();
+});
+
+// Checkout button → Stripe
+drawerCheckout.addEventListener('click',async()=>{
+  drawerCheckout.disabled=true;
+  drawerCheckout.textContent='Processing...';
+  try{
+    const res=await fetch('/.netlify/functions/create-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({items:cart.map(i=>({
+        id:i.id,name:NAMES[i.id],price:i.price,size:i.size,qty:i.qty
+      }))})
+    });
+    const data=await res.json();
+    if(data.url){window.location.href=data.url}
+    else{throw new Error(data.error||'Checkout failed')}
+  }catch(err){
+    console.error(err);
+    drawerCheckout.textContent='Error — try again';
+    setTimeout(()=>renderDrawer(),2000);
+  }
 });
 </script>
 </body>
