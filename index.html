@@ -40,8 +40,30 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   transition:opacity .6s ease,visibility .6s ease;
 }
 .loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-inner{
+  display:flex;flex-direction:column;align-items:center;gap:40px;
+}
 .loader-stage{
   position:relative;width:clamp(180px,22vw,320px);height:clamp(44px,5vw,72px);
+}
+.loader-gate{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .5s ease .8s,transform .5s ease .8s;
+}
+.loader-gate.show{opacity:1;transform:translateY(0)}
+.loader-gate input{
+  width:220px;padding:10px 16px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  color:#fff;font-family:var(--sans);font-size:14px;letter-spacing:.06em;
+  text-align:center;outline:none;
+  transition:border-color .25s ease;
+}
+.loader-gate input::placeholder{color:rgba(255,255,255,.3);letter-spacing:.08em;font-size:12px}
+.loader-gate input:focus{border-color:rgba(255,255,255,.45)}
+.loader-gate .gate-error{
+  font-size:11px;letter-spacing:.06em;color:rgba(255,80,80,.85);
+  height:14px;transition:opacity .2s;
 }
 .loader-logo{
   position:absolute;inset:0;
@@ -457,9 +479,15 @@ footer .wordmark img{
 
 <!-- PAGE LOADER -->
 <div class="loader" id="loader">
-  <div class="loader-stage">
-    <div class="loader-logo loader-base"></div>
-    <div class="loader-logo loader-fill"></div>
+  <div class="loader-inner">
+    <div class="loader-stage">
+      <div class="loader-logo loader-base"></div>
+      <div class="loader-logo loader-fill"></div>
+    </div>
+    <div class="loader-gate" id="gate">
+      <input type="password" id="gateInput" placeholder="ENTER PASSWORD" autocomplete="off" spellcheck="false">
+      <div class="gate-error" id="gateError"></div>
+    </div>
   </div>
 </div>
 
@@ -686,10 +714,21 @@ footer .wordmark img{
 </footer>
 
 <script>
-/* Page loader hide */
+/* Page loader + password gate */
 window.addEventListener('load',()=>{
-  const minDelay = 2400;
-  setTimeout(()=>document.getElementById('loader').classList.add('done'), minDelay);
+  setTimeout(()=>document.getElementById('gate').classList.add('show'), 2400);
+});
+const gateInput=document.getElementById('gateInput'),gateError=document.getElementById('gateError');
+gateInput.addEventListener('keydown',(e)=>{
+  if(e.key==='Enter'){
+    if(gateInput.value==='monnatestagawd'){
+      document.getElementById('loader').classList.add('done');
+    } else {
+      gateError.textContent='Wrong password';
+      gateInput.value='';
+      setTimeout(()=>gateError.textContent='',2000);
+    }
+  }
 });
 </script>
 <script>
