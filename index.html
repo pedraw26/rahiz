@@ -61,8 +61,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ———— NAV ———— */
 nav.primary{
   position:fixed;top:0;left:0;right:0;z-index:99;
-  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--gap);
-  padding:18px var(--pad);
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;
+  padding:14px var(--pad);
   background:rgba(255,255,255,.72);
   backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
   border-bottom:1px solid var(--rule);
@@ -83,11 +83,11 @@ nav.primary .burger.active span:nth-child(2){opacity:0}
 nav.primary .burger.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
 nav.primary .logo{justify-self:center;display:inline-flex;align-items:center}
-nav.primary .logo img{height:26px;width:auto;display:block;transition:filter .35s ease}
+nav.primary .logo img{height:clamp(18px,3.5vw,26px);width:auto;display:block;transition:filter .35s ease}
 
 nav.primary .lang{
-  justify-self:end;font-size:12px;font-weight:500;letter-spacing:.04em;
-  display:flex;align-items:center;gap:8px;color:var(--ink);
+  justify-self:end;font-size:clamp(10px,1.8vw,12px);font-weight:500;letter-spacing:.04em;
+  display:flex;align-items:center;gap:clamp(4px,1vw,8px);color:var(--ink);white-space:nowrap;
 }
 nav.primary .lang button{
   padding:4px 2px;color:inherit;opacity:.45;transition:opacity .25s ease;cursor:pointer;
