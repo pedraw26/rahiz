@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>RAHIZ</title>
+<link rel="preconnect" href="https://rsms.me/">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<style>
+/* ————————————————————————————————————————————
+   RAHIZ · Minimal · Apple × Spotify × Swiss
+   ———————————————————————————————————————————— */
+:root{
+  --ink:#0a0a0a;
+  --ink-2:#1d1d1f;
+  --muted:#86868b;
+  --rule:#e5e5e7;
+  --paper:#ffffff;
+  --bg-2:#f5f5f7;
+  --accent:#0071e3;
+  --sans:-apple-system,"SF Pro Display","SF Pro Text","Inter","Inter var",system-ui,sans-serif;
+  --mono:"SF Mono",ui-monospace,Menlo,monospace;
+  --pad:clamp(20px,4vw,64px);
+  --gap:clamp(12px,1.2vw,20px);
+  --r:0;
+}
+*,*::before,*::after{border-radius:0!important}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html,body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-feature-settings:"ss01","cv11","tnum";line-height:1.45}
+body{overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,video{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--ink);color:var(--paper)}
+
+/* ———— NAV ———— */
+nav.primary{
+  position:fixed;top:0;left:0;right:0;z-index:99;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--gap);
+  padding:18px var(--pad);
+  background:rgba(255,255,255,.72);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--rule);
+}
+nav.primary.on-hero{background:rgba(0,0,0,.18);border-bottom-color:rgba(255,255,255,.14);color:#fff}
+nav.primary.on-hero .burger span{background:#fff}
+nav.primary.on-hero .logo img{filter:invert(1)}
+
+nav.primary .burger{
+  justify-self:start;display:flex;flex-direction:column;gap:5px;
+  padding:10px;margin-left:-10px;cursor:pointer;
+}
+nav.primary .burger span{
+  display:block;width:22px;height:1.5px;background:var(--ink);transition:all .35s ease;
+}
+nav.primary .burger.active span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+nav.primary .burger.active span:nth-child(2){opacity:0}
+nav.primary .burger.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+nav.primary .logo{justify-self:center;display:inline-flex;align-items:center}
+nav.primary .logo img{height:26px;width:auto;display:block;transition:filter .35s ease}
+
+nav.primary .lang{
+  justify-self:end;font-size:12px;font-weight:500;letter-spacing:.04em;
+  display:flex;align-items:center;gap:8px;color:var(--ink);
+}
+nav.primary .lang button{
+  padding:4px 2px;color:inherit;opacity:.45;transition:opacity .25s ease;cursor:pointer;
+}
+nav.primary .lang button.on{opacity:1}
+nav.primary .lang .sep{opacity:.35}
+nav.primary.on-hero .lang{color:#fff}
+
+/* ———— MENU OVERLAY ———— */
+.menu{
+  position:fixed;inset:0;z-index:98;
+  background:rgba(10,10,10,.96);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  opacity:0;pointer-events:none;transition:opacity .45s ease;
+  padding:var(--pad);
+}
+.menu.open{opacity:1;pointer-events:auto}
+.menu ul{
+  list-style:none;display:flex;flex-direction:column;gap:8px;text-align:center;
+}
+.menu li{
+  opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.menu.open li{opacity:1;transform:translateY(0)}
+.menu.open li:nth-child(1){transition-delay:.08s}
+.menu.open li:nth-child(2){transition-delay:.14s}
+.menu.open li:nth-child(3){transition-delay:.20s}
+.menu.open li:nth-child(4){transition-delay:.26s}
+.menu.open li:nth-child(5){transition-delay:.32s}
+.menu.open li:nth-child(6){transition-delay:.38s}
+.menu li a{
+  display:block;color:#fff;font-size:clamp(44px,7vw,96px);font-weight:500;letter-spacing:-.03em;line-height:1.1;
+  padding:8px 20px;opacity:.75;transition:opacity .25s ease,transform .25s ease;
+}
+.menu li a:hover{opacity:1;transform:translateX(8px)}
+.menu .foot{
+  position:absolute;left:var(--pad);right:var(--pad);bottom:40px;
+  display:flex;justify-content:space-between;
+  font-size:12px;color:rgba(255,255,255,.5);
+}
+.menu .foot a:hover{color:#fff}
+
+/* ———— HERO — FULLSCREEN IMAGE ———— */
+.hero{
+  position:relative;min-height:100vh;
+  padding:140px var(--pad) 56px;
+  display:block;
+  border-bottom:1px solid var(--rule);
+  overflow:hidden;color:#fff;
+}
+.hero .bgvid{
+  position:absolute;inset:0;z-index:0;
+  background:#000 url('https://res.cloudinary.com/dzgqzeebg/image/upload/v1775685096/image-9_efc1z8.webp') center/cover no-repeat;
+}
+.hero .bgvid video{display:none}
+.hero .bgvid::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%);
+}
+.hero > *{position:relative;z-index:1}
+
+/* Concentric ring behind play button */
+.hero .rings{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(78vmin,860px);aspect-ratio:1;
+  border-radius:50%!important;border:1px solid rgba(255,255,255,.18);
+  pointer-events:none;
+  animation:ringPulse 4.5s cubic-bezier(.4,0,.2,1) infinite;
+}
+.hero .rings::before,.hero .rings::after{
+  content:"";position:absolute;inset:0;border-radius:50%!important;
+  border:1px solid rgba(255,255,255,.12);
+  animation:ringPulse 4.5s cubic-bezier(.4,0,.2,1) infinite;
+}
+.hero .rings::before{inset:12%;animation-delay:.6s}
+.hero .rings::after{inset:26%;animation-delay:1.2s}
+
+@keyframes ringPulse{
+  0%,100%{transform:scale(1);opacity:.55}
+  50%{transform:scale(1.04);opacity:1}
+}
+.hero .rings{animation-name:ringPulseOuter}
+@keyframes ringPulseOuter{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.55}
+  50%{transform:translate(-50%,-50%) scale(1.035);opacity:1}
+}
+
+/* Play button */
+.hero .playbtn{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:118px;height:118px;border-radius:50%!important;
+  background:rgba(20,20,20,.38);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.28);
+  display:grid;place-items:center;cursor:pointer;
+  transition:all .35s cubic-bezier(.2,.8,.2,1);
+  z-index:2;
+}
+.hero .playbtn:hover{background:rgba(20,20,20,.55);transform:translate(-50%,-50%) scale(1.06)}
+.hero .playbtn svg{width:34px;height:34px;fill:#fff;margin-left:4px}
+
+/* Bio bottom-left */
+.hero .bio{
+  position:absolute;left:var(--pad);bottom:56px;right:var(--pad);
+  max-width:560px;z-index:2;
+  font-size:15px;line-height:1.5;color:rgba(255,255,255,.92);
+}
+.hero .bio p + p{margin-top:10px;color:rgba(255,255,255,.68)}
+
+.hero h1,.hero .kicker,.hero .ctas,.hero .videoframe{display:none}
+
+/* ———— SECTION ———— */
+section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
+.section-head{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);
+  margin-bottom:48px;align-items:end;
+}
+.section-head .eyebrow{
+  grid-column:1/13;font-size:13px;font-weight:500;color:var(--accent);margin-bottom:6px;
+}
+.section-head h2{
+  grid-column:1/9;font-size:clamp(32px,4.4vw,56px);font-weight:600;line-height:1.05;letter-spacing:-.025em;
+}
+.section-head .aside{
+  grid-column:10/13;font-size:13px;color:var(--muted);text-align:right;align-self:end;
+}
+
+/* ———— TOUR ———— */
+.tour .row{
+  display:grid;grid-template-columns:60px 180px 1fr 140px auto;gap:var(--gap);align-items:center;
+  padding:22px 0;border-top:1px solid var(--rule);
+  transition:background .25s ease,padding .3s ease;
+  border-radius:10px;
+}
+.tour .row:last-child{border-bottom:1px solid var(--rule)}
+.tour .row:hover{background:var(--bg-2);padding-left:16px;padding-right:16px}
+.tour .row .n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tour .row .date{font-size:15px;font-weight:500}
+.tour .row .date small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+.tour .row .city{font-size:17px;font-weight:500;letter-spacing:-.01em}
+.tour .row .city small{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:2px}
+.tour .row .status{font-size:12px;color:var(--muted)}
+.tour .row .status.sold{color:#ff3b30}
+.tour .row .buy{
+  font-size:13px;font-weight:500;padding:8px 18px;
+  background:var(--ink);color:var(--paper);border-radius:980px;transition:background .25s ease;
+}
+.tour .row .buy:hover{background:var(--ink-2)}
+
+/* ———— DARK SECTION ———— */
+.dark{background:var(--ink);color:var(--paper);border-color:#232325}
+.dark ::selection{background:var(--paper);color:var(--ink)}
+.dark .section-head .aside,.dark .muted{color:#86868b}
+.dark .section-head .eyebrow{color:#0a84ff}
+
+/* ———— PLAYER (Apple Music look) ———— */
+.player{background:var(--bg-2)}
+.player .wrap{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);align-items:center}
+.player .art{
+  grid-column:1/5;aspect-ratio:1;border-radius:var(--r);overflow:hidden;position:relative;
+  background:radial-gradient(ellipse at 30% 20%,#ff6b4a 0%,#7a1500 55%,#1a0500 90%);
+  box-shadow:0 1px 3px rgba(0,0,0,.06),0 24px 60px rgba(0,0,0,.14);
+}
+.player .art .corner{
+  position:absolute;left:18px;right:18px;color:#fff;font-size:10px;font-weight:500;opacity:.85;
+  display:flex;justify-content:space-between;
+}
+.player .art .corner.top{top:18px}
+.player .art .corner.bot{bottom:18px}
+
+.player .controls{grid-column:6/13}
+.player .controls .eyebrow{font-size:13px;color:var(--muted);margin-bottom:8px}
+.player .controls h3{font-size:clamp(28px,3.4vw,42px);font-weight:600;letter-spacing:-.02em;line-height:1.1;margin-bottom:6px}
+.player .controls .albref{font-size:14px;color:var(--muted);margin-bottom:32px}
+
+.player .bar{height:4px;background:#d2d2d7;border-radius:4px;position:relative;cursor:pointer;margin-bottom:10px}
+.player .bar .fill{position:absolute;left:0;top:0;bottom:0;width:34%;background:var(--ink);border-radius:4px}
+.player .bar .fill::after{content:"";position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:var(--paper);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.player .time{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-bottom:28px}
+
+.player .btns{display:flex;align-items:center;gap:16px}
+.player .btns button{
+  width:46px;height:46px;border-radius:50%!important;background:var(--paper);color:var(--ink);
+  display:grid;place-items:center;font-size:15px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 3px 8px rgba(0,0,0,.06);
+  transition:transform .2s ease;
+}
+.player .btns button:hover{transform:scale(1.05)}
+.player .btns .play{width:60px;height:60px;background:var(--ink);color:var(--paper);font-size:18px;border-radius:50%!important}
+
+.player .tracks{grid-column:1/13;margin-top:72px}
+.player .tracks h4{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px}
+.player .tracks ol{list-style:none}
+.player .tracks li{
+  display:grid;grid-template-columns:40px 1fr auto auto;gap:20px;align-items:center;
+  padding:14px 16px;border-radius:10px;cursor:pointer;
+  transition:background .25s ease;font-size:15px;
+}
+.player .tracks li:hover{background:rgba(0,0,0,.04)}
+.player .tracks li .n{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums;text-align:center}
+.player .tracks li .t{font-weight:500;letter-spacing:-.005em}
+.player .tracks li .feat{font-size:13px;color:var(--muted)}
+.player .tracks li .dur{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ———— VIDEOS ———— */
+.videos .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+.videos .main{
+  grid-column:1/9;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#000;position:relative;
+}
+.videos .main video{width:100%;height:100%;object-fit:cover}
+.videos .main{cursor:pointer}
+.videos .main .play{
+  position:absolute;inset:0;display:grid;place-items:center;
+  opacity:0;transition:opacity .35s ease;
+  background:rgba(0,0,0,.15);
+}
+.videos .main:hover .play{opacity:1}
+.videos .main .play .btn{
+  width:72px;height:72px;border-radius:50%!important;
+  background:rgba(20,20,20,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.3);
+  display:grid;place-items:center;transition:transform .3s ease, background .3s ease;
+}
+.videos .main:hover .play .btn:hover{background:rgba(20,20,20,.7);transform:scale(1.06)}
+.videos .main .play .btn svg{width:24px;height:24px;fill:#fff;display:none}
+.videos .main .play .btn .play-ic{margin-left:3px}
+.videos .main.paused .play .btn .play-ic{display:block}
+.videos .main.playing .play .btn .pause{display:block}
+.videos .main .play span{
+  padding:12px 24px;background:rgba(0,0,0,.5);backdrop-filter:blur(12px);color:#fff;
+  border-radius:980px;font-size:13px;font-weight:500;transition:background .25s ease;
+}
+.videos .main:hover .play span{background:rgba(0,0,0,.7)}
+
+.videos .side{grid-column:9/13;display:flex;flex-direction:column;gap:var(--gap)}
+.videos .side .item{
+  flex:1;min-height:110px;padding:18px;border-radius:12px;
+  background:#1a1a1c;display:flex;flex-direction:column;justify-content:space-between;
+  transition:background .25s ease;cursor:pointer;
+}
+.videos .side .item:hover{background:#232325}
+.videos .side .item h4{font-size:15px;font-weight:500;letter-spacing:-.005em;line-height:1.3;max-width:22ch}
+.videos .side .item .t{display:flex;justify-content:space-between;font-size:11px;color:#86868b}
+
+/* ———— MERCH ———— */
+.merch .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+.merch .item{grid-column:span 4;cursor:pointer}
+.merch .item .ph{
+  aspect-ratio:1;border-radius:var(--r);overflow:hidden;position:relative;
+  background:var(--bg-2);transition:transform .35s ease;
+}
+.merch .item:hover .ph{transform:translateY(-4px)}
+.merch .item .ph.m1{background:
+  linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+  url("https://res.cloudinary.com/dzgqzeebg/image/upload/v1775725104/Asset_2_cxrimm.webp") center/103% no-repeat,
+  #f5f5f7}
+.merch .m2{background:linear-gradient(180deg,#0a0a0a 0 60%,#1a1a1c 100%)}
+.merch .m3{background:
+  repeating-linear-gradient(0deg,#1a1a1c 0 2px,transparent 2px 14px),#0a0a0a}
+.merch .info{display:grid;grid-template-columns:1fr auto;gap:4px;margin-top:16px}
+.merch .info h3{font-size:16px;font-weight:500;letter-spacing:-.005em}
+.merch .info .price{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.merch .info .sub{grid-column:1/3;font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ———— BOOKING — EDITORIAL DARK LIST ———— */
+.booking{background:#0a0a0a;color:#f5f5f7;padding:clamp(90px,9vw,140px) var(--pad);border-bottom:0!important}
+.booking .bk-head{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);
+  margin-bottom:clamp(40px,4vw,56px);align-items:end;
+}
+.booking .bk-head .eyebrow{grid-column:1/13;font-size:13px;color:#0084ff;font-weight:500;margin-bottom:10px}
+.booking .bk-head h2{grid-column:1/9;font-size:clamp(32px,4.4vw,56px);font-weight:600;letter-spacing:-.025em;line-height:1.05;color:#fff}
+.booking .bk-head .aside{grid-column:10/13;font-size:13px;color:#86868b;text-align:right;align-self:end}
+.booking .bk-head .lede{display:none}
+.booking .bk-intro{
+  font-size:16px;color:#86868b;line-height:1.55;max-width:58ch;
+  margin-bottom:clamp(40px,4vw,56px);
+}
+
+.booking .bk-rows{border-top:1px solid #1f1f21}
+.booking .bk-row{
+  display:grid;grid-template-columns:60px 1fr 1.2fr auto;gap:var(--gap);align-items:center;
+  padding:clamp(28px,3vw,40px) 0;border-bottom:1px solid #1f1f21;
+  transition:padding .5s cubic-bezier(.2,.8,.2,1),background .35s ease;cursor:pointer;
+}
+.booking .bk-row:hover{padding-left:24px;padding-right:24px}
+.booking .bk-row .bk-n{font-size:12px;color:#6e6e73;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.booking .bk-row h3{
+  font-size:clamp(24px,3vw,40px);font-weight:500;letter-spacing:-.02em;color:#fff;line-height:1.05;
+  transition:color .35s ease;
+}
+.booking .bk-row:hover h3{color:#0084ff}
+.booking .bk-row p{font-size:14px;color:#86868b;line-height:1.5;max-width:44ch}
+.booking .bk-row .bk-pill{
+  padding:12px 24px;border:1px solid #2a2a2c;font-size:12px;color:#d2d2d7;
+  display:inline-flex;align-items:center;gap:10px;transition:all .35s ease;white-space:nowrap;
+}
+.booking .bk-row:hover .bk-pill{background:#fff;color:#0a0a0a;border-color:#fff}
+
+.booking .bk-cta{
+  margin-top:clamp(48px,5vw,72px);padding:clamp(32px,3.4vw,48px);
+  border:1px solid #1f1f21;
+  display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;
+  transition:border-color .35s ease;
+}
+.booking .bk-cta:hover{border-color:#2e2e30}
+.booking .bk-cta .bk-cta-left .bk-eb{
+  font-size:11px;color:#6e6e73;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:10px;font-weight:500;
+}
+.booking .bk-cta .bk-cta-left h4{
+  font-size:clamp(20px,2vw,26px);font-weight:500;color:#fff;letter-spacing:-.015em;line-height:1.2;
+}
+.booking .bk-cta .bk-cta-left p{font-size:13px;color:#86868b;margin-top:6px;line-height:1.5}
+.booking .bk-cta a{
+  padding:16px 32px;background:#fff;color:#0a0a0a;font-size:13px;font-weight:600;
+  display:inline-flex;align-items:center;gap:12px;transition:transform .25s ease;
+}
+.booking .bk-cta a:hover{transform:translateY(-2px)}
+
+@media(max-width:900px){
+  .booking .bk-head h2{grid-column:1/13}
+  .booking .bk-head .aside{grid-column:1/13;text-align:left;margin-top:6px}
+  .booking .bk-row{grid-template-columns:40px 1fr auto;row-gap:6px}
+  .booking .bk-row p{display:none}
+  .booking .bk-cta{flex-direction:column;align-items:flex-start}
+}
+
+/* ———— FOOTER — WORDMARK BLEED ———— */
+footer{background:#0a0a0a;color:#f5f5f7;padding:80px var(--pad) 0;font-family:var(--sans);overflow:hidden}
+footer a{transition:opacity .2s ease}
+footer a:hover{opacity:.65}
+footer .fbox{display:block}
+footer .wordmark{
+  margin:0 calc(-1 * var(--pad));display:flex;justify-content:center;align-items:flex-end;
+  overflow:hidden;pointer-events:none;user-select:none;
+}
+footer .wordmark img{
+  width:100%;height:auto;max-width:none;filter:invert(1);
+  display:block;
+}
+
+/* ———— RESPONSIVE ———— */
+@media (max-width:900px){
+  nav.primary{grid-template-columns:auto auto}
+  nav.primary ul{display:none}
+  .hero .videoframe{grid-column:1/13;grid-row:2;margin:24px 0}
+  .hero .bio,.hero .ctas{grid-column:1/13}
+  .hero .bio{grid-row:4}
+  .hero .ctas{grid-row:5}
+  .tour .row{grid-template-columns:40px 1fr auto;row-gap:4px}
+  .tour .row .date{display:none}
+  .tour .row .status{display:none}
+  .player .art{grid-column:1/13;max-width:360px}
+  .player .controls{grid-column:1/13;margin-top:30px}
+  .videos .main,.videos .side{grid-column:1/13}
+  .merch .item{grid-column:span 6}
+  footer .f-top{grid-template-columns:1fr;gap:24px;text-align:left}
+  footer .f-top .f-right{text-align:left;justify-self:start}
+  .social .row{grid-template-columns:1fr 1fr}
+  footer .cols div{grid-column:span 6;margin-bottom:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="primary on-hero" id="nav">
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="logo" href="#" aria-label="Rahiz"><img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjUyMDguMDAwMDAwcHQiIGhlaWdodD0iMjc0NS4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDUyMDguMDAwMDAwIDI3NDUuMDAwMDAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0Ij4gPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsMjc0NS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+IDxwYXRoIGQ9Ik0yODAgMTc1OTAgbDAgLTk2NjAgODk1IDAgODk1IDAgMCA0Mzc0IDAgNDM3NCA2MzggNSBjMzUwIDMgNjYxIDkgNjkwIDE0IDQ5IDkgNTMgOCA1NyAtMTEgMTIgLTU3IDQxIC0yMTYgMTA0IC01NzEgMzUwIC0xOTYwIDY2NCAtMzk0NSA5ODYgLTYyMzUgODIgLTU3OCAyNjUgLTE5MTkgMjY1IC0xOTM3IDAgLTExIDE3NyAtMTMgOTc1IC0xMyA5NzYgMCA5NzYgMCA5NzAgMzMgLTMgMTcgLTUwIDMxNiAtMTA1IDY2MiAtMzc1IDIzNzkgLTczNyA0NDg0IC0xMTAwIDYzOTAgLTEwMSA1MzIgLTM5OCAyMDI3IC00MDcgMjA1MSAtMiA3IDMyIDMzIDg5IDY0IDgxMiA0NTcgMTI0OSAxMjUxIDEzMjggMjQxMCA4IDExNyAxMCA4MjkgOCAyNDUwIC00IDI0NzggLTEgMjM0MCAtNTkgMjc0MCAtOTMgNjU0IC0zMDUgMTE4NyAtNjI1IDE1NzAgLTc2IDkyIC0yNDcgMjU4IC0zMzQgMzI3IC00MDkgMzIwIC05NzggNTE5IC0xNjgyIDU4OCAtMjkwIDI5IC02NTUgMzUgLTIxMjUgMzUgbC0xNDYzIDAgMCAtOTY2MHogbTMxODAgNzg0MCBjODMxIC01OSAxMTc2IC0zOTcgMTI3NSAtMTI1MCAzMiAtMjc4IDM2IC02MzQgMzIgLTI2MDUgLTQgLTIxMjQgLTEgLTIwMjcgLTYzIC0yMzA0IC03MCAtMzEyIC0yMTQgLTU1MCAtNDI3IC03MDggLTEyMCAtODggLTMxNiAtMTcyIC00ODggLTIwOCAtMjExIC00NSAtMjU0IC00OCAtMTAwMSAtNTIgbC03MTggLTUgMCAzNTcxIDAgMzU3MSA2MjMgMCBjMzQyIDAgNjg3IC01IDc2NyAtMTB6IE0xNDgxMCAyNzIzOSBjMCAtMTMgLTI2MzcgLTE5MjI3IC0yNjQ1IC0xOTI3NiAtNiAtMzMgLTYgLTMzIDg2NSAtMzMgNjg5IDAgODcwIDMgODcwIDEzIDAgMTIgNTk3IDQ2MTMgNjcwIDUxNjIgMTQ0IDEwODQgODc4IDY3NDggOTU1IDczNzAgMTAzIDgzMiAyNTAgMjA0MSAyNjEgMjE0OCA3IDY1IDcgNjYgMjEgNDEgOCAtMTcgMzYyIC0yODQ4IDkxOCAtNzM0MyA0OTggLTQwMjQgOTA3IC03MzMzIDkxMSAtNzM1NCA2IC0zNyA2IC0zNyA4OTEgLTM3IDg4NSAwIDg4NSAwIDg3OSA0MyAtMyAyMyAtNTY2IDQzNTUgLTEyNTEgOTYyNyAtNjg1IDUyNzIgLTEyNDggOTYwMCAtMTI1MSA5NjE4IC02IDMyIC02IDMyIC0xMDUwIDMyIC03NjUgMCAtMTA0NCAtMyAtMTA0NCAtMTF6IE0yNTMwNyAyNzI0MyBjLTQgLTMgLTcgLTQzNTAgLTcgLTk2NjAgbDAgLTk2NTMgODk1IDAgODk1IDAgMCA0NDcwIDAgNDQ3MCAxMjQ1IDAgMTI0NSAwIDAgLTQ0NzAgMCAtNDQ3MCA4OTAgMCA4OTAgMCAwIDk2NjAgMCA5NjYwIC04OTAgMCAtODkwIDAgMCAtNDMxMCAwIC00MzEwIC0xMjQ1IDAgLTEyNDUgMCAwIDQzMTAgMCA0MzEwIC04ODggMCBjLTQ4OSAwIC04OTIgLTMgLTg5NSAtN3ogTTM3ODQwIDE2ODE1IGwwIC0xMDQzNSAtMTg4MjAgMCAtMTg4MjAgMCAyIC0xOTcyIDMgLTE5NzMgMTg4MTggLTMgMTg4MTcgLTIgMCAtMTExNSAwIC0xMTE1IDg5MCAwIDg5MCAwIDAgMTExNSAwIDExMTUgNjEzNSAwIDYxMzUgMCAwIDE5NzUgMCAxOTc1IC02MTM1IDAgLTYxMzUgMCAwIDEwNDM1IDAgMTA0MzUgLTg5MCAwIC04OTAgMCAwIC0xMDQzNXogTTQ1OTg3IDI3MjQzIGMtNCAtMyAtNyAtMzk1IC03IC04NzAgbDAgLTg2MyAyMDU2IDAgYzE5NTQgMCAyMDU2IC0xIDIwNTIgLTE3IC0zIC0xMCAtOTY0IC0zNTY0IC0yMTM3IC03ODk5IC0yMTMxIC03ODgxIC0yMTMxIC03ODgxIC0yMTMxIC04NzczIGwwIC04OTEgMzAyNSAwIDMwMjUgMCAwIDkwMCAwIDkwMCAtMjA5NiAwIGMtMjA5NyAwIC0yMDk3IDAgLTIwOTEgMzIgMyAxOCA5NDYgMzU5MSAyMDk2IDc5NDAgMjA5MSA3OTA4IDIwOTEgNzkwOCAyMDkxIDg3MjggbDAgODIwIC0yOTM4IDAgYy0xNjE2IDAgLTI5NDIgLTMgLTI5NDUgLTd6Ii8+IDwvZz4gPC9zdmc+" alt="Rahiz"></a>
+  <div class="lang">
+    <button class="on" data-lang="en">EN</button>
+    <span class="sep">|</span>
+    <button data-lang="pt">PT</button>
+  </div>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div class="menu" id="menu">
+  <ul>
+    <li><a href="#tour">Tour dates</a></li>
+    <li><a href="#play">Listen</a></li>
+    <li><a href="#video">Watch</a></li>
+    <li><a href="#merch">Merchandise</a></li>
+    <li><a href="#booking">Booking</a></li>
+  </ul>
+  <div class="foot">
+    <span>B.O.B Musik · Paris</span>
+    <a href="mailto:bobentgroup@gmail.com">bobentgroup@gmail.com</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="bgvid"></div>
+
+  <div class="rings"></div>
+  <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
+
+  
+
+  
+
+  <div class="bio">
+    <p>Rahiz — born Celso de Jesus Morais, Lisboa, 1980 — is a Luso-Cape Verdean author, composer, producer &amp; host. Grand-nephew of the late Luís Morais.</p>
+    <p>Formerly known as Celso OPP, he opened a new chapter in 2014 from France, fusing hip-hop, reggae, kizomba, afrobeat and zouk — most of it sung in Cape Verdean Creole.</p>
+  </div>
+
+  <div class="ctas">
+    <a class="pri" href="#play"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 2.5v11L14 8z"/></svg>Listen now</a>
+    <a class="sec" href="#tour">See tour dates<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+  </div>
+</header>
+
+<!-- TOUR -->
+<section class="tour" id="tour">
+  <div class="section-head">
+    <div class="eyebrow">Live ’26</div>
+    <h2>Tour dates.</h2>
+    <div class="aside">Updated 04.08.26</div>
+  </div>
+
+  <div class="rows">
+    <div class="row"><div class="n">01</div><div class="date">May 02<small>Sat · 21:00</small></div><div class="city">Lisboa, PT<small>Musicbox Lisboa</small></div><div class="status sold">Sold out</div><a class="buy" href="#">Waitlist</a></div>
+    <div class="row"><div class="n">02</div><div class="date">May 16<small>Sat · 22:00</small></div><div class="city">Paris, FR<small>La Bellevilloise</small></div><div class="status">On sale</div><a class="buy" href="#">Tickets</a></div>
+    <div class="row"><div class="n">03</div><div class="date">May 30<small>Sat · 20:30</small></div><div class="city">Rotterdam, NL<small>BIRD</small></div><div class="status">On sale</div><a class="buy" href="#">Tickets</a></div>
+    <div class="row"><div class="n">04</div><div class="date">Jun 13<small>Sat · 21:00</small></div><div class="city">Luxembourg, LU<small>den Atelier</small></div><div class="status">On sale</div><a class="buy" href="#">Tickets</a></div>
+    <div class="row"><div class="n">05</div><div class="date">Jun 27<small>Sat · 22:00</small></div><div class="city">Bruxelles, BE<small>Botanique — Orangerie</small></div><div class="status">Presale</div><a class="buy" href="#">Tickets</a></div>
+    <div class="row"><div class="n">06</div><div class="date">Jul 11<small>Sat · 23:00</small></div><div class="city">Mindelo, CV<small>Festival Baía das Gatas</small></div><div class="status">Festival</div><a class="buy" href="#">Tickets</a></div>
+    <div class="row"><div class="n">07</div><div class="date">Jul 25<small>Sat · 21:30</small></div><div class="city">Praia, CV<small>Cidadela Cultural</small></div><div class="status">On sale</div><a class="buy" href="#">Tickets</a></div>
+    <div class="row"><div class="n">08</div><div class="date">Aug 15<small>Sat · 20:00</small></div><div class="city">Amsterdam, NL<small>Melkweg — Max</small></div><div class="status sold">Sold out</div><a class="buy" href="#">Waitlist</a></div>
+  </div>
+</section>
+
+<!-- PLAYER -->
+<section class="player" id="play">
+  <div class="section-head">
+    <div class="eyebrow">Now playing</div>
+    <h2>Listen.</h2>
+    <div class="aside">Covers LP · 11 tracks</div>
+  </div>
+
+  <div class="wrap">
+    <div class="art">
+      <div class="corner top"><span>RAHIZ</span><span>LP</span></div>
+      <div class="corner bot"><span>Covers in Capeverdean</span><span>2025</span></div>
+    </div>
+    <div class="controls">
+      <div class="eyebrow">Track 01 · from Covers in Capeverdean di Rahiz</div>
+      <h3>4 Kampé</h3>
+      <div class="albref">Cape Verdean cover of Joé Dwét Filé · B.O.B Musik</div>
+
+      <div class="bar" id="bar"><div class="fill" id="fill"></div></div>
+      <div class="time"><span id="curr">01:17</span><span>03:42</span></div>
+
+      <div class="btns">
+        <button aria-label="previous"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 5h2v14H6zM20 5L9 12l11 7z"/></svg></button>
+        <button class="play" id="playBtn" aria-label="play"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+        <button aria-label="next"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16 5h2v14h-2zM4 5l11 7-11 7z"/></svg></button>
+      </div>
+    </div>
+
+    <div class="tracks">
+      <h4>Tracklist</h4>
+      <ol>
+        <li><span class="n">1</span><span class="t">4 Kampé</span><span class="feat">cover · Joé Dwét Filé</span><span class="dur">03:42</span></li>
+        <li><span class="n">2</span><span class="t">Calm Down</span><span class="feat">cover · Rema</span><span class="dur">03:58</span></li>
+        <li><span class="n">3</span><span class="t">Last Last</span><span class="feat">cover · Burna Boy</span><span class="dur">03:03</span></li>
+        <li><span class="n">4</span><span class="t">Rush</span><span class="feat">cover · Ayra Starr</span><span class="dur">02:51</span></li>
+        <li><span class="n">5</span><span class="t">Soso</span><span class="feat">cover · Omah Lay</span><span class="dur">03:20</span></li>
+        <li><span class="n">6</span><span class="t">Ku Lo Sa</span><span class="feat">cover · Oxlade</span><span class="dur">03:05</span></li>
+        <li><span class="n">7</span><span class="t">Spéciale</span><span class="feat">cover</span><span class="dur">03:28</span></li>
+        <li><span class="n">8</span><span class="t">Confession</span><span class="feat">cover</span><span class="dur">03:11</span></li>
+        <li><span class="n">9</span><span class="t">Sensational</span><span class="feat">cover · Chris Brown</span><span class="dur">03:47</span></li>
+        <li><span class="n">10</span><span class="t">Under the Influence</span><span class="feat">cover · Chris Brown</span><span class="dur">03:34</span></li>
+        <li><span class="n">11</span><span class="t">Dumebi</span><span class="feat">cover · Rema</span><span class="dur">02:58</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS (DARK) -->
+<section class="videos dark" id="video">
+  <div class="section-head">
+    <div class="eyebrow">Film &amp; visuals</div>
+    <h2>Watch.</h2>
+    <div class="aside">Selected works</div>
+  </div>
+
+  <div class="grid">
+    <div class="main playing" id="vidMain">
+      <video autoplay muted loop playsinline preload="metadata" id="vidEl">
+        <source src="https://res.cloudinary.com/dzgqzeebg/video/upload/v1775679965/Oh_ya_ya_-_Da_savage_ft_Rahiz_bfs3ti.mp4" type="video/mp4">
+      </video>
+      <div class="play">
+        <div class="btn">
+          <svg class="play-ic" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>
+          <svg class="pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15"/><rect x="14" y="4.5" width="4" height="15"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="item"><div class="t"><span>Film 02</span><span>03:58</span></div><h4>Calm Down — Kriolu version</h4></div>
+      <div class="item"><div class="t"><span>Film 03</span><span>05:11</span></div><h4>Live from Musicbox Lisboa</h4></div>
+      <div class="item"><div class="t"><span>Film 04</span><span>06:04</span></div><h4>Making of Covers LP</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCH -->
+<section class="merch" id="merch">
+  <div class="section-head">
+    <div class="eyebrow">Store</div>
+    <h2>Merchandise.</h2>
+    <div class="aside">Free EU shipping over €80</div>
+  </div>
+
+  <div class="grid">
+    <div class="item">
+      <div class="ph m1"></div>
+      <div class="info"><h3>RAHIZ Tour Tee — Bone</h3><div class="price">€42</div><div class="sub">Garment-dyed · 260gsm</div></div>
+    </div>
+    <div class="item">
+      <div class="ph" style="background:#f5f5f7 url('https://res.cloudinary.com/dzgqzeebg/image/upload/v1775687012/hf_20260408_222108_c40e7001-d0cc-4459-a2f6-baf4a58bcafa_k5mozi.png') center/cover no-repeat;filter:grayscale(.9) contrast(1.02)"></div>
+      <div class="info"><h3>RAHIZ Hat — Black &amp; White</h3><div class="price">€38</div><div class="sub">Embroidered · One size · Cotton twill</div></div>
+    </div>
+    <div class="item">
+      <div class="ph m3"></div>
+      <div class="info"><h3>Kriolu Hoodie — Black</h3><div class="price">€78</div><div class="sub">Heavyweight fleece · embroidered mark</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="bk-head">
+    <div class="eyebrow">Booking</div>
+    <h2>Bring Rahiz to your stage.</h2>
+    <div class="aside">Available worldwide</div>
+  </div>
+  <p class="bk-intro">Festivals, clubs, private events, brand collaborations, and studio sessions. All bookings handled exclusively by B.O.B Entertainment Group in Paris. Response within 48 hours.</p>
+
+  <div class="bk-rows">
+    <a class="bk-row" href="/cdn-cgi/l/email-protection#1c7e737e7972687b6e73696c5c7b717d7570327f7371236f697e76797f682150756a79392e2c6f74736b392e2c7e73737775727b">
+      <span class="bk-n">01</span>
+      <h3>Live shows</h3>
+      <p>Festivals, clubs, theatres. Full band or DJ set, 45&ndash;90 minutes. Technical rider on request.</p>
+      <span class="bk-pill">Request &rarr;</span>
+    </a>
+    <a class="bk-row" href="/cdn-cgi/l/email-protection#03616c61666d7764716c767343646e626a6f2d606c6e3c707661696660773e53716a756277662631336675666d77263133616c6c686a6d64">
+      <span class="bk-n">02</span>
+      <h3>Private &amp; corporate</h3>
+      <p>Weddings, brand activations, launches, intimate gatherings. Acoustic or full production.</p>
+      <span class="bk-pill">Request &rarr;</span>
+    </a>
+    <a class="bk-row" href="/cdn-cgi/l/email-protection#385a575a5d564c5f4a574d48785f55595154165b5755074b4d5a525d5b4c056b4c4d5c51571d0a084b5d4b4b5157561d0a085a57575351565f">
+      <span class="bk-n">03</span>
+      <h3>Sessions &amp; features</h3>
+      <p>Studio features, co-writing, topline work and production collaborations. Remote or in person.</p>
+      <span class="bk-pill">Request &rarr;</span>
+    </a>
+    <a class="bk-row" href="/cdn-cgi/l/email-protection#e3818c81868d9784918c9693a3848e828a8fcd808c8edc90968189868097deb391869090c6d1d391869296869097">
+      <span class="bk-n">04</span>
+      <h3>Press &amp; interviews</h3>
+      <p>Print, digital, podcast and broadcast requests. All press inquiries routed through management.</p>
+      <span class="bk-pill">Request &rarr;</span>
+    </a>
+  </div>
+
+  <div class="bk-cta">
+    <div class="bk-cta-left">
+      <div class="bk-eb">Direct contact</div>
+      <h4>B.O.B Entertainment Group &mdash; Paris, France</h4>
+      <p>Mon &ndash; Fri &middot; 09:00 &ndash; 18:00 CET &middot; Response within 48 hours</p>
+    </div>
+    <a href="/cdn-cgi/l/email-protection#25474a47404b5142574a5055654248444c490b464a48"><span class="__cf_email__" data-cfemail="16747974737862716479636656717b777f7a3875797b">[email&#160;protected]</span> <span>&rarr;</span></a>
+  </div>
+</section>
+
+
+<!-- SOCIAL -->
+<!-- FOOTER -->
+<footer id="subscribe">
+  <div class="fbox">
+    <div class="wordmark"><img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjUyMDguMDAwMDAwcHQiIGhlaWdodD0iMjc0NS4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDUyMDguMDAwMDAwIDI3NDUuMDAwMDAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0Ij4gPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsMjc0NS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+IDxwYXRoIGQ9Ik0yODAgMTc1OTAgbDAgLTk2NjAgODk1IDAgODk1IDAgMCA0Mzc0IDAgNDM3NCA2MzggNSBjMzUwIDMgNjYxIDkgNjkwIDE0IDQ5IDkgNTMgOCA1NyAtMTEgMTIgLTU3IDQxIC0yMTYgMTA0IC01NzEgMzUwIC0xOTYwIDY2NCAtMzk0NSA5ODYgLTYyMzUgODIgLTU3OCAyNjUgLTE5MTkgMjY1IC0xOTM3IDAgLTExIDE3NyAtMTMgOTc1IC0xMyA5NzYgMCA5NzYgMCA5NzAgMzMgLTMgMTcgLTUwIDMxNiAtMTA1IDY2MiAtMzc1IDIzNzkgLTczNyA0NDg0IC0xMTAwIDYzOTAgLTEwMSA1MzIgLTM5OCAyMDI3IC00MDcgMjA1MSAtMiA3IDMyIDMzIDg5IDY0IDgxMiA0NTcgMTI0OSAxMjUxIDEzMjggMjQxMCA4IDExNyAxMCA4MjkgOCAyNDUwIC00IDI0NzggLTEgMjM0MCAtNTkgMjc0MCAtOTMgNjU0IC0zMDUgMTE4NyAtNjI1IDE1NzAgLTc2IDkyIC0yNDcgMjU4IC0zMzQgMzI3IC00MDkgMzIwIC05NzggNTE5IC0xNjgyIDU4OCAtMjkwIDI5IC02NTUgMzUgLTIxMjUgMzUgbC0xNDYzIDAgMCAtOTY2MHogbTMxODAgNzg0MCBjODMxIC01OSAxMTc2IC0zOTcgMTI3NSAtMTI1MCAzMiAtMjc4IDM2IC02MzQgMzIgLTI2MDUgLTQgLTIxMjQgLTEgLTIwMjcgLTYzIC0yMzA0IC03MCAtMzEyIC0yMTQgLTU1MCAtNDI3IC03MDggLTEyMCAtODggLTMxNiAtMTcyIC00ODggLTIwOCAtMjExIC00NSAtMjU0IC00OCAtMTAwMSAtNTIgbC03MTggLTUgMCAzNTcxIDAgMzU3MSA2MjMgMCBjMzQyIDAgNjg3IC01IDc2NyAtMTB6IE0xNDgxMCAyNzIzOSBjMCAtMTMgLTI2MzcgLTE5MjI3IC0yNjQ1IC0xOTI3NiAtNiAtMzMgLTYgLTMzIDg2NSAtMzMgNjg5IDAgODcwIDMgODcwIDEzIDAgMTIgNTk3IDQ2MTMgNjcwIDUxNjIgMTQ0IDEwODQgODc4IDY3NDggOTU1IDczNzAgMTAzIDgzMiAyNTAgMjA0MSAyNjEgMjE0OCA3IDY1IDcgNjYgMjEgNDEgOCAtMTcgMzYyIC0yODQ4IDkxOCAtNzM0MyA0OTggLTQwMjQgOTA3IC03MzMzIDkxMSAtNzM1NCA2IC0zNyA2IC0zNyA4OTEgLTM3IDg4NSAwIDg4NSAwIDg3OSA0MyAtMyAyMyAtNTY2IDQzNTUgLTEyNTEgOTYyNyAtNjg1IDUyNzIgLTEyNDggOTYwMCAtMTI1MSA5NjE4IC02IDMyIC02IDMyIC0xMDUwIDMyIC03NjUgMCAtMTA0NCAtMyAtMTA0NCAtMTF6IE0yNTMwNyAyNzI0MyBjLTQgLTMgLTcgLTQzNTAgLTcgLTk2NjAgbDAgLTk2NTMgODk1IDAgODk1IDAgMCA0NDcwIDAgNDQ3MCAxMjQ1IDAgMTI0NSAwIDAgLTQ0NzAgMCAtNDQ3MCA4OTAgMCA4OTAgMCAwIDk2NjAgMCA5NjYwIC04OTAgMCAtODkwIDAgMCAtNDMxMCAwIC00MzEwIC0xMjQ1IDAgLTEyNDUgMCAwIDQzMTAgMCA0MzEwIC04ODggMCBjLTQ4OSAwIC04OTIgLTMgLTg5NSAtN3ogTTM3ODQwIDE2ODE1IGwwIC0xMDQzNSAtMTg4MjAgMCAtMTg4MjAgMCAyIC0xOTcyIDMgLTE5NzMgMTg4MTggLTMgMTg4MTcgLTIgMCAtMTExNSAwIC0xMTE1IDg5MCAwIDg5MCAwIDAgMTExNSAwIDExMTUgNjEzNSAwIDYxMzUgMCAwIDE5NzUgMCAxOTc1IC02MTM1IDAgLTYxMzUgMCAwIDEwNDM1IDAgMTA0MzUgLTg5MCAwIC04OTAgMCAwIC0xMDQzNXogTTQ1OTg3IDI3MjQzIGMtNCAtMyAtNyAtMzk1IC03IC04NzAgbDAgLTg2MyAyMDU2IDAgYzE5NTQgMCAyMDU2IC0xIDIwNTIgLTE3IC0zIC0xMCAtOTY0IC0zNTY0IC0yMTM3IC03ODk5IC0yMTMxIC03ODgxIC0yMTMxIC03ODgxIC0yMTMxIC04NzczIGwwIC04OTEgMzAyNSAwIDMwMjUgMCAwIDkwMCAwIDkwMCAtMjA5NiAwIGMtMjA5NyAwIC0yMDk3IDAgLTIwOTEgMzIgMyAxOCA5NDYgMzU5MSAyMDk2IDc5NDAgMjA5MSA3OTA4IDIwOTEgNzkwOCAyMDkxIDg3MjggbDAgODIwIC0yOTM4IDAgYy0xNjE2IDAgLTI5NDIgLTMgLTI5NDUgLTd6Ii8+IDwvZz4gPC9zdmc+" alt="RAHIZ"></div>
+  </div>
+</footer>
+
+<script>
+/* Video play/pause */
+const vidMain=document.getElementById('vidMain'),vidEl=document.getElementById('vidEl');
+function syncVid(){
+  if(vidEl.paused){vidMain.classList.add('paused');vidMain.classList.remove('playing')}
+  else{vidMain.classList.add('playing');vidMain.classList.remove('paused')}
+}
+vidEl.addEventListener('play',syncVid);
+vidEl.addEventListener('pause',syncVid);
+vidMain.addEventListener('click',(e)=>{
+  e.preventDefault();
+  if(vidEl.paused)vidEl.play();else vidEl.pause();
+});
+syncVid();
+
+/* Menu */
+const burger=document.getElementById('burger'),menu=document.getElementById('menu'),navEl=document.getElementById('nav');
+burger.addEventListener('click',()=>{
+  burger.classList.toggle('active');
+  menu.classList.toggle('open');
+});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  burger.classList.remove('active');menu.classList.remove('open');
+}));
+
+/* Nav switches from transparent (on hero) to light once scrolled past hero */
+const hero=document.querySelector('.hero');
+function updateNav(){
+  const past = window.scrollY > hero.offsetHeight - 80;
+  navEl.classList.toggle('on-hero', !past);
+}
+window.addEventListener('scroll',updateNav,{passive:true});
+updateNav();
+
+/* Language toggle */
+document.querySelectorAll('nav.primary .lang button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('nav.primary .lang button').forEach(x=>x.classList.toggle('on',x===b));
+  });
+});
+
+/* Player */
+const playBtn=document.getElementById('playBtn'),fill=document.getElementById('fill'),curr=document.getElementById('curr'),bar=document.getElementById('bar');
+const PLAY_SVG='<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const PAUSE_SVG='<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+let playing=false,p=34,total=222,timer;
+function fmt(s){const m=Math.floor(s/60),r=Math.floor(s%60);return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0')}
+function render(){fill.style.width=p+'%';curr.textContent=fmt(total*p/100)}
+playBtn.addEventListener('click',()=>{
+  playing=!playing;
+  playBtn.innerHTML=playing?PAUSE_SVG:PLAY_SVG;
+  if(playing){timer=setInterval(()=>{p=Math.min(p+0.45,100);render();if(p>=100){playing=false;clearInterval(timer);playBtn.innerHTML=PLAY_SVG}},1000)}
+  else{clearInterval(timer)}
+});
+render();
+</script>
+</body>
+</html>
