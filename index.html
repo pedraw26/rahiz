@@ -970,16 +970,18 @@ footer .wordmark img{
 
 <script>
 /* Page loader + password gate */
+function skipGate(){document.getElementById('loader').classList.add('done')}
 window.addEventListener('load',()=>{
-  if(new URLSearchParams(window.location.search).get('admin')==='1'){
-    document.getElementById('loader').classList.add('done');return;
+  if(new URLSearchParams(window.location.search).get('admin')==='1'||document.cookie.includes('rahiz_auth=1')){
+    skipGate();return;
   }
   setTimeout(()=>document.getElementById('gate').classList.add('show'), 2400);
 });
 const gateInput=document.getElementById('gateInput'),gateError=document.getElementById('gateError'),gateBtn=document.getElementById('gateBtn');
 function tryGate(){
   if(gateInput.value==='monnatestagawd'){
-    document.getElementById('loader').classList.add('done');
+    document.cookie='rahiz_auth=1;path=/;max-age=31536000';
+    skipGate();
   } else {
     gateError.textContent='Wrong password';
     gateInput.value='';
