@@ -971,6 +971,9 @@ footer .wordmark img{
 <script>
 /* Page loader + password gate */
 window.addEventListener('load',()=>{
+  if(new URLSearchParams(window.location.search).get('admin')==='1'){
+    document.getElementById('loader').classList.add('done');return;
+  }
   setTimeout(()=>document.getElementById('gate').classList.add('show'), 2400);
 });
 const gateInput=document.getElementById('gateInput'),gateError=document.getElementById('gateError'),gateBtn=document.getElementById('gateBtn');
