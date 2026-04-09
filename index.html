@@ -402,6 +402,88 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .merch .info .price{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
 .merch .info .sub{grid-column:1/3;font-size:12px;color:var(--muted);margin-top:2px}
 
+/* ———— PRODUCT MODAL ———— */
+.pmodal{
+  position:fixed;inset:0;z-index:9000;background:var(--paper);
+  opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s ease;
+  overflow:hidden;
+}
+.pmodal.open{opacity:1;visibility:visible}
+.pmodal-layout{
+  width:100%;height:100%;display:grid;grid-template-columns:1.3fr 1fr;gap:0;overflow:hidden;
+}
+.pmodal-close{
+  position:absolute;top:20px;right:24px;width:44px;height:44px;
+  display:grid;place-items:center;color:var(--ink);font-size:24px;z-index:10;
+  transition:transform .3s ease;background:transparent;
+}
+.pmodal-close:hover{transform:rotate(90deg)}
+.pmodal-img{background:var(--bg-2);position:relative;overflow:hidden}
+.pmodal-big{
+  width:100%;height:100%;
+  background:#f5f5f7 center/103% no-repeat;
+  transform:scale(1.02);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.pmodal.open .pmodal-big{transform:scale(1)}
+.pmodal-cap{
+  position:absolute;bottom:24px;left:28px;right:28px;
+  display:flex;justify-content:space-between;font-size:11px;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.pmodal-buy{
+  padding:clamp(48px,5vw,96px) clamp(36px,4vw,72px);overflow-y:auto;
+  display:flex;flex-direction:column;justify-content:center;
+  border-left:1px solid var(--rule);
+}
+.pmodal-num{
+  font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:clamp(28px,3vw,44px);font-weight:500;
+}
+.pmodal-buy h3{
+  font-size:clamp(30px,3.4vw,52px);font-weight:600;letter-spacing:-.03em;
+  line-height:.98;margin-bottom:20px;color:var(--ink);
+}
+.pmodal-price{
+  font-size:clamp(18px,1.8vw,22px);font-weight:500;letter-spacing:-.01em;color:var(--ink);
+}
+.pmodal-desc{
+  font-size:14px;color:var(--muted);line-height:1.65;margin-top:18px;max-width:42ch;
+}
+.pmodal-divider{height:1px;background:var(--rule);margin:clamp(24px,2.6vw,36px) 0}
+.pmodal-size-label{
+  font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:12px;font-weight:500;display:flex;justify-content:space-between;
+}
+.pmodal-size-label a{text-decoration:underline}
+.pmodal-sizes{display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap}
+.pmodal-sizes button{
+  padding:12px 0;min-width:48px;border:1px solid var(--rule);font-size:12px;font-weight:500;
+  transition:all .2s ease;color:var(--ink);background:transparent;
+}
+.pmodal-sizes button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pmodal-sizes button:hover:not(.on){border-color:var(--ink)}
+.pmodal-qty{
+  display:flex;align-items:center;border:1px solid var(--rule);width:max-content;margin-bottom:22px;
+}
+.pmodal-qty button{width:44px;height:44px;font-size:16px;transition:background .2s ease;color:var(--ink)}
+.pmodal-qty button:hover{background:var(--bg-2)}
+.pmodal-qty span{width:44px;text-align:center;font-size:14px;font-variant-numeric:tabular-nums}
+.pmodal-cart{
+  width:100%;padding:18px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;transition:transform .25s ease;
+}
+.pmodal-cart:hover{transform:translateY(-2px)}
+.pmodal-cart.added{background:#30a46c}
+.pmodal-meta{
+  font-size:11px;color:var(--muted);margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;
+}
+@media(max-width:900px){
+  .pmodal-layout{grid-template-columns:1fr;grid-template-rows:45% 1fr}
+  .pmodal-buy{border-left:0;border-top:1px solid var(--rule);padding:32px 24px}
+  .pmodal-buy h3{font-size:clamp(26px,6vw,36px)}
+}
+
 /* ———— BOOKING — EDITORIAL DARK LIST ———— */
 .booking{background:#0a0a0a;color:#f5f5f7;padding:clamp(90px,9vw,140px) var(--pad);border-bottom:0!important}
 .booking .bk-head{
@@ -676,20 +758,43 @@ footer .wordmark img{
   </div>
 
   <div class="grid">
-    <div class="item">
+    <div class="item" data-product="tee">
       <div class="ph m1"></div>
       <div class="info"><h3>RAHIZ Tour Tee — Bone</h3><div class="price">€42</div><div class="sub" data-en="Garment-dyed · 260gsm" data-pt="Tingimento peça · 260gsm">Garment-dyed · 260gsm</div></div>
     </div>
-    <div class="item">
+    <div class="item" data-product="hat">
       <div class="ph" style="background:#f5f5f7 url('https://res.cloudinary.com/dzgqzeebg/image/upload/v1775687012/hf_20260408_222108_c40e7001-d0cc-4459-a2f6-baf4a58bcafa_k5mozi.png') center/cover no-repeat;filter:grayscale(.9) contrast(1.02)"></div>
       <div class="info"><h3>RAHIZ Hat — Black &amp; White</h3><div class="price">€38</div><div class="sub" data-en="Embroidered · One size · Cotton twill" data-pt="Bordado · Tamanho único · Sarja de algodão">Embroidered · One size · Cotton twill</div></div>
     </div>
-    <div class="item">
+    <div class="item" data-product="hoodie">
       <div class="ph m3"></div>
       <div class="info"><h3>Kriolu Hoodie — Black</h3><div class="price">€78</div><div class="sub" data-en="Heavyweight fleece · embroidered mark" data-pt="Fleece pesado · marca bordada">Heavyweight fleece · embroidered mark</div></div>
     </div>
   </div>
 </section>
+
+<!-- PRODUCT MODAL -->
+<div class="pmodal" id="pmodal" aria-hidden="true">
+  <div class="pmodal-layout">
+    <button class="pmodal-close" aria-label="Close">&times;</button>
+    <div class="pmodal-img">
+      <div class="pmodal-big" id="pmodalBig"></div>
+      <div class="pmodal-cap"><span id="pmodalCap"></span><span>01 / 04</span></div>
+    </div>
+    <div class="pmodal-buy">
+      <div class="pmodal-num" id="pmodalNum"></div>
+      <h3 id="pmodalTitle"></h3>
+      <div class="pmodal-price" id="pmodalPrice"></div>
+      <p class="pmodal-desc" id="pmodalDesc"></p>
+      <div class="pmodal-divider"></div>
+      <div class="pmodal-size-label" id="pmodalSizeLabel"><span>Size</span><a href="#">Size guide &rarr;</a></div>
+      <div class="pmodal-sizes" id="pmodalSizes"></div>
+      <div class="pmodal-qty"><button data-qty="-1">&minus;</button><span id="pmodalQty">1</span><button data-qty="1">+</button></div>
+      <button class="pmodal-cart" id="pmodalCart">Add to cart</button>
+      <div class="pmodal-meta"><span>✓ Ships worldwide</span><span>✓ 14-day returns</span></div>
+    </div>
+  </div>
+</div>
 
 <!-- BOOKING -->
 <section class="booking" id="booking">
@@ -850,6 +955,107 @@ playBtn.addEventListener('click',()=>{
   else{clearInterval(timer)}
 });
 render();
+
+/* Product modal */
+const PRODUCTS={
+  tee:{
+    num:'— 01 · Apparel',
+    title:'RAHIZ<br>Tour Tee<br>Bone',
+    price:'€42.00',
+    priceNum:42,
+    desc:'Garment-dyed 260gsm heavyweight cotton. Screen-printed front graphic, embroidered Rahiz mark on the back neck. Made in Portugal. Limited run of 200.',
+    cap:'Shot by Rahiz · Mindelo 2026',
+    img:'linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),url("https://res.cloudinary.com/dzgqzeebg/image/upload/v1775725104/Asset_2_cxrimm.webp") center/103% no-repeat,#f5f5f7',
+    sizes:['XS','S','M','L','XL','XXL'],
+    defaultSize:'M'
+  },
+  hat:{
+    num:'— 02 · Accessories',
+    title:'RAHIZ<br>Hat<br>Black & White',
+    price:'€38.00',
+    priceNum:38,
+    desc:'Structured 6-panel cap in cotton twill. Embroidered Rahiz mark on the front, adjustable strap at the back. One size fits all. Made in Portugal.',
+    cap:'Shot by Rahiz · Lisboa 2026',
+    img:'url("https://res.cloudinary.com/dzgqzeebg/image/upload/v1775687012/hf_20260408_222108_c40e7001-d0cc-4459-a2f6-baf4a58bcafa_k5mozi.png") center/cover no-repeat,#f5f5f7',
+    sizes:['One size'],
+    defaultSize:'One size'
+  },
+  hoodie:{
+    num:'— 03 · Apparel',
+    title:'Kriolu<br>Hoodie<br>Black',
+    price:'€78.00',
+    priceNum:78,
+    desc:'Heavyweight 400gsm fleece hoodie. Embroidered Rahiz mark on the chest, tonal stitching throughout. Kangaroo pocket, drawstring hood. Made in Portugal.',
+    cap:'Shot by Rahiz · Paris 2026',
+    img:'repeating-linear-gradient(0deg,#1a1a1c 0 2px,transparent 2px 14px),#0a0a0a',
+    sizes:['S','M','L','XL','XXL'],
+    defaultSize:'M'
+  }
+};
+const pmodal=document.getElementById('pmodal');
+const pBig=document.getElementById('pmodalBig');
+const pCap=document.getElementById('pmodalCap');
+const pNum=document.getElementById('pmodalNum');
+const pTitle=document.getElementById('pmodalTitle');
+const pPrice=document.getElementById('pmodalPrice');
+const pDesc=document.getElementById('pmodalDesc');
+const pSizes=document.getElementById('pmodalSizes');
+const pQty=document.getElementById('pmodalQty');
+const pCart=document.getElementById('pmodalCart');
+const pClose=document.querySelector('.pmodal-close');
+let pqty=1;
+
+function openProduct(key){
+  const p=PRODUCTS[key];if(!p)return;
+  pBig.style.background=p.img;
+  pCap.textContent=p.cap;
+  pNum.textContent=p.num;
+  pTitle.innerHTML=p.title;
+  pPrice.textContent=p.price;
+  pDesc.textContent=p.desc;
+  pSizes.innerHTML=p.sizes.map(s=>`<button class="${s===p.defaultSize?'on':''}">${s}</button>`).join('');
+  pSizes.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      pSizes.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+    });
+  });
+  pqty=1;pQty.textContent='1';
+  pCart.textContent=`Add to cart — €${p.priceNum}`;
+  pCart.classList.remove('added');
+  pCart.dataset.price=p.priceNum;
+  pmodal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeProduct(){
+  pmodal.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.querySelectorAll('.merch .item[data-product]').forEach(item=>{
+  item.addEventListener('click',()=>openProduct(item.dataset.product));
+});
+pClose.addEventListener('click',closeProduct);
+pmodal.addEventListener('click',e=>{if(e.target===pmodal)closeProduct()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pmodal.classList.contains('open'))closeProduct()});
+
+document.querySelectorAll('.pmodal-qty button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const delta=parseInt(btn.dataset.qty);
+    pqty=Math.max(1,pqty+delta);
+    pQty.textContent=pqty;
+    const price=parseInt(pCart.dataset.price||42);
+    pCart.textContent=`Add to cart — €${price*pqty}`;
+  });
+});
+pCart.addEventListener('click',()=>{
+  pCart.classList.add('added');
+  pCart.textContent='✓ Added to cart';
+  setTimeout(()=>{
+    pCart.classList.remove('added');
+    const price=parseInt(pCart.dataset.price||42);
+    pCart.textContent=`Add to cart — €${price*pqty}`;
+  },1800);
+});
 </script>
 </body>
 </html>
