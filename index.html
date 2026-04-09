@@ -83,7 +83,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ———— NAV ———— */
 nav.primary{
   position:fixed;top:0;left:0;right:0;z-index:99;
-  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;
+  display:flex;align-items:center;justify-content:space-between;
   padding:14px var(--pad);
   background:rgba(255,255,255,.72);
   backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
@@ -104,19 +104,10 @@ nav.primary .burger.active span:nth-child(1){transform:translateY(6.5px) rotate(
 nav.primary .burger.active span:nth-child(2){opacity:0}
 nav.primary .burger.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
-nav.primary .logo{justify-self:center;display:inline-flex;align-items:center}
-nav.primary .logo img{height:clamp(18px,3.5vw,26px);width:auto;display:block;transition:filter .35s ease}
+nav.primary .logo{display:inline-flex;align-items:center}
+nav.primary .logo img{height:clamp(20px,3.5vw,26px);width:auto;display:block;transition:filter .35s ease}
 
-nav.primary .lang{
-  justify-self:end;font-size:clamp(10px,1.8vw,12px);font-weight:500;letter-spacing:.04em;
-  display:flex;align-items:center;gap:clamp(4px,1vw,8px);color:var(--ink);white-space:nowrap;
-}
-nav.primary .lang button{
-  padding:4px 2px;color:inherit;opacity:.45;transition:opacity .25s ease;cursor:pointer;
-}
-nav.primary .lang button.on{opacity:1}
-nav.primary .lang .sep{opacity:.35}
-nav.primary.on-hero .lang{color:#fff}
+nav.primary .lang{display:none}
 
 /* ———— MENU OVERLAY ———— */
 .menu{
@@ -151,6 +142,19 @@ nav.primary.on-hero .lang{color:#fff}
   font-size:12px;color:rgba(255,255,255,.5);
 }
 .menu .foot a:hover{color:#fff}
+.menu .menu-lang{
+  display:flex;align-items:center;gap:10px;
+  margin-top:32px;
+  font-size:14px;font-weight:500;letter-spacing:.06em;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .5s ease .44s,transform .5s ease .44s;
+}
+.menu.open .menu-lang{opacity:1;transform:translateY(0)}
+.menu .menu-lang button{
+  padding:6px 4px;color:#fff;opacity:.4;transition:opacity .25s ease;cursor:pointer;
+}
+.menu .menu-lang button.on{opacity:1}
+.menu .menu-lang .sep{color:rgba(255,255,255,.3)}
 
 /* ———— HERO — FULLSCREEN IMAGE ———— */
 .hero{
@@ -511,6 +515,11 @@ footer .wordmark img{
     <li><a href="#merch" data-en="Merchandise" data-pt="Loja">Merchandise</a></li>
     <li><a href="#booking" data-en="Booking" data-pt="Reservas">Booking</a></li>
   </ul>
+  <div class="menu-lang">
+    <button class="on" data-lang="en">EN</button>
+    <span class="sep">|</span>
+    <button data-lang="pt">PT</button>
+  </div>
   <div class="foot">
     <span>B.O.B Musik · Paris</span>
     <a href="mailto:bobentgroup@gmail.com">bobentgroup@gmail.com</a>
@@ -796,9 +805,9 @@ function setLang(lang){
   });
   document.documentElement.lang=lang;
 }
-document.querySelectorAll('nav.primary .lang button').forEach(b=>{
+document.querySelectorAll('[data-lang]').forEach(b=>{
   b.addEventListener('click',()=>{
-    document.querySelectorAll('nav.primary .lang button').forEach(x=>x.classList.toggle('on',x===b));
+    document.querySelectorAll('[data-lang]').forEach(x=>x.classList.toggle('on',x.dataset.lang===b.dataset.lang));
     setLang(b.dataset.lang);
   });
 });
