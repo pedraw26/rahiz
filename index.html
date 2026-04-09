@@ -128,9 +128,21 @@ nav.primary.on-hero .lang{color:#fff}
 nav.primary .cart{
   display:grid;place-items:center;
   opacity:.6;transition:opacity .25s ease;
+  position:relative;
 }
 nav.primary .cart:hover{opacity:1}
 nav.primary.on-hero .cart{color:#fff}
+.cart-badge{
+  position:absolute;top:-6px;right:-8px;
+  min-width:16px;height:16px;padding:0 4px;
+  background:var(--ink);color:#fff;
+  font-size:9px;font-weight:700;line-height:16px;text-align:center;
+  border-radius:50%!important;
+  opacity:0;transform:scale(0);
+  transition:opacity .25s ease,transform .25s cubic-bezier(.2,.8,.2,1);
+}
+.cart-badge.show{opacity:1;transform:scale(1)}
+nav.primary.on-hero .cart-badge{background:#fff;color:var(--ink)}
 
 /* ———— MENU OVERLAY ———— */
 .menu{
@@ -612,7 +624,7 @@ footer .wordmark img{
       <span class="sep">|</span>
       <button data-lang="pt">PT</button>
     </div>
-    <a class="cart" href="#merch" aria-label="Cart"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></a>
+    <a class="cart" href="#merch" aria-label="Cart"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-badge" id="cartBadge">0</span></a>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -1047,7 +1059,15 @@ document.querySelectorAll('.pmodal-qty button').forEach(btn=>{
     pCart.textContent=`Add to cart — €${price*pqty}`;
   });
 });
+let cartCount=0;
+const cartBadge=document.getElementById('cartBadge');
+function updateBadge(){
+  cartBadge.textContent=cartCount;
+  cartBadge.classList.toggle('show',cartCount>0);
+}
 pCart.addEventListener('click',()=>{
+  cartCount+=pqty;
+  updateBadge();
   pCart.classList.add('added');
   pCart.textContent='✓ Added to cart';
   setTimeout(()=>{
