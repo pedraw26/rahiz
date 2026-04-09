@@ -33,6 +33,31 @@ img,video{display:block;max-width:100%}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 ::selection{background:var(--ink);color:var(--paper)}
 
+/* ———— PAGE LOADER ———— */
+.loader{
+  position:fixed;inset:0;background:#0a0a0a;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .6s ease,visibility .6s ease;
+}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-stage{
+  position:relative;width:clamp(180px,22vw,320px);height:clamp(44px,5vw,72px);
+}
+.loader-logo{
+  position:absolute;inset:0;
+  background:url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjUyMDguMDAwMDAwcHQiIGhlaWdodD0iMjc0NS4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDUyMDguMDAwMDAwIDI3NDUuMDAwMDAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0Ij4gPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsMjc0NS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+IDxwYXRoIGQ9Ik0yODAgMTc1OTAgbDAgLTk2NjAgODk1IDAgODk1IDAgMCA0Mzc0IDAgNDM3NCA2MzggNSBjMzUwIDMgNjYxIDkgNjkwIDE0IDQ5IDkgNTMgOCA1NyAtMTEgMTIgLTU3IDQxIC0yMTYgMTA0IC01NzEgMzUwIC0xOTYwIDY2NCAtMzk0NSA5ODYgLTYyMzUgODIgLTU3OCAyNjUgLTE5MTkgMjY1IC0xOTM3IDAgLTExIDE3NyAtMTMgOTc1IC0xMyA5NzYgMCA5NzYgMCA5NzAgMzMgLTMgMTcgLTUwIDMxNiAtMTA1IDY2MiAtMzc1IDIzNzkgLTczNyA0NDg0IC0xMTAwIDYzOTAgLTEwMSA1MzIgLTM5OCAyMDI3IC00MDcgMjA1MSAtMiA3IDMyIDMzIDg5IDY0IDgxMiA0NTcgMTI0OSAxMjUxIDEzMjggMjQxMCA4IDExNyAxMCA4MjkgOCAyNDUwIC00IDI0NzggLTEgMjM0MCAtNTkgMjc0MCAtOTMgNjU0IC0zMDUgMTE4NyAtNjI1IDE1NzAgLTc2IDkyIC0yNDcgMjU4IC0zMzQgMzI3IC00MDkgMzIwIC05NzggNTE5IC0xNjgyIDU4OCAtMjkwIDI5IC02NTUgMzUgLTIxMjUgMzUgbC0xNDYzIDAgMCAtOTY2MHogbTMxODAgNzg0MCBjODMxIC01OSAxMTc2IC0zOTcgMTI3NSAtMTI1MCAzMiAtMjc4IDM2IC02MzQgMzIgLTI2MDUgLTQgLTIxMjQgLTEgLTIwMjcgLTYzIC0yMzA0IC03MCAtMzEyIC0yMTQgLTU1MCAtNDI3IC03MDggLTEyMCAtODggLTMxNiAtMTcyIC00ODggLTIwOCAtMjExIC00NSAtMjU0IC00OCAtMTAwMSAtNTIgbC03MTggLTUgMCAzNTcxIDAgMzU3MSA2MjMgMCBjMzQyIDAgNjg3IC01IDc2NyAtMTB6IE0xNDgxMCAyNzIzOSBjMCAtMTMgLTI2MzcgLTE5MjI3IC0yNjQ1IC0xOTI3NiAtNiAtMzMgLTYgLTMzIDg2NSAtMzMgNjg5IDAgODcwIDMgODcwIDEzIDAgMTIgNTk3IDQ2MTMgNjcwIDUxNjIgMTQ0IDEwODQgODc4IDY3NDggOTU1IDczNzAgMTAzIDgzMiAyNTAgMjA0MSAyNjEgMjE0OCA3IDY1IDcgNjYgMjEgNDEgOCAtMTcgMzYyIC0yODQ4IDkxOCAtNzM0MyA0OTggLTQwMjQgOTA3IC03MzMzIDkxMSAtNzM1NCA2IC0zNyA2IC0zNyA4OTEgLTM3IDg4NSAwIDg4NSAwIDg3OSA0MyAtMyAyMyAtNTY2IDQzNTUgLTEyNTEgOTYyNyAtNjg1IDUyNzIgLTEyNDggOTYwMCAtMTI1MSA5NjE4IC02IDMyIC02IDMyIC0xMDUwIDMyIC03NjUgMCAtMTA0NCAtMyAtMTA0NCAtMTF6IE0yNTMwNyAyNzI0MyBjLTQgLTMgLTcgLTQzNTAgLTcgLTk2NjAgbDAgLTk2NTMgODk1IDAgODk1IDAgMCA0NDcwIDAgNDQ3MCAxMjQ1IDAgMTI0NSAwIDAgLTQ0NzAgMCAtNDQ3MCA4OTAgMCA4OTAgMCAwIDk2NjAgMCA5NjYwIC04OTAgMCAtODkwIDAgMCAtNDMxMCAwIC00MzEwIC0xMjQ1IDAgLTEyNDUgMCAwIDQzMTAgMCA0MzEwIC04ODggMCBjLTQ4OSAwIC04OTIgLTMgLTg5NSAtN3ogTTM3ODQwIDE2ODE1IGwwIC0xMDQzNSAtMTg4MjAgMCAtMTg4MjAgMCAyIC0xOTcyIDMgLTE5NzMgMTg4MTggLTMgMTg4MTcgLTIgMCAtMTExNSAwIC0xMTE1IDg5MCAwIDg5MCAwIDAgMTExNSAwIDExMTUgNjEzNSAwIDYxMzUgMCAwIDE5NzUgMCAxOTc1IC02MTM1IDAgLTYxMzUgMCAwIDEwNDM1IDAgMTA0MzUgLTg5MCAwIC04OTAgMCAwIC0xMDQzNXogTTQ1OTg3IDI3MjQzIGMtNCAtMyAtNyAtMzk1IC03IC04NzAgbDAgLTg2MyAyMDU2IDAgYzE5NTQgMCAyMDU2IC0xIDIwNTIgLTE3IC0zIC0xMCAtOTY0IC0zNTY0IC0yMTM3IC03ODk5IC0yMTMxIC03ODgxIC0yMTMxIC03ODgxIC0yMTMxIC04NzczIGwwIC04OTEgMzAyNSAwIDMwMjUgMCAwIDkwMCAwIDkwMCAtMjA5NiAwIGMtMjA5NyAwIC0yMDk3IDAgLTIwOTEgMzIgMyAxOCA5NDYgMzU5MSAyMDk2IDc5NDAgMjA5MSA3OTA4IDIwOTEgNzkwOCAyMDkxIDg3MjggbDAgODIwIC0yOTM4IDAgYy0xNjE2IDAgLTI5NDIgLTMgLTI5NDUgLTd6Ii8+IDwvZz4gPC9zdmc+") center/contain no-repeat;
+}
+.loader-base{filter:invert(.28)}
+.loader-fill{
+  filter:invert(1);
+  clip-path:inset(0 100% 0 0);
+  animation:loaderFill 2.2s cubic-bezier(.6,.05,.3,1) forwards;
+}
+@keyframes loaderFill{
+  0%{clip-path:inset(0 100% 0 0)}
+  100%{clip-path:inset(0 0 0 0)}
+}
+
 /* ———— NAV ———— */
 nav.primary{
   position:fixed;top:0;left:0;right:0;z-index:99;
@@ -430,6 +455,14 @@ footer .wordmark img{
 </head>
 <body>
 
+<!-- PAGE LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-stage">
+    <div class="loader-logo loader-base"></div>
+    <div class="loader-logo loader-fill"></div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav class="primary on-hero" id="nav">
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -652,6 +685,13 @@ footer .wordmark img{
   </div>
 </footer>
 
+<script>
+/* Page loader hide */
+window.addEventListener('load',()=>{
+  const minDelay = 2400;
+  setTimeout(()=>document.getElementById('loader').classList.add('done'), minDelay);
+});
+</script>
 <script>
 /* Video play/pause */
 const vidMain=document.getElementById('vidMain'),vidEl=document.getElementById('vidEl');
