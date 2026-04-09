@@ -162,6 +162,7 @@ nav.primary.on-hero .lang{color:#fff}
 }
 .hero .playbtn:hover{background:rgba(20,20,20,.55);transform:translate(-50%,-50%) scale(1.06)}
 .hero .playbtn svg{width:34px;height:34px;fill:#fff;margin-left:4px}
+.hero .playbtn.is-playing svg{margin-left:0}
 
 /* Bio bottom-left */
 .hero .bio{
@@ -172,6 +173,7 @@ nav.primary.on-hero .lang{color:#fff}
 .hero .bio p + p{margin-top:10px;color:rgba(255,255,255,.68)}
 
 .hero h1,.hero .kicker,.hero .ctas,.hero .videoframe{display:none}
+
 
 /* ———— SECTION ———— */
 section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
@@ -664,6 +666,18 @@ vidMain.addEventListener('click',(e)=>{
   if(vidEl.paused)vidEl.play();else vidEl.pause();
 });
 syncVid();
+
+/* Hero play button → audio */
+const heroBtn=document.querySelector('.hero .playbtn');
+const heroAudio=new Audio('https://res.cloudinary.com/dzgqzeebg/video/upload/v1775726341/Rahiz_-_Feita_em_Cabo_Verde_yrt497.mp3');
+heroAudio.preload='none';
+const PLAY_ICON='<svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>';
+const PAUSE_ICON='<svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+heroBtn.addEventListener('click',()=>{
+  if(heroAudio.paused){heroAudio.play();heroBtn.innerHTML=PAUSE_ICON;heroBtn.classList.add('is-playing')}
+  else{heroAudio.pause();heroBtn.innerHTML=PLAY_ICON;heroBtn.classList.remove('is-playing')}
+});
+heroAudio.addEventListener('ended',()=>{heroBtn.innerHTML=PLAY_ICON;heroBtn.classList.remove('is-playing')});
 
 /* Menu */
 const burger=document.getElementById('burger'),menu=document.getElementById('menu'),navEl=document.getElementById('nav');
