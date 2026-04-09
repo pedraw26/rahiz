@@ -947,7 +947,7 @@ footer .wordmark img{
   <div class="drawer-body" id="drawerBody"></div>
   <div class="drawer-footer" id="drawerFooter">
     <div class="drawer-totals" id="drawerTotals"></div>
-    <button class="drawer-checkout" id="drawerCheckout">Checkout &rarr;</button>
+    <button class="drawer-checkout" id="drawerCheckout">Checkout</button>
     <div class="drawer-secure">🔒 Secured by Stripe &middot; 14-day returns</div>
   </div>
 </div>
@@ -1247,7 +1247,7 @@ function renderDrawer(){
     <div class="drawer-total-line"><span>VAT (20%)</span><span>&euro;${vat.toFixed(2)}</span></div>
     <div class="drawer-total-line grand"><span>Total</span><span>&euro;${total.toFixed(2)}</span></div>
   `;
-  drawerCheckout.textContent=`Checkout — €${total.toFixed(2)} →`;
+  drawerCheckout.textContent=`Checkout €${total.toFixed(2)}`;
   drawerCheckout.disabled=false;
 }
 
