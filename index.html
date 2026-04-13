@@ -114,7 +114,8 @@ nav.primary .burger.active span:nth-child(3){transform:translateY(-6.5px) rotate
 nav.primary .logo{display:inline-flex;align-items:center}
 nav.primary .logo img{height:clamp(20px,3.5vw,26px);width:auto;display:block;transition:filter .35s ease}
 
-.nav-links{display:none;align-items:center;gap:clamp(16px,2.5vw,32px);list-style:none;margin-left:auto;margin-right:clamp(16px,2vw,24px)}
+.nav-links{display:none;align-items:center;gap:clamp(16px,2.5vw,32px);list-style:none;margin-left:auto;margin-right:clamp(20px,2.5vw,32px);padding-right:clamp(20px,2.5vw,32px);border-right:1px solid var(--rule)}
+nav.primary.on-hero .nav-links{border-right-color:rgba(255,255,255,.2)}
 .nav-links a{
   font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink);
   opacity:.65;transition:opacity .25s ease;
