@@ -117,7 +117,7 @@ nav.primary .logo img{height:clamp(20px,3.5vw,26px);width:auto;display:block;tra
 .nav-links{display:none;align-items:center;gap:clamp(16px,2.5vw,32px);list-style:none;margin-left:auto;margin-right:clamp(20px,2.5vw,32px);padding-right:clamp(20px,2.5vw,32px);border-right:1px solid var(--rule)}
 nav.primary.on-hero .nav-links{border-right-color:rgba(255,255,255,.2)}
 .nav-links a{
-  font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink);
+  font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);
   opacity:.65;transition:opacity .25s ease;
 }
 .nav-links a:hover{opacity:1}
@@ -372,6 +372,8 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
   transition:background .25s ease;font-size:15px;
 }
 .player .tracks li:hover{background:rgba(0,0,0,.04)}
+.player .tracks li.active{background:rgba(0,0,0,.06);font-weight:600}
+.player .tracks li{cursor:pointer}
 .player .tracks li .n{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums;text-align:center}
 .player .tracks li .t{font-weight:500;letter-spacing:-.005em}
 .player .tracks li .feat{font-size:13px;color:var(--muted)}
@@ -803,7 +805,7 @@ footer .wordmark img{
   <div class="section-head">
     <div class="eyebrow" data-en="Now playing" data-pt="A tocar">Now playing</div>
     <h2 data-en="Listen" data-pt="Ouvir">Listen <svg class="verified" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5213 2.62368C11.3147 1.75255 12.6853 1.75255 13.4787 2.62368L14.4989 3.74391C14.8998 4.18418 15.4761 4.42288 16.071 4.39508L17.5845 4.32435C18.7614 4.26934 19.7307 5.23857 19.6757 6.41554L19.6049 7.92905C19.5771 8.52388 19.8158 9.10016 20.2561 9.50111L21.3763 10.5213C22.2475 11.3147 22.2475 12.6853 21.3763 13.4787L20.2561 14.4989C19.8158 14.8998 19.5771 15.4761 19.6049 16.071L19.6757 17.5845C19.7307 18.7614 18.7614 19.7307 17.5845 19.6757L16.071 19.6049C15.4761 19.5771 14.8998 19.8158 14.4989 20.2561L13.4787 21.3763C12.6853 22.2475 11.3147 22.2475 10.5213 21.3763L9.50111 20.2561C9.10016 19.8158 8.52388 19.5771 7.92905 19.6049L6.41553 19.6757C5.23857 19.7307 4.26934 18.7614 4.32435 17.5845L4.39508 16.071C4.42288 15.4761 4.18418 14.8998 3.74391 14.4989L2.62368 13.4787C1.75255 12.6853 1.75255 11.3147 2.62368 10.5213L3.74391 9.50111C4.18418 9.10016 4.42288 8.52388 4.39508 7.92905L4.32435 6.41553C4.26934 5.23857 5.23857 4.26934 6.41554 4.32435L7.92905 4.39508C8.52388 4.42288 9.10016 4.18418 9.50111 3.74391L10.5213 2.62368Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></h2>
-    <div class="aside" data-en="Covers LP · 11 tracks" data-pt="Covers LP · 11 faixas">Covers LP · 11 tracks</div>
+    <div class="aside" data-en="Covers LP · 8 tracks" data-pt="Covers LP · 8 faixas">Covers LP · 8 tracks</div>
   </div>
 
   <div class="wrap">
@@ -812,11 +814,11 @@ footer .wordmark img{
       <div class="corner bot"><span>Covers in Capeverdean</span><span>2025</span></div>
     </div>
     <div class="controls">
-      <h3>4 Kampé</h3>
-      <div class="albref" data-en="Cape Verdean cover of Joé Dwét Filé · B.O.B Musik" data-pt="Cover cabo-verdiano de Joé Dwét Filé · B.O.B Musik">Cape Verdean cover of Joé Dwét Filé · B.O.B Musik</div>
+      <h3 id="trackTitle">Dança Roça</h3>
+      <div class="albref" id="trackSub">Rahiz</div>
 
       <div class="bar" id="bar"><div class="fill" id="fill"></div></div>
-      <div class="time"><span id="curr">01:17</span><span>03:42</span></div>
+      <div class="time"><span id="curr">00:00</span><span id="totalTime">04:03</span></div>
 
       <div class="btns">
         <button aria-label="previous"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 5h2v14H6zM20 5L9 12l11 7z"/></svg></button>
@@ -827,18 +829,15 @@ footer .wordmark img{
 
     <div class="tracks">
       <h4 data-en="Tracklist" data-pt="Faixas">Tracklist</h4>
-      <ol>
-        <li><span class="n">1</span><span class="t">4 Kampé</span><span class="feat">cover · Joé Dwét Filé</span><span class="dur">03:42</span></li>
-        <li><span class="n">2</span><span class="t">Calm Down</span><span class="feat">cover · Rema</span><span class="dur">03:58</span></li>
-        <li><span class="n">3</span><span class="t">Last Last</span><span class="feat">cover · Burna Boy</span><span class="dur">03:03</span></li>
-        <li><span class="n">4</span><span class="t">Rush</span><span class="feat">cover · Ayra Starr</span><span class="dur">02:51</span></li>
-        <li><span class="n">5</span><span class="t">Soso</span><span class="feat">cover · Omah Lay</span><span class="dur">03:20</span></li>
-        <li><span class="n">6</span><span class="t">Ku Lo Sa</span><span class="feat">cover · Oxlade</span><span class="dur">03:05</span></li>
-        <li><span class="n">7</span><span class="t">Spéciale</span><span class="feat">cover</span><span class="dur">03:28</span></li>
-        <li><span class="n">8</span><span class="t">Confession</span><span class="feat">cover</span><span class="dur">03:11</span></li>
-        <li><span class="n">9</span><span class="t">Sensational</span><span class="feat">cover · Chris Brown</span><span class="dur">03:47</span></li>
-        <li><span class="n">10</span><span class="t">Under the Influence</span><span class="feat">cover · Chris Brown</span><span class="dur">03:34</span></li>
-        <li><span class="n">11</span><span class="t">Dumebi</span><span class="feat">cover · Rema</span><span class="dur">02:58</span></li>
+      <ol id="trackList">
+        <li data-i="0"><span class="n">1</span><span class="t">Dança Roça</span><span class="dur">04:03</span></li>
+        <li data-i="1"><span class="n">2</span><span class="t">4 Kampé</span><span class="feat">cover · Joé Dwét Filé</span><span class="dur">03:34</span></li>
+        <li data-i="2"><span class="n">3</span><span class="t">Dança ma mi</span><span class="dur">03:34</span></li>
+        <li data-i="3"><span class="n">4</span><span class="t">Bô ê Tão Boa</span><span class="dur">03:13</span></li>
+        <li data-i="4"><span class="n">5</span><span class="t">Um sonho Kriolu</span><span class="dur">02:59</span></li>
+        <li data-i="5"><span class="n">6</span><span class="t">Mario Let Me Love You</span><span class="feat">cover</span><span class="dur">04:17</span></li>
+        <li data-i="6"><span class="n">7</span><span class="t">Áz Vêz</span><span class="dur">03:43</span></li>
+        <li data-i="7"><span class="n">8</span><span class="t">Hoje e Amanhã</span><span class="dur">03:34</span></li>
       </ol>
     </div>
   </div>
@@ -1085,19 +1084,61 @@ document.querySelectorAll('[data-lang]').forEach(b=>{
 });
 
 /* Player */
-const playBtn=document.getElementById('playBtn'),fill=document.getElementById('fill'),curr=document.getElementById('curr'),bar=document.getElementById('bar');
+const TRACKS=[
+  {title:'Dança Roça',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208311/rahiz/01_Dan%C3%A7a_Ro%C3%A7a.mp3'},
+  {title:'4 Kampé',sub:'cover · Joé Dwét Filé',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208316/rahiz/02_4_Kamp%C3%A9_Cover_in_Capverdean.mp3'},
+  {title:'Dança ma mi',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208324/rahiz/03_Danca_ma_mi.mp3'},
+  {title:'Bô ê Tão Boa',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208330/rahiz/04_B%C3%B4_%C3%AA_T%C3%A3o_Boa.mp3'},
+  {title:'Um sonho Kriolu',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208339/rahiz/05_Um_sonho_Kriolu.mp3'},
+  {title:'Mario Let Me Love You',sub:'cover',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208473/rahiz/07_Mario_Let_Me_Love_You.mp3'},
+  {title:'Áz Vêz',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208344/rahiz/08_%C3%81z_V%C3%AAz.mp3'},
+  {title:'Hoje e Amanhã',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208353/rahiz/09_-_Rahiz_-_Hoje_e_Amanh%C3%A3.mp3'}
+];
+const playBtn=document.getElementById('playBtn'),fill=document.getElementById('fill'),curr=document.getElementById('curr'),bar=document.getElementById('bar'),totalTime=document.getElementById('totalTime'),trackTitle=document.getElementById('trackTitle'),trackSub=document.getElementById('trackSub'),trackList=document.getElementById('trackList');
 const PLAY_SVG='<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 const PAUSE_SVG='<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
-let playing=false,p=34,total=222,timer;
+let currentIdx=0;
+const audio=new Audio();
 function fmt(s){const m=Math.floor(s/60),r=Math.floor(s%60);return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0')}
-function render(){fill.style.width=p+'%';curr.textContent=fmt(total*p/100)}
-playBtn.addEventListener('click',()=>{
-  playing=!playing;
-  playBtn.innerHTML=playing?PAUSE_SVG:PLAY_SVG;
-  if(playing){timer=setInterval(()=>{p=Math.min(p+0.45,100);render();if(p>=100){playing=false;clearInterval(timer);playBtn.innerHTML=PLAY_SVG}},1000)}
-  else{clearInterval(timer)}
+function loadTrack(i){
+  currentIdx=i;
+  const t=TRACKS[i];
+  audio.src=t.src;
+  trackTitle.textContent=t.title;
+  trackSub.textContent=t.sub;
+  fill.style.width='0%';
+  curr.textContent='00:00';
+  totalTime.textContent='--:--';
+  trackList.querySelectorAll('li').forEach((li,j)=>li.classList.toggle('active',j===i));
+}
+audio.addEventListener('loadedmetadata',()=>{totalTime.textContent=fmt(audio.duration)});
+audio.addEventListener('timeupdate',()=>{
+  if(audio.duration){
+    fill.style.width=(audio.currentTime/audio.duration*100)+'%';
+    curr.textContent=fmt(audio.currentTime);
+  }
 });
-render();
+audio.addEventListener('ended',()=>{
+  if(currentIdx<TRACKS.length-1){loadTrack(currentIdx+1);audio.play()}
+  else{playBtn.innerHTML=PLAY_SVG}
+});
+bar.addEventListener('click',(e)=>{
+  if(audio.duration){audio.currentTime=e.offsetX/bar.offsetWidth*audio.duration}
+});
+playBtn.addEventListener('click',()=>{
+  if(audio.paused){audio.play();playBtn.innerHTML=PAUSE_SVG}
+  else{audio.pause();playBtn.innerHTML=PLAY_SVG}
+});
+trackList.querySelectorAll('li').forEach(li=>{
+  li.addEventListener('click',()=>{loadTrack(+li.dataset.i);audio.play();playBtn.innerHTML=PAUSE_SVG});
+});
+document.querySelectorAll('[aria-label="previous"]')[0].addEventListener('click',()=>{
+  loadTrack(currentIdx>0?currentIdx-1:TRACKS.length-1);audio.play();playBtn.innerHTML=PAUSE_SVG;
+});
+document.querySelectorAll('[aria-label="next"]')[0].addEventListener('click',()=>{
+  loadTrack(currentIdx<TRACKS.length-1?currentIdx+1:0);audio.play();playBtn.innerHTML=PAUSE_SVG;
+});
+loadTrack(0);
 
 /* Product modal */
 const PRODUCTS={
