@@ -367,7 +367,7 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .player .tracks h4{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px}
 .player .tracks ol{list-style:none}
 .player .tracks li{
-  display:grid;grid-template-columns:40px 64px 1fr auto auto;gap:12px;align-items:center;
+  display:grid;grid-template-columns:40px 1fr auto auto auto;gap:12px;align-items:center;
   padding:14px 16px;border-radius:10px;cursor:pointer;
   transition:background .25s ease;font-size:15px;
 }
@@ -378,9 +378,7 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .player .tracks li .t{font-weight:500;letter-spacing:-.005em}
 .player .tracks li .feat{font-size:13px;color:var(--muted);text-align:right}
 .player .tracks li .dur{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;grid-column:5;text-align:right}
-.player .tracks li .pill{font-size:11px;font-weight:600;color:#e8456b;background:rgba(232,69,107,.1);padding:3px 10px;border-radius:20px;grid-column:2;white-space:nowrap;letter-spacing:.02em}
-.player .tracks li .t{grid-column:3}
-.player .tracks li .feat{grid-column:4}
+.player .tracks li .pill{font-size:11px;font-weight:600;color:#e8456b;background:rgba(232,69,107,.1);padding:3px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.02em}
 
 /* ———— VIDEOS ———— */
 .videos .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
@@ -833,11 +831,11 @@ footer .wordmark img{
     <div class="tracks">
       <h4 data-en="Tracklist" data-pt="Faixas">Tracklist</h4>
       <ol id="trackList">
-        <li data-i="0"><span class="n">1</span><span class="pill">Popular</span><span class="t">Dança Roça</span><span class="dur">04:03</span></li>
+        <li data-i="0"><span class="n">1</span><span class="t">Dança Roça</span><span class="pill">Popular</span><span class="dur">04:03</span></li>
         <li data-i="1"><span class="n">2</span><span class="t">4 Kampé</span><span class="feat">cover · Joé Dwét Filé</span><span class="dur">03:34</span></li>
-        <li data-i="2"><span class="n">3</span><span class="pill">Popular</span><span class="t">Dança ma mi</span><span class="dur">03:34</span></li>
+        <li data-i="2"><span class="n">3</span><span class="t">Dança ma mi</span><span class="pill">Popular</span><span class="dur">03:34</span></li>
         <li data-i="3"><span class="n">4</span><span class="t">Bô ê Tão Boa</span><span class="dur">03:13</span></li>
-        <li data-i="4"><span class="n">5</span><span class="pill">Popular</span><span class="t">Um sonho Kriolu</span><span class="dur">02:59</span></li>
+        <li data-i="4"><span class="n">5</span><span class="t">Um sonho Kriolu</span><span class="pill">Popular</span><span class="dur">02:59</span></li>
         <li data-i="5"><span class="n">6</span><span class="t">Let Me Love You</span><span class="feat">cover · Mario</span><span class="dur">04:17</span></li>
         <li data-i="6"><span class="n">7</span><span class="t">Áz Vêz</span><span class="dur">03:43</span></li>
         <li data-i="7"><span class="n">8</span><span class="t">Hoje e Amanhã</span><span class="dur">03:34</span></li>
