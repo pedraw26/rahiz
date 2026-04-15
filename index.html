@@ -816,7 +816,7 @@ footer .wordmark img{
       <div class="corner bot"><span>Rahiz Kwasi</span><span>2025</span></div>
     </div>
     <div class="controls">
-      <h3 id="trackTitle">Dança Roça</h3><span class="pill-ctrl" id="trackPill">Popular</span>
+      <h3 id="trackTitle">Dança Roça <span class="pill-ctrl" id="trackPill">Popular</span></h3>
       <div class="albref" id="trackSub">Rahiz</div>
 
       <div class="bar" id="bar"><div class="fill" id="fill"></div></div>
@@ -1106,8 +1106,8 @@ function loadTrack(i){
   currentIdx=i;
   const t=TRACKS[i];
   audio.src=t.src;
-  trackTitle.textContent=t.title;
-  trackPill.style.display=t.popular?'inline-block':'none';
+  const pillHtml=t.popular?'<span class="pill-ctrl">Popular</span>':'';
+  trackTitle.innerHTML=t.title+' '+pillHtml;
   trackSub.textContent=t.sub;
   fill.style.width='0%';
   curr.textContent='00:00';
