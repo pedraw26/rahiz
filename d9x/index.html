@@ -919,492 +919,80 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
       <!-- ========== ROW 2: LIVE NOW ========== -->
       <div class="page" data-page="activity">
       <section class="sec" id="live">
-        <div class="head">
-          <div class="title">
-            <h2>Live now</h2>
-            <span class="sub">What's happening on rahiz.com this very second</span>
-          </div>
-        </div>
-
+        <div class="head"><div class="title"><h2>Live now</h2><span class="sub">What's happening on rahiz.com</span></div></div>
         <div class="live-now">
           <div class="live-card live-counter">
-            <div class="head"><h3>Concurrent visitors</h3><span class="meta">Updates every 3s</span></div>
-            <div>
-              <div class="num" id="liveBig">42</div>
-              <div class="label">people on the site right now</div>
-            </div>
-            <div class="breakdown">
-              <span><b>28</b> desktop</span>
-              <span><b>14</b> mobile</span>
-              <span><b>9</b> in EU · <b>11</b> in CV · <b>22</b> elsewhere</span>
-            </div>
+            <div class="head"><h3>Concurrent visitors</h3><span class="meta">Last 5 minutes</span></div>
+            <div><div class="num" id="liveBig">—</div><div class="label">people on the site right now</div></div>
           </div>
-
           <div class="live-card live-playing">
-            <div class="head"><h3>Now playing</h3><span class="meta">Concurrent listeners</span></div>
-            <div class="row"><div class="ico">▶</div><div class="name">4 Kampé</div><div class="count">12 listening</div></div>
-            <div class="row"><div class="ico">▶</div><div class="name">Calm Down</div><div class="count">7 listening</div></div>
-            <div class="row"><div class="ico">▶</div><div class="name">Last Last</div><div class="count">4 listening</div></div>
-            <div class="row"><div class="ico">▶</div><div class="name">Soso</div><div class="count">3 listening</div></div>
+            <div class="head"><h3>Recent plays</h3><span class="meta">From Supabase</span></div>
+            <div id="pgLivePlays"><div style="font-size:11px;color:var(--muted);padding:10px 12px">Loading...</div></div>
           </div>
-
           <div class="live-card">
-            <div class="head"><h3>Most-visited pages</h3><span class="meta">Right now</span></div>
-            <div class="live-pages">
-              <div class="row"><span class="pg">/ (home)</span><span class="n">31</span></div>
-              <div class="row"><span class="pg">/listen</span><span class="n">12</span></div>
-              <div class="row"><span class="pg">/podcast</span><span class="n">8</span></div>
-              <div class="row"><span class="pg">/blog/o-abrir-dos-olhos</span><span class="n">5</span></div>
-              <div class="row"><span class="pg">/merch</span><span class="n">3</span></div>
-              <div class="row"><span class="pg">/booking</span><span class="n">2</span></div>
-            </div>
+            <div class="head"><h3>Most-visited pages</h3><span class="meta">Last 30 days</span></div>
+            <div class="live-pages" id="pgLivePages"><div style="font-size:11px;color:var(--muted);padding:8px 0">Loading...</div></div>
           </div>
         </div>
       </section>
       </div>
 
-      <!-- ========== ROW 4: MUSIC PLAYS ========== -->
+      <!-- ========== MEDIA ========== -->
       <div class="page" data-page="media">
       <section class="sec" id="music">
-        <div class="head">
-          <div class="title">
-            <h2>Music plays</h2>
-            <span class="sub">Total plays per track · Covers in Capeverdean di Rahiz</span>
-          </div>
-          <div class="actions">
-            <button class="pill on">30D</button>
-            <button class="pill">7D</button>
-            <button class="pill">All time</button>
-          </div>
-        </div>
+        <div class="head"><div class="title"><h2>Music plays</h2><span class="sub">Total plays per track</span></div></div>
 
-        <!-- Hero: most-played track called out -->
-        <div class="card" style="background:linear-gradient(135deg,#1d1d1f,#141416);border-color:var(--ink-4)">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
-            <div style="display:flex;align-items:center;gap:18px;min-width:0">
-              <div style="width:64px;height:64px;background:linear-gradient(135deg,#C0FF45,#7a1500);display:grid;place-items:center;flex-shrink:0;font-size:11px;font-weight:600;color:#fff;letter-spacing:.04em;text-align:center;line-height:1.2">RAHIZ<br>LP</div>
-              <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
-                <div style="font-size:10px;color:var(--cv-yellow);font-weight:500;letter-spacing:.1em;text-transform:uppercase">Most played track</div>
-                <div style="font-size:26px;font-weight:600;color:#fff;letter-spacing:-.022em;line-height:1">4 Kampé</div>
-                <div style="font-size:11px;color:var(--muted)">Track 01 · Cape Verdean cover of Joé Dwét Filé</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:32px;align-items:flex-start">
-              <div><div style="font-size:32px;font-weight:500;color:#fff;letter-spacing:-.025em;font-variant-numeric:tabular-nums;line-height:1">8,412</div><div style="font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:.06em;text-transform:uppercase">Total plays</div></div>
-              <div><div style="font-size:32px;font-weight:500;color:#8b5cf6;letter-spacing:-.025em;font-variant-numeric:tabular-nums;line-height:1">+24%</div><div style="font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:.06em;text-transform:uppercase">vs prev period</div></div>
-            </div>
-          </div>
+        <!-- Media hero + tracks list -->
+        <div class="card" id="pgMediaHero" style="background:linear-gradient(135deg,#1d1d1f,#141416);border-color:var(--ink-4)">
+          <div style="font-size:11px;color:var(--muted);padding:8px 0">Loading music data...</div>
         </div>
-
-        <!-- Plays list -->
         <div class="card" style="margin-top:14px">
-          <div class="card-header">
-            <div class="card-title">All tracks · ranked by plays</div>
-            <div class="card-meta">11 tracks · 32,694 total plays</div>
-          </div>
-          <div class="plays-list">
-            <div class="plays-row top">
-              <span class="rk">01</span>
-              <span class="trk">4 Kampé</span>
-              <div class="bar-wrap"><div class="bar" style="width:100%;background:linear-gradient(90deg,#C0FF45,#C0FF45)"></div></div>
-              <span class="ct">8,412</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">02</span>
-              <span class="trk">Calm Down</span>
-              <div class="bar-wrap"><div class="bar" style="width:62%"></div></div>
-              <span class="ct">5,218</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">03</span>
-              <span class="trk">Ku Lo Sa</span>
-              <div class="bar-wrap"><div class="bar" style="width:45%"></div></div>
-              <span class="ct">3,184</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">04</span>
-              <span class="trk">Rush</span>
-              <div class="bar-wrap"><div class="bar" style="width:39%"></div></div>
-              <span class="ct">2,847</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">05</span>
-              <span class="trk">Last Last</span>
-              <div class="bar-wrap"><div class="bar" style="width:34%"></div></div>
-              <span class="ct">2,412</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">06</span>
-              <span class="trk">Dumebi</span>
-              <div class="bar-wrap"><div class="bar" style="width:30%"></div></div>
-              <span class="ct">2,318</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">07</span>
-              <span class="trk">Soso</span>
-              <div class="bar-wrap"><div class="bar" style="width:28%"></div></div>
-              <span class="ct">2,142</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">08</span>
-              <span class="trk">Sensational</span>
-              <div class="bar-wrap"><div class="bar" style="width:24%"></div></div>
-              <span class="ct">1,914</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">09</span>
-              <span class="trk">Spéciale</span>
-              <div class="bar-wrap"><div class="bar" style="width:20%"></div></div>
-              <span class="ct">1,624</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">10</span>
-              <span class="trk">Confession</span>
-              <div class="bar-wrap"><div class="bar" style="width:17%"></div></div>
-              <span class="ct">1,398</span>
-            </div>
-            <div class="plays-row">
-              <span class="rk">11</span>
-              <span class="trk">Under the Influence</span>
-              <div class="bar-wrap"><div class="bar" style="width:15%"></div></div>
-              <span class="ct">1,225</span>
-            </div>
-          </div>
+          <div class="card-header"><div class="card-title">All tracks · ranked by plays</div><div class="card-meta" id="pgMediaMeta">Loading...</div></div>
+          <div class="plays-list" id="pgMediaList"></div>
         </div>
       </section>
       </div>
 
-      <!-- ========== ROW 5: VIDEO PLAYS ========== -->
-      <div class="page" data-page="media">
-      <section class="sec" id="video">
-        <div class="head">
-          <div class="title">
-            <h2>Video — watch depth</h2>
-            <span class="sub">Site-embedded video plays · completion vs view counts</span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="depth-list">
-            <div class="row"><span class="n">01</span><div class="meta"><span class="name">Oh Ya Ya — Da Savage feat. Rahiz (live)</span><div class="bar-wrap"><div class="bar" style="width:74%"></div></div></div><span class="completion">74%</span><span class="plays">14.2k</span></div>
-            <div class="row"><span class="n">02</span><div class="meta"><span class="name">Calm Down — Kriolu version</span><div class="bar-wrap"><div class="bar" style="width:68%"></div></div></div><span class="completion">68%</span><span class="plays">9.8k</span></div>
-            <div class="row"><span class="n">03</span><div class="meta"><span class="name">Live from Musicbox Lisboa</span><div class="bar-wrap"><div class="bar" style="width:51%"></div></div></div><span class="completion">51%</span><span class="plays">4.3k</span></div>
-            <div class="row"><span class="n">04</span><div class="meta"><span class="name">Making of Covers LP</span><div class="bar-wrap"><div class="bar" style="width:62%"></div></div></div><span class="completion">62%</span><span class="plays">3.1k</span></div>
-          </div>
-        </div>
-      </section>
-      </div>
-
-      <!-- ========== ROW 6: ENGAGEMENT FUNNELS ========== -->
+      <!-- ========== ENGAGEMENT ========== -->
       <div class="page" data-page="engagement">
       <section class="sec" id="engagement">
-        <div class="head">
-          <div class="title">
-            <h2>Engagement funnels</h2>
-            <span class="sub">Where people drop off · what's converting</span>
-          </div>
-        </div>
-
-        <div class="funnel-row">
-          <div class="card">
-            <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:14px">Streaming funnel · Visitor → Spotify/Apple/Bandcamp</div>
-            <div class="funnel">
-              <div class="step"><span class="lbl">Visited site</span><span class="num">12,847</span><span class="pct">100%</span></div>
-              <div class="step s2"><span class="lbl">Played a song</span><span class="num">8,402</span><span class="pct">65.4%</span></div>
-              <div class="step s3"><span class="lbl">Reached Listen section</span><span class="num">6,241</span><span class="pct">48.6%</span></div>
-              <div class="step s4"><span class="lbl">Clicked platform link</span><span class="num">2,184</span><span class="pct">17.0%</span></div>
-              <div class="step s5"><span class="lbl">Likely converted to stream</span><span class="num">1,612</span><span class="pct">12.5%</span></div>
-              <div class="conv">End-to-end conversion · <b>12.5%</b> · industry avg 3-7%</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:14px">Booking inquiry pipeline</div>
-            <div class="funnel">
-              <div class="step"><span class="lbl">Reached Booking section</span><span class="num">912</span><span class="pct">100%</span></div>
-              <div class="step s2"><span class="lbl">Hovered a category</span><span class="num">428</span><span class="pct">46.9%</span></div>
-              <div class="step s3"><span class="lbl">Clicked email CTA</span><span class="num">87</span><span class="pct">9.5%</span></div>
-              <div class="step s4"><span class="lbl">Sent email</span><span class="num">23</span><span class="pct">2.5%</span></div>
-              <div class="conv">Email send rate · <b>2.5%</b> · consider an inline form</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:14px">Merchandise checkout funnel</div>
-            <div class="funnel">
-              <div class="step"><span class="lbl">Viewed Merch section</span><span class="num">3,124</span><span class="pct">100%</span></div>
-              <div class="step s2"><span class="lbl">Opened a product modal</span><span class="num">1,408</span><span class="pct">45.1%</span></div>
-              <div class="step s3"><span class="lbl">Added to cart</span><span class="num">312</span><span class="pct">10.0%</span></div>
-              <div class="step s4"><span class="lbl">Reached checkout</span><span class="num">187</span><span class="pct">6.0%</span></div>
-              <div class="step s5"><span class="lbl">Paid</span><span class="num">142</span><span class="pct">4.5%</span></div>
-              <div class="conv">Cart → Pay · <b>76%</b> · checkout flow is healthy</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:8px">
-          <div class="card-title" style="margin-bottom:14px">Time spent per section</div>
-          <div class="section-engage">
-            <div class="row"><span class="name">Hero</span><div class="bar-wrap"><div class="bar" style="width:14%"></div></div><span class="time">0:08</span></div>
-            <div class="row"><span class="name">Listen / Player</span><div class="bar-wrap"><div class="bar" style="width:96%"></div></div><span class="time">2:48</span></div>
-            <div class="row"><span class="name">Watch</span><div class="bar-wrap"><div class="bar" style="width:71%"></div></div><span class="time">2:04</span></div>
-            <div class="row"><span class="name">Cultiva Podcast</span><div class="bar-wrap"><div class="bar" style="width:81%"></div></div><span class="time">2:21</span></div>
-            <div class="row"><span class="name">Blog</span><div class="bar-wrap"><div class="bar" style="width:38%"></div></div><span class="time">1:06</span></div>
-            <div class="row"><span class="name">Merch</span><div class="bar-wrap"><div class="bar" style="width:28%"></div></div><span class="time">0:48</span></div>
-            <div class="row"><span class="name">Booking</span><div class="bar-wrap"><div class="bar" style="width:11%"></div></div><span class="time">0:18</span></div>
-            <div class="row"><span class="name">Newsletter</span><div class="bar-wrap"><div class="bar" style="width:24%"></div></div><span class="time">0:42</span></div>
-          </div>
+        <div class="head"><div class="title"><h2>Engagement</h2><span class="sub">How visitors interact with your site</span></div></div>
+        <div class="card" style="padding:48px 24px;text-align:center">
+          <div style="font-size:13px;color:var(--muted)">Engagement tracking coming soon</div>
+          <div style="font-size:11px;color:var(--muted-2);margin-top:8px">Requires click and scroll tracking on the main site</div>
         </div>
       </section>
       </div>
 
-      <!-- ========== ROW 7: ACQUISITION + PEAK TIMES ========== -->
+      <!-- ========== ACQUISITION ========== -->
       <div class="page" data-page="acquisition">
       <section class="sec" id="acquisition">
-        <div class="head">
-          <div class="title">
-            <h2>Acquisition &amp; peak times</h2>
-            <span class="sub">Where they're coming from · when they're showing up</span>
-          </div>
-        </div>
-
-        <div class="acq-row">
-          <div class="card">
-            <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:12px">Top referrers — last 30 days</div>
-            <div class="referrers">
-              <div class="row"><div class="ico">TT</div><div class="src">tiktok.com<small>"4 Kampé challenge" — 12 viral posts</small></div><span class="visits">3,847</span><span class="delta up">↗ 127%</span></div>
-              <div class="row"><div class="ico">IG</div><div class="src">instagram.com<small>@rahizkwazi · stories &amp; reels</small></div><span class="visits">2,612</span><span class="delta up">↗ 18%</span></div>
-              <div class="row"><div class="ico">SP</div><div class="src">open.spotify.com<small>Spotify "RAHIZ" artist page → site link</small></div><span class="visits">1,408</span><span class="delta up">↗ 24%</span></div>
-              <div class="row"><div class="ico">YT</div><div class="src">youtube.com<small>@iamrahiz · Cultiva Podcast description</small></div><span class="visits">812</span><span class="delta up">↗ 9%</span></div>
-              <div class="row"><div class="ico">FB</div><div class="src">facebook.com<small>@iamrahiz · 69.7k page</small></div><span class="visits">487</span><span class="delta down">↘ 11%</span></div>
-              <div class="row"><div class="ico">SM</div><div class="src">santiagomagazine.cv<small>Profile feature article</small></div><span class="visits">312</span><span class="delta up">↗ 6%</span></div>
-              <div class="row"><div class="ico">G</div><div class="src">google.com<small>Organic search</small></div><span class="visits">2,184</span><span class="delta up">↗ 14%</span></div>
-              <div class="row"><div class="ico">D</div><div class="src">Direct / no referrer<small>Bookmarks &amp; type-ins</small></div><span class="visits">1,185</span><span class="delta up">↗ 4%</span></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:12px">Peak times — when fans visit</div>
-            <div style="font-size:10px;color:var(--muted);margin-bottom:14px">Day of week × hour of day · darker = more visitors</div>
-            <div class="heatmap" id="heatmap">
-              <span></span>
-              <span class="h">0</span><span class="h">2</span><span class="h">4</span><span class="h">6</span><span class="h">8</span><span class="h">10</span><span class="h">12</span><span class="h">14</span><span class="h">16</span><span class="h">18</span><span class="h">20</span><span class="h">22</span>
-              <span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span>
-            </div>
-            <div class="heatmap-legend">
-              <span>Less</span>
-              <div class="scale"><div class="s" style="background:var(--ink-3)"></div><div class="s" style="background:#1e1a2e"></div><div class="s" style="background:#2a1f4a"></div><div class="s" style="background:#4c3a8a"></div><div class="s" style="background:#8b5cf6"></div></div>
-              <span>More</span>
-            </div>
-            <div class="insight-box blue"><b>Insight:</b> Peak is Sun 21:00 CET — schedule new releases &amp; episode drops then.</div>
-          </div>
+        <div class="head"><div class="title"><h2>Acquisition</h2><span class="sub">Where visitors come from</span></div></div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">Top referrers — last 30 days</div>
+          <div class="referrers" id="pgReferrers"><div style="font-size:11px;color:var(--muted);padding:10px 0">Loading...</div></div>
         </div>
       </section>
       </div>
 
-      <!-- ========== ROW 8: CLICK HEATMAP ========== -->
-      <div class="page" data-page="acquisition">
-      <section class="sec" id="heatmap">
-        <div class="head">
-          <div class="title">
-            <h2>Click heatmap — home page</h2>
-            <span class="sub">Aggregated 30-day cursor + tap density on the public site</span>
-          </div>
-          <div class="actions"><button class="pill on">Home</button><button class="pill">Listen</button><button class="pill">Podcast</button><button class="pill">Blog</button></div>
-        </div>
-        <div class="click-heat">
-          <div class="map">
-            <div class="preview">
-              <div class="hero"></div>
-              <div class="row-shape"></div>
-              <div class="grid-shape"><div></div><div></div><div></div></div>
-              <div class="row-shape"></div>
-              <div class="grid-shape"><div></div><div></div><div></div></div>
-            </div>
-            <div class="blob b1"></div>
-            <div class="blob b2"></div>
-            <div class="blob b3"></div>
-            <div class="blob b4"></div>
-          </div>
-          <div class="legend">
-            <span>Top click target: Hero "play" button — 38% of all clicks</span>
-            <span>Lowest engagement: Blog read-more — 0.4%</span>
-          </div>
-        </div>
-      </section>
-      </div>
-
-      <!-- ========== ROW 9: NEWSLETTER ========== -->
+      <!-- ========== NEWSLETTER ========== -->
       <div class="page" data-page="newsletter">
       <section class="sec" id="newsletter">
-        <div class="head">
-          <div class="title">
-            <h2>Newsletter</h2>
-            <span class="sub">Subscribers, segments, broadcast tool</span>
-          </div>
-        </div>
-
-        <div class="nl-row">
-          <div class="card nl-stats">
-            <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:6px">Subscribers</div>
-            <div class="row"><span class="lbl">Total active</span><span class="val">4,231</span></div>
-            <div class="row"><span class="lbl">Added this month</span><span class="val" style="color:#8b5cf6">+478</span></div>
-            <div class="row"><span class="lbl">Unsubscribed this month</span><span class="val">-52</span></div>
-            <div class="row"><span class="lbl">Net retention</span><span class="val">89%</span></div>
-            <div class="row"><span class="lbl">Avg open rate</span><span class="val">62%</span></div>
-            <div class="row"><span class="lbl">Avg click-through</span><span class="val">11.4%</span></div>
-          </div>
-
-          <div class="card nl-segments">
-            <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:8px">Interest segments</div>
-            <div class="row music"><div class="top"><span class="name">Music releases</span><span class="pct">3,802 · 89.9%</span></div><div class="bar" style="--w:89.9%"></div></div>
-            <div class="row writing"><div class="top"><span class="name">Writing &amp; essays</span><span class="pct">2,412 · 57.0%</span></div><div class="bar" style="--w:57%"></div></div>
-            <div class="row podcast"><div class="top"><span class="name">Cultiva Podcast</span><span class="pct">2,184 · 51.6%</span></div><div class="bar" style="--w:51.6%"></div></div>
-            <div class="row tour"><div class="top"><span class="name">Tour &amp; live shows</span><span class="pct">3,401 · 80.4%</span></div><div class="bar" style="--w:80.4%"></div></div>
-          </div>
-        </div>
-
-        <!-- Broadcast — full width below the two boxes above -->
-        <div class="card nl-broadcast" style="margin-top:0">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
-            <div style="font-size:13px;font-weight:500;color:#fff">Send a broadcast</div>
-            <div style="font-size:11px;color:var(--muted)">Will reach <b style="color:#fff">7,203 subscribers</b> based on selected segments</div>
-          </div>
-          <textarea placeholder="Quick message to send to subscribers..." style="min-height:120px"></textarea>
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:14px;flex-wrap:wrap">
-            <div class="seg-pick" style="margin-top:0">
-              <label class="on">Music</label>
-              <label>Writing</label>
-              <label>Podcast</label>
-              <label class="on">Tour</label>
-            </div>
-            <button class="send" style="margin-top:0;width:auto;padding:11px 28px">Send broadcast →</button>
-          </div>
+        <div class="head"><div class="title"><h2>Newsletter</h2><span class="sub">Subscribers and broadcasts</span></div></div>
+        <div class="card" style="padding:48px 24px;text-align:center">
+          <div style="font-size:13px;color:var(--muted)">Newsletter integration coming soon</div>
+          <div style="font-size:11px;color:var(--muted-2);margin-top:8px">Connect Resend or Mailchimp to see subscriber data</div>
         </div>
       </section>
       </div>
 
-      <!-- ========== ROW 10: LANGUAGE & REGION ========== -->
+      <!-- ========== AUDIENCE ========== -->
       <div class="page" data-page="audience">
       <section class="sec" id="language">
-        <div class="head">
-          <div class="title">
-            <h2>Audience</h2>
-            <span class="sub">Who comes back, how deep they engage, and what language they prefer</span>
-          </div>
-        </div>
-
-        <!-- ROW 1: Cohorts (returning vs new) — full width hero widget -->
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;gap:18px;flex-wrap:wrap">
-            <div>
-              <div style="font-size:13px;font-weight:500;color:#fff">Returning fans vs new visitors</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:3px">Are you building loyalty or leaking visitors? · Last 30 days</div>
-            </div>
-            <div style="display:flex;gap:24px">
-              <div><div style="font-size:24px;font-weight:500;color:#fff;letter-spacing:-.022em;line-height:1;font-variant-numeric:tabular-nums">38%</div><div style="font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.04em">Returning</div></div>
-              <div><div style="font-size:24px;font-weight:500;color:var(--muted);letter-spacing:-.022em;line-height:1;font-variant-numeric:tabular-nums">62%</div><div style="font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.04em">New</div></div>
-              <div><div style="font-size:24px;font-weight:500;color:#8b5cf6;letter-spacing:-.022em;line-height:1;font-variant-numeric:tabular-nums">+11pt</div><div style="font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.04em">vs prev</div></div>
-            </div>
-          </div>
-
-          <!-- Stacked area chart: new vs returning over 30 days -->
-          <svg viewBox="0 0 800 180" preserveAspectRatio="none" style="width:100%;height:180px;display:block">
-            <defs>
-              <linearGradient id="newGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#86868b" stop-opacity=".4"/><stop offset="100%" stop-color="#86868b" stop-opacity="0"/></linearGradient>
-              <linearGradient id="retGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b5cf6" stop-opacity=".5"/><stop offset="100%" stop-color="#8b5cf6" stop-opacity=".05"/></linearGradient>
-            </defs>
-            <!-- gridlines -->
-            <line x1="0" y1="40" x2="800" y2="40" stroke="#1c1c1e"/><line x1="0" y1="90" x2="800" y2="90" stroke="#1c1c1e"/><line x1="0" y1="140" x2="800" y2="140" stroke="#1c1c1e"/>
-            <!-- new visitors (bottom layer, grey) -->
-            <path d="M 0,140 L 27,135 L 54,138 L 80,130 L 107,128 L 134,122 L 160,124 L 187,116 L 213,118 L 240,108 L 267,112 L 293,102 L 320,98 L 347,94 L 373,88 L 400,84 L 427,80 L 453,82 L 480,76 L 507,74 L 533,68 L 560,72 L 587,64 L 613,60 L 640,58 L 667,52 L 693,55 L 720,48 L 747,44 L 773,40 L 800,38 L 800,180 L 0,180 Z" fill="url(#newGrad)" stroke="#86868b" stroke-width="1.2"/>
-            <!-- returning visitors (top layer, green, stacked above new) -->
-            <path d="M 0,128 L 27,122 L 54,124 L 80,114 L 107,110 L 134,100 L 160,102 L 187,90 L 213,92 L 240,78 L 267,82 L 293,68 L 320,62 L 347,56 L 373,46 L 400,40 L 427,34 L 453,38 L 480,28 L 507,24 L 533,16 L 560,22 L 587,12 L 613,8 L 640,6 L 667,2 L 693,8 L 720,4 L 747,2 L 773,0 L 800,2 L 800,38 L 773,40 L 747,44 L 720,48 L 693,55 L 667,52 L 640,58 L 613,60 L 587,64 L 560,72 L 533,68 L 507,74 L 480,76 L 453,82 L 427,80 L 400,84 L 373,88 L 347,94 L 320,98 L 293,102 L 267,112 L 240,108 L 213,118 L 187,116 L 160,124 L 134,122 L 107,128 L 80,130 L 54,138 L 27,135 L 0,140 Z" fill="url(#retGrad)" stroke="#8b5cf6" stroke-width="1.2"/>
-            <text x="0" y="172" fill="#6e6e73" font-size="9" font-family="var(--sans)">15 Mar</text>
-            <text x="380" y="172" fill="#6e6e73" font-size="9" font-family="var(--sans)">30 Mar</text>
-            <text x="755" y="172" fill="#6e6e73" font-size="9" font-family="var(--sans)">15 Apr</text>
-          </svg>
-
-          <!-- Mini cohort retention grid -->
-          <div style="margin-top:18px;border-top:1px solid var(--ink-3);padding-top:18px">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
-              <div style="font-size:12px;font-weight:500;color:#fff">Weekly cohort retention</div>
-              <div style="font-size:10px;color:var(--muted)">Of visitors that arrived in week 1, how many returned in following weeks</div>
-            </div>
-            <div style="display:grid;grid-template-columns:90px repeat(4,1fr);gap:6px;font-size:11px">
-              <div style="color:var(--muted-2);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:6px 4px">Cohort</div>
-              <div style="color:var(--muted-2);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:6px 4px;text-align:center">Wk 1</div>
-              <div style="color:var(--muted-2);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:6px 4px;text-align:center">Wk 2</div>
-              <div style="color:var(--muted-2);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:6px 4px;text-align:center">Wk 3</div>
-              <div style="color:var(--muted-2);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:6px 4px;text-align:center">Wk 4</div>
-              <div style="color:#fff;font-weight:500;padding:8px 4px">17 Mar</div>
-              <div style="background:#8b5cf6;color:var(--ink);padding:8px 4px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums">100%</div>
-              <div style="background:rgba(139,92,246,.55);color:#fff;padding:8px 4px;text-align:center;font-weight:500;font-variant-numeric:tabular-nums">42%</div>
-              <div style="background:rgba(139,92,246,.32);color:#fff;padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">28%</div>
-              <div style="background:rgba(139,92,246,.18);color:#a1a1a6;padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">21%</div>
-              <div style="color:#fff;font-weight:500;padding:8px 4px">24 Mar</div>
-              <div style="background:#8b5cf6;color:var(--ink);padding:8px 4px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums">100%</div>
-              <div style="background:rgba(139,92,246,.62);color:#fff;padding:8px 4px;text-align:center;font-weight:500;font-variant-numeric:tabular-nums">48%</div>
-              <div style="background:rgba(139,92,246,.38);color:#fff;padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">32%</div>
-              <div style="background:var(--ink-3);color:var(--muted-2);padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">—</div>
-              <div style="color:#fff;font-weight:500;padding:8px 4px">31 Mar</div>
-              <div style="background:#8b5cf6;color:var(--ink);padding:8px 4px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums">100%</div>
-              <div style="background:rgba(139,92,246,.7);color:#fff;padding:8px 4px;text-align:center;font-weight:500;font-variant-numeric:tabular-nums">54%</div>
-              <div style="background:var(--ink-3);color:var(--muted-2);padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">—</div>
-              <div style="background:var(--ink-3);color:var(--muted-2);padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">—</div>
-              <div style="color:#fff;font-weight:500;padding:8px 4px">07 Apr</div>
-              <div style="background:#8b5cf6;color:var(--ink);padding:8px 4px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums">100%</div>
-              <div style="background:rgba(139,92,246,.78);color:var(--ink);padding:8px 4px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums">61%</div>
-              <div style="background:var(--ink-3);color:var(--muted-2);padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">—</div>
-              <div style="background:var(--ink-3);color:var(--muted-2);padding:8px 4px;text-align:center;font-variant-numeric:tabular-nums">—</div>
-            </div>
-            <div class="insight-box green"><b>Improving:</b> Wk-2 retention rose from 42% (17 Mar cohort) → 61% (07 Apr cohort). Newsletter signup flow is working — fans are coming back.</div>
-          </div>
-        </div>
-
-        <!-- ROW 2: Loyalty tiers + Language toggle side by side -->
-        <div class="misc-row">
-          <div class="card">
-            <div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:6px">Fan loyalty tiers</div>
-            <div style="font-size:11px;color:var(--muted);margin-bottom:18px">12,847 visitors segmented by depth of engagement · 30D</div>
-
-            <div style="display:flex;flex-direction:column;gap:16px">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:13px;color:#fff;font-weight:500;display:inline-flex;align-items:center;gap:8px"><span style="width:8px;height:8px;background:#a78bfa;display:inline-block"></span>Curious</span><span style="font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums">6,205 · 48.3%</span></div>
-                <div style="height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:#a78bfa;width:48.3%"></div></div>
-                <div style="font-size:10px;color:var(--muted-2);margin-top:5px">1 visit · &lt;30 sec · no actions taken</div>
-              </div>
-
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:13px;color:#fff;font-weight:500;display:inline-flex;align-items:center;gap:8px"><span style="width:8px;height:8px;background:#8b5cf6;display:inline-block"></span>Listener</span><span style="font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums">3,815 · 29.7%</span></div>
-                <div style="height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:#8b5cf6;width:29.7%"></div></div>
-                <div style="font-size:10px;color:var(--muted-2);margin-top:5px">Played 1+ songs · ≥1 min on site</div>
-              </div>
-
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:13px;color:#fff;font-weight:500;display:inline-flex;align-items:center;gap:8px"><span style="width:8px;height:8px;background:var(--cv-yellow);display:inline-block"></span>Fan</span><span style="font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums">2,180 · 17.0%</span></div>
-                <div style="height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:var(--cv-yellow);width:17%"></div></div>
-                <div style="font-size:10px;color:var(--muted-2);margin-top:5px">Multiple songs · OR newsletter signup · OR returned 2+ times</div>
-              </div>
-
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><span style="font-size:13px;color:#fff;font-weight:500;display:inline-flex;align-items:center;gap:8px"><span style="width:8px;height:8px;background:var(--cv-red);display:inline-block"></span>Superfan</span><span style="font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums">647 · 5.0%</span></div>
-                <div style="height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:var(--cv-red);width:5%"></div></div>
-                <div style="font-size:10px;color:var(--muted-2);margin-top:5px">Subscribed + multiple visits + clicked tour OR bought merch</div>
-              </div>
-            </div>
-
-            <div class="insight-box red" style="margin-top:18px"><b style="color:var(--cv-red)">Your real audience:</b> 647 Superfans. Newsletter campaigns and tour announcements should be designed for them, not for the 6,205 Curious browsers.</div>
-          </div>
-
-          <div class="card">
-            <div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:12px">Language toggle usage</div>
-            <div class="lang-bars">
-              <div class="row"><div class="top"><span>EN (default)</span><span class="pct">62.4%</span></div><div class="bar" style="--w:62.4%"></div></div>
-              <div class="row"><div class="top"><span>PT (manually picked)</span><span class="pct">31.2%</span></div><div class="bar" style="--w:31.2%"></div></div>
-              <div class="row"><div class="top"><span>Kriolu (manually picked)</span><span class="pct">6.4%</span></div><div class="bar" style="--w:6.4%"></div></div>
-            </div>
-            <div class="insight-box green"><b>Insight:</b> 31% of PT-region visitors switch to PT — consider region auto-detection.</div>
-          </div>
+        <div class="head"><div class="title"><h2>Audience</h2><span class="sub">Who visits and where they come from</span></div></div>
+        <div class="card" style="padding:48px 24px;text-align:center">
+          <div style="font-size:13px;color:var(--muted)">Audience insights coming soon</div>
+          <div style="font-size:11px;color:var(--muted-2);margin-top:8px">Requires session tracking and returning visitor detection</div>
         </div>
       </section>
       </div>
@@ -1525,30 +1113,11 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
       </section>
       </div>
 
-      <!-- ========== ROW 13: ACTIVITY FEED ========== -->
+      <!-- ========== ACTIVITY FEED ========== -->
       <div class="page" data-page="activity">
       <section class="sec" id="activity">
-        <div class="head">
-          <div class="title">
-            <h2>Live activity</h2>
-            <span class="sub">Real-time feed of events on the site</span>
-          </div>
-        </div>
-
-        <div class="activity" id="activityFeed">
-          <div class="row ev-buy"><span class="time">14:38:02</span><span class="dot"></span><span class="msg"><b>Order #1247</b> · Tour Tee — Bone · €42 <span class="meta-i">· paid</span></span><span class="where">Lisboa, PT</span></div>
-          <div class="row ev-play"><span class="time">14:37:58</span><span class="dot"></span><span class="msg">Started <b>"4 Kampé"</b> from the Listen player</span><span class="where">Mindelo, CV</span></div>
-          <div class="row ev-sub"><span class="time">14:37:51</span><span class="dot"></span><span class="msg">New newsletter signup · interests: <b>Music · Tour</b></span><span class="where">Paris, FR</span></div>
-          <div class="row ev-click"><span class="time">14:37:46</span><span class="dot"></span><span class="msg">Clicked <b>Spotify</b> link from Listen section</span><span class="where">Stockholm, SE</span></div>
-          <div class="row ev-search"><span class="time">14:37:39</span><span class="dot"></span><span class="msg">Searched in-site for "<b>colhe quem planta</b>"</span><span class="where">Praia, CV</span></div>
-          <div class="row ev-play"><span class="time">14:37:31</span><span class="dot"></span><span class="msg">Played <b>"Toxicidade Feminina"</b> · Cultiva Podcast Ep 06</span><span class="where">Brussels, BE</span></div>
-          <div class="row ev-book"><span class="time">14:37:18</span><span class="dot"></span><span class="msg">Email sent → <b>bobentgroup@gmail.com</b> · "Live shows" inquiry</span><span class="where">Zurich, CH</span></div>
-          <div class="row ev-buy"><span class="time">14:36:54</span><span class="dot"></span><span class="msg"><b>Order #1246</b> · Kriolu Hoodie — Black · €78 <span class="meta-i">· paid</span></span><span class="where">Amsterdam, NL</span></div>
-          <div class="row ev-play"><span class="time">14:36:42</span><span class="dot"></span><span class="msg">Started <b>"Calm Down"</b> · completed 78%</span><span class="where">Lisboa, PT</span></div>
-          <div class="row ev-click"><span class="time">14:36:31</span><span class="dot"></span><span class="msg">Downloaded <b>EPK</b> from Booking</span><span class="where">London, UK</span></div>
-          <div class="row ev-sub"><span class="time">14:36:18</span><span class="dot"></span><span class="msg">New newsletter signup · interests: <b>Music · Writing · Podcast</b></span><span class="where">Praia, CV</span></div>
-          <div class="row ev-play"><span class="time">14:36:04</span><span class="dot"></span><span class="msg">Played <b>"Drill o Novo Bode Expiatório"</b> · Na Kriolu Ep 38</span><span class="where">Paris, FR</span></div>
-        </div>
+        <div class="head"><div class="title"><h2>Live activity</h2><span class="sub">Real events from the site</span></div></div>
+        <div class="activity" id="activityFeed"><div style="font-size:11px;color:var(--muted);padding:16px 18px">Loading...</div></div>
       </section>
       </div>
 
@@ -1799,59 +1368,56 @@ const SB_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJl
 // Refresh analytics every 30s
 setInterval(()=>location.reload(),30000);
 
-/* ———— LIVE COUNTER ———— */
-const liveBig=document.getElementById('liveBig'),ovLiveCount=document.getElementById('ovLiveCount'),topLiveCount=document.getElementById('topLiveCount');
-let n=42;
-setInterval(()=>{
-  n+=Math.floor(Math.random()*7)-3;
-  if(n<32)n=32;if(n>62)n=62;
-  if(liveBig)liveBig.textContent=n;
-  if(ovLiveCount)ovLiveCount.textContent=n;
-  if(topLiveCount)topLiveCount.textContent=n;
-},3000);
+/* ———— LOAD ALL SUB-PAGES FROM SUPABASE (runs once on load) ———— */
+(async function loadAllPages(){
+  var SB_A=SB_ANALYTICS||'https://pyumurjbrannerolhrop.supabase.co/rest/v1';
+  var SK=SB_ANON||'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
+  var hdr={apikey:SK};
+  var d30=new Date();d30.setDate(d30.getDate()-30);var since=d30.toISOString();
+  function pad2(n){return n<10?'0'+n:n}
+  try{
+    var pvRes=await fetch(SB_A+'/page_views?select=path,referrer,created_at&order=created_at.desc&limit=500',{headers:hdr});
+    var pvs=await pvRes.json();
+    var mpRes=await fetch(SB_A+'/music_plays?select=track,created_at&order=created_at.desc&limit=500',{headers:hdr});
+    var mps=await mpRes.json();
 
-/* Build heatmap cells */
-(function(){
-  const map=document.getElementById('heatmap');
-  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const heatPattern=[
-    [1,1,0,0,0,0,1,2,2,2,1,1,2,2,2,2,1,2,2,3,3,2,2,1],
-    [1,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,2,2,1],
-    [1,1,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,3,3,3,2,2,1],
-    [1,1,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,2,1],
-    [1,1,0,0,0,0,1,2,2,3,2,2,2,2,2,3,3,3,3,3,4,3,2,1],
-    [2,1,1,0,0,1,1,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,3,2],
-    [2,1,1,0,0,0,1,1,2,2,2,2,2,3,3,3,3,3,4,4,4,4,3,2]
-  ];
-  days.forEach((d,r)=>{
-    map.insertAdjacentHTML('beforeend',`<span class="d">${d}</span>`);
-    for(let h=0;h<24;h++){
-      const v=heatPattern[r][h];
-      map.insertAdjacentHTML('beforeend',`<span class="cell${v>0?' l'+v:''}" title="${d} ${h}:00 · ${v*40+Math.floor(Math.random()*30)} visits"></span>`);
+    // ACTIVITY PAGE: real feed
+    var feedEl=document.getElementById('activityFeed');
+    if(feedEl){
+      var all=[];
+      pvs.slice(0,15).forEach(function(p){all.push({t:new Date(p.created_at),cls:'ev-click',msg:'Visited <b>'+p.path+'</b>'})});
+      mps.slice(0,15).forEach(function(m){all.push({t:new Date(m.created_at),cls:'ev-play',msg:'Played <b>"'+m.track+'"</b>'})});
+      all.sort(function(a,b){return b.t-a.t});
+      feedEl.innerHTML=all.length>0?all.slice(0,16).map(function(e){return '<div class="row '+e.cls+'"><span class="time">'+pad2(e.t.getHours())+':'+pad2(e.t.getMinutes())+':'+pad2(e.t.getSeconds())+'</span><span class="dot"></span><span class="msg">'+e.msg+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:16px 18px">No activity yet</div>';
     }
-  });
-})();
 
-/* Activity feed: prepend new event every 8s */
-const feed=document.getElementById('activityFeed');
-const events=[
-  ['ev-play','Started <b>"Last Last"</b> from the Listen player','Rotterdam, NL'],
-  ['ev-sub','New newsletter signup · interests: <b>Music · Tour</b>','Berlin, DE'],
-  ['ev-buy','<b>Order #1248</b> · Hat — Black &amp; White · €38','Paris, FR'],
-  ['ev-click','Clicked <b>Apple Music</b> link','Mindelo, CV'],
-  ['ev-play','Played <b>"Squid Games"</b> · Descódigo Ep 38','Lisboa, PT'],
-  ['ev-book','Email sent → <b>bobentgroup@gmail.com</b> · "Press" inquiry','Geneva, CH'],
-  ['ev-search','Searched for "<b>4 kampé</b>"','Sal, CV'],
-  ['ev-play','Started <b>"Soso"</b> · completed 62%','Madrid, ES']
-];
-function pad(n){return n<10?'0'+n:n}
-function timeStr(){const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`}
-setInterval(()=>{
-  const e=events[Math.floor(Math.random()*events.length)];
-  const html=`<div class="row ${e[0]}"><span class="time">${timeStr()}</span><span class="dot"></span><span class="msg">${e[1]}</span><span class="where">${e[2]}</span></div>`;
-  feed.insertAdjacentHTML('afterbegin',html);
-  while(feed.children.length>16)feed.removeChild(feed.lastChild);
-},8000);
+    // LIVE PAGE: concurrent + plays + pages
+    var d5=new Date();d5.setMinutes(d5.getMinutes()-5);
+    var liveCount=pvs.filter(function(p){return new Date(p.created_at)>=d5}).length;
+    var lb=document.getElementById('liveBig');if(lb)lb.textContent=liveCount;
+    var pp=document.getElementById('pgLivePlays');
+    if(pp){pp.innerHTML=mps.length>0?mps.slice(0,5).map(function(m){return '<div class="row"><div class="ico">▶</div><div class="name">'+m.track+'</div><div class="count">'+new Date(m.created_at).toLocaleTimeString()+'</div></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:10px 12px">No plays yet</div>'}
+    var pl=document.getElementById('pgLivePages');
+    if(pl){var pc={};pvs.forEach(function(p){pc[p.path]=(pc[p.path]||0)+1});var sp=Object.entries(pc).sort(function(a,b){return b[1]-a[1]}).slice(0,6);pl.innerHTML=sp.length>0?sp.map(function(p){return '<div class="row"><span class="pg">'+p[0]+'</span><span class="n">'+p[1]+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:8px 0">No data yet</div>'}
+
+    // MEDIA PAGE: track rankings
+    var tc={};mps.forEach(function(m){tc[m.track]=(tc[m.track]||0)+1});
+    var ranked=Object.entries(tc).sort(function(a,b){return b[1]-a[1]});
+    var maxP=ranked.length>0?ranked[0][1]:1;
+    var mh=document.getElementById('pgMediaHero');
+    if(mh){mh.innerHTML=ranked.length>0?'<div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:10px;color:var(--cv-yellow);font-weight:500;letter-spacing:.1em;text-transform:uppercase">Most played</div><div style="font-size:26px;font-weight:600;color:#fff;letter-spacing:-.022em;line-height:1">'+ranked[0][0]+'</div></div><div><div style="font-size:32px;font-weight:500;color:#fff;font-variant-numeric:tabular-nums;line-height:1">'+ranked[0][1].toLocaleString()+'</div><div style="font-size:10px;color:var(--muted);margin-top:6px;text-transform:uppercase">plays</div></div></div>':'<div style="font-size:11px;color:var(--muted)">No plays yet</div>'}
+    var mm=document.getElementById('pgMediaMeta');if(mm)mm.textContent=ranked.length+' tracks · '+mps.length+' total plays';
+    var ml=document.getElementById('pgMediaList');
+    if(ml){ml.innerHTML=ranked.length>0?ranked.map(function(t,i){return '<div class="plays-row'+(i===0?' top':'')+'"><span class="rk">'+String(i+1).padStart(2,'0')+'</span><span class="trk">'+t[0]+'</span><div class="bar-wrap"><div class="bar" style="width:'+Math.round(t[1]/maxP*100)+'%"></div></div><span class="ct">'+t[1].toLocaleString()+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:12px 0">No plays yet</div>'}
+
+    // ACQUISITION PAGE: referrers
+    var rc={};pvs.forEach(function(p){if(p.referrer){try{var h=new URL(p.referrer).hostname;rc[h]=(rc[h]||0)+1}catch(e){}}});
+    var topR=Object.entries(rc).sort(function(a,b){return b[1]-a[1]}).slice(0,8);
+    var rl=document.getElementById('pgReferrers');
+    if(rl){rl.innerHTML=topR.length>0?topR.map(function(r){return '<div class="row"><div class="ico">'+r[0].slice(0,2).toUpperCase()+'</div><div class="src">'+r[0]+'</div><span class="visits">'+r[1]+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:10px 0">No referrer data yet</div>'}
+
+  }catch(e){console.error('Sub-pages load error',e)}
+})();
 
 /* Page switcher — data-go anywhere switches body[data-page] */
 const labels={overview:'Overview',activity:'Activity',media:'Media',engagement:'Engagement',acquisition:'Acquisition',newsletter:'Newsletter',audience:'Audience','tour-edit':'Tour dates',tools:'Tools',settings:'Settings'};
@@ -1862,8 +1428,8 @@ function goToPage(p){
   document.querySelector('.breadcrumb').innerHTML='Admin / <b>'+labels[p]+'</b>';
   window.scrollTo({top:0,behavior:'smooth'});
   closeSidebar();
-  // Re-trigger scroll reveals for new page
   setTimeout(()=>observeReveals(),100);
+  if(p==='tour-edit'&&typeof loadTourDates==='function')loadTourDates();
 }
 document.querySelectorAll('[data-go]').forEach(el=>{
   el.addEventListener('click',e=>{e.preventDefault();goToPage(el.dataset.go)});
@@ -2139,10 +1705,7 @@ document.getElementById('tourAddBtn').addEventListener('click',async()=>{
   loadTourDates();
 });
 
-// Load on page switch to tour-edit
-const origGoToPage=goToPage;
-goToPage=function(p){origGoToPage(p);if(p==='tour-edit')loadTourDates()};
-// Also load if already on tour-edit
+// Load tour dates if already on that page
 if(document.body.getAttribute('data-page')==='tour-edit')loadTourDates();
 
 /* ———— SEGMENT LABEL TOGGLE (newsletter) ———— */
