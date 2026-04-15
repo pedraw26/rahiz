@@ -322,6 +322,27 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
   background:var(--ink);color:var(--paper);border-radius:980px;transition:background .25s ease;
 }
 .tour .row .buy:hover{background:var(--ink-2)}
+.tour-map{position:relative;background:var(--paper);border:1px solid var(--rule);padding:clamp(24px,3vw,40px);margin-bottom:64px;overflow:hidden}
+.tour-map .meta{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:20px}
+.tour-map svg{width:100%;height:auto;display:block;max-height:520px}
+.tour-map .map-bg{fill:#f0f0f1;stroke:var(--rule);stroke-width:.5}
+.tour-map .graticule{stroke:#ebebec;stroke-width:.4;fill:none}
+.tour-map .route-past{stroke:#c8c8cc;stroke-width:1.4;fill:none;stroke-dasharray:3 3}
+.tour-map .route-upcoming{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-dasharray:6 5;animation:route-draw 60s linear infinite}
+@keyframes route-draw{to{stroke-dashoffset:-220}}
+.tour-map .dot-past{fill:#c8c8cc;stroke:var(--paper);stroke-width:2.5}
+.tour-map .dot-up{fill:var(--ink);stroke:var(--paper);stroke-width:2.5}
+.tour-map .dot-up.next{fill:#2ca55e}
+.tour-map .pulse{fill:#2ca55e;opacity:.4;animation:map-pulse 2.4s ease-out infinite}
+@keyframes map-pulse{0%{r:7;opacity:.55}70%{r:22;opacity:0}100%{r:22;opacity:0}}
+.tour-map .label{fill:var(--muted);font-size:10px;font-family:var(--sans);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.tour-map .label.live{fill:var(--ink)}
+.tour-map .legend{display:flex;gap:26px;margin-top:20px;padding-top:20px;border-top:1px solid var(--rule);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:500;flex-wrap:wrap}
+.tour-map .legend span{display:inline-flex;align-items:center;gap:9px}
+.tour-map .legend span::before{content:"";width:9px;height:9px;display:inline-block}
+.tour-map .legend .pl::before{background:#c8c8cc}
+.tour-map .legend .up::before{background:var(--ink)}
+.tour-map .legend .nx::before{background:#2ca55e}
 
 /* ———— DARK SECTION ———— */
 .dark{background:var(--ink);color:var(--paper);border-color:#232325}
@@ -793,6 +814,49 @@ footer .wordmark img{
     <div class="eyebrow" data-en="Live ‘26" data-pt="Ao vivo ‘26">Live ‘26</div>
     <h2 data-en="Tour dates" data-pt="Datas da tour">Tour dates</h2>
     <div class="aside" data-en="Updated 15.04.26" data-pt="Atualizado 15.04.26">Updated 15.04.26</div>
+  </div>
+
+  <div class="tour-map">
+    <div class="meta"><span>Route · March → July 2026</span><span>7 stops</span></div>
+    <svg viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid meet">
+      <path class="map-bg" d="M 600 110 L 700 95 L 810 115 L 890 150 L 940 210 L 935 260 L 890 285 L 840 295 L 790 290 L 740 310 L 700 295 L 660 290 L 625 310 L 600 335 L 570 320 L 555 280 L 540 240 L 555 195 L 575 150 Z"/>
+      <path class="map-bg" d="M 490 305 L 560 300 L 600 320 L 595 370 L 560 385 L 510 378 L 480 345 Z"/>
+      <path class="map-bg" d="M 475 390 L 570 380 L 660 395 L 760 410 L 830 428 L 890 448 L 905 500 L 830 534 L 710 538 L 580 528 L 475 505 L 435 460 L 445 420 Z"/>
+      <path class="map-bg" d="M 500 130 L 545 120 L 558 155 L 545 195 L 500 200 L 478 165 Z"/>
+      <path class="map-bg" d="M 720 50 L 790 38 L 850 60 L 865 125 L 830 170 L 800 188 L 770 155 L 755 110 L 725 80 Z"/>
+      <line class="graticule" x1="250" y1="20" x2="250" y2="480"/>
+      <line class="graticule" x1="400" y1="20" x2="400" y2="480"/>
+      <line class="graticule" x1="550" y1="20" x2="550" y2="480"/>
+      <line class="graticule" x1="700" y1="20" x2="700" y2="480"/>
+      <line class="graticule" x1="850" y1="20" x2="850" y2="480"/>
+      <line class="graticule" x1="1000" y1="20" x2="1000" y2="480"/>
+      <line class="graticule" x1="20" y1="100" x2="1180" y2="100"/>
+      <line class="graticule" x1="20" y1="220" x2="1180" y2="220"/>
+      <line class="graticule" x1="20" y1="340" x2="1180" y2="340"/>
+      <line class="graticule" x1="20" y1="460" x2="1180" y2="460"/>
+      <path class="route-past" d="M 685 235 L 330 460 L 790 115"/>
+      <path class="route-upcoming" d="M 790 115 L 715 255 L 315 460 L 510 345 L 510 360"/>
+      <circle class="dot-past" cx="685" cy="235" r="6"/>
+      <text class="label" x="700" y="229">Paris · 28 Mar</text>
+      <circle class="dot-past" cx="330" cy="460" r="6"/>
+      <text class="label" x="220" y="454">Boavista · 04 Apr</text>
+      <circle class="dot-past" cx="790" cy="115" r="6"/>
+      <text class="label" x="805" y="109">Sweden · 11 Apr</text>
+      <circle class="pulse" cx="715" cy="255" r="7"/>
+      <circle class="dot-up next" cx="715" cy="255" r="6"/>
+      <text class="label live" x="730" y="249">Switzerland · next</text>
+      <circle class="dot-up" cx="315" cy="460" r="6"/>
+      <text class="label live" x="195" y="482">São Vicente · 27 Jun</text>
+      <circle class="dot-up" cx="510" cy="345" r="6"/>
+      <text class="label live" x="370" y="340">Odivelas · 03 Jul</text>
+      <circle class="dot-up" cx="510" cy="360" r="6"/>
+      <text class="label live" x="525" y="378">Almada · 18 Jul</text>
+    </svg>
+    <div class="legend">
+      <span class="pl">Played</span>
+      <span class="up">Upcoming</span>
+      <span class="nx">Next show</span>
+    </div>
   </div>
 
   <div class="rows">
