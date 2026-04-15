@@ -1484,34 +1484,96 @@ drawerCheckout.addEventListener('click',async()=>{
 });
 </script>
 <script>
-/* ———— ANALYTICS: page views + music plays → Supabase ———— */
+/* ———— ANALYTICS: full tracking → Supabase ———— */
 (function(){
-  const SB='https://pyumurjbrannerolhrop.supabase.co/rest/v1';
-  const K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
-  const H={apikey:K,'Content-Type':'application/json',Prefer:'return=minimal'};
-  // Track page view (once per session per path)
-  const pvKey='pv_'+location.pathname;
-  if(!sessionStorage.getItem(pvKey)){
-    sessionStorage.setItem(pvKey,'1');
-    fetch(SB+'/page_views',{method:'POST',headers:H,body:JSON.stringify({path:location.pathname,referrer:document.referrer||''})}).catch(()=>{});
+  var SB='https://pyumurjbrannerolhrop.supabase.co/rest/v1';
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
+  var H={apikey:K,'Content-Type':'application/json',Prefer:'return=minimal'};
+
+  // Session ID (persists across page loads, resets after 30min idle)
+  var sid=sessionStorage.getItem('rahiz_sid');
+  if(!sid){sid=Math.random().toString(36).slice(2)+Date.now().toString(36);sessionStorage.setItem('rahiz_sid',sid)}
+
+  // Detect country via free API (no key needed)
+  var country='';var city='';
+  fetch('https://ip-api.com/json/?fields=country,city').then(function(r){return r.json()}).then(function(d){
+    country=d.country||'';city=d.city||'';
+    // Track page view with session + location
+    var pvKey='pv_'+location.pathname;
+    if(!sessionStorage.getItem(pvKey)){
+      sessionStorage.setItem(pvKey,'1');
+      fetch(SB+'/page_views',{method:'POST',headers:H,body:JSON.stringify({path:location.pathname,referrer:document.referrer||'',session_id:sid,country:country,city:city})}).catch(function(){});
+    }
+  }).catch(function(){
+    // Fallback: track without country
+    var pvKey='pv_'+location.pathname;
+    if(!sessionStorage.getItem(pvKey)){
+      sessionStorage.setItem(pvKey,'1');
+      fetch(SB+'/page_views',{method:'POST',headers:H,body:JSON.stringify({path:location.pathname,referrer:document.referrer||'',session_id:sid})}).catch(function(){});
+    }
+  });
+
+  function trackEvent(type,data){
+    fetch(SB+'/engagement_events',{method:'POST',headers:H,body:JSON.stringify({session_id:sid,event_type:type,event_data:data||'',path:location.pathname})}).catch(function(){});
   }
+
+  // Track scroll depth (25%, 50%, 75%, 100%)
+  var scrollMarks={25:false,50:false,75:false,100:false};
+  window.addEventListener('scroll',function(){
+    var pct=Math.round((window.scrollY+window.innerHeight)/document.body.scrollHeight*100);
+    [25,50,75,100].forEach(function(m){
+      if(pct>=m&&!scrollMarks[m]){scrollMarks[m]=true;trackEvent('scroll',''+m+'%')}
+    });
+  });
+
+  // Track section visibility
+  var sections=document.querySelectorAll('section[id]');
+  var sectionTracked={};
+  if(sections.length>0&&window.IntersectionObserver){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting&&!sectionTracked[e.target.id]){
+          sectionTracked[e.target.id]=true;
+          trackEvent('section_view',e.target.id);
+        }
+      });
+    },{threshold:0.3});
+    sections.forEach(function(s){obs.observe(s)});
+  }
+
+  // Track outbound link clicks
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');
+    if(a&&a.hostname&&a.hostname!==location.hostname){
+      trackEvent('outbound_click',a.href);
+    }
+  });
+
   // Track music plays
   if(typeof audio!=='undefined'&&typeof TRACKS!=='undefined'){
-    let lastTracked=-1;
+    var lastTracked=-1;
     audio.addEventListener('play',function(){
       if(currentIdx!==lastTracked){
         lastTracked=currentIdx;
-        fetch(SB+'/music_plays',{method:'POST',headers:H,body:JSON.stringify({track:TRACKS[currentIdx].title})}).catch(()=>{});
+        fetch(SB+'/music_plays',{method:'POST',headers:H,body:JSON.stringify({track:TRACKS[currentIdx].title})}).catch(function(){});
+        trackEvent('music_play',TRACKS[currentIdx].title);
       }
     });
   }
-  // Track hero audio play
   if(typeof heroAudio!=='undefined'){
-    let heroTracked=false;
+    var heroTracked=false;
     heroAudio.addEventListener('play',function(){
-      if(!heroTracked){heroTracked=true;fetch(SB+'/music_plays',{method:'POST',headers:H,body:JSON.stringify({track:'Hero audio'})}).catch(()=>{})}
+      if(!heroTracked){heroTracked=true;fetch(SB+'/music_plays',{method:'POST',headers:H,body:JSON.stringify({track:'Hero audio'})}).catch(function(){});trackEvent('music_play','Hero audio')}
     });
   }
+
+  // Track time on page (log every 30s up to 5min)
+  var timeLogged=0;
+  var timeInterval=setInterval(function(){
+    timeLogged+=30;
+    trackEvent('time_on_page',''+timeLogged+'s');
+    if(timeLogged>=300)clearInterval(timeInterval);
+  },30000);
 })();
 </script>
 </body>

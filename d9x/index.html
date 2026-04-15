@@ -957,9 +957,17 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
       <div class="page" data-page="engagement">
       <section class="sec" id="engagement">
         <div class="head"><div class="title"><h2>Engagement</h2><span class="sub">How visitors interact with your site</span></div></div>
-        <div class="card" style="padding:48px 24px;text-align:center">
-          <div style="font-size:13px;color:var(--muted)">Engagement tracking coming soon</div>
-          <div style="font-size:11px;color:var(--muted-2);margin-top:8px">Requires click and scroll tracking on the main site</div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">Scroll depth</div>
+          <div id="pgScrollDepth"><div style="font-size:11px;color:var(--muted)">Loading...</div></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title" style="margin-bottom:14px">Section views — what visitors see</div>
+          <div id="pgSectionViews"><div style="font-size:11px;color:var(--muted)">Loading...</div></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title" style="margin-bottom:14px">Outbound clicks</div>
+          <div id="pgOutboundClicks"><div style="font-size:11px;color:var(--muted)">Loading...</div></div>
         </div>
       </section>
       </div>
@@ -989,10 +997,18 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
       <!-- ========== AUDIENCE ========== -->
       <div class="page" data-page="audience">
       <section class="sec" id="language">
-        <div class="head"><div class="title"><h2>Audience</h2><span class="sub">Who visits and where they come from</span></div></div>
-        <div class="card" style="padding:48px 24px;text-align:center">
-          <div style="font-size:13px;color:var(--muted)">Audience insights coming soon</div>
-          <div style="font-size:11px;color:var(--muted-2);margin-top:8px">Requires session tracking and returning visitor detection</div>
+        <div class="head"><div class="title"><h2>Audience</h2><span class="sub">Who visits, where they're from, new vs returning</span></div></div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">Visitor countries</div>
+          <div id="pgCountries"><div style="font-size:11px;color:var(--muted)">Loading...</div></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title" style="margin-bottom:14px">New vs returning visitors</div>
+          <div id="pgReturnVsNew"><div style="font-size:11px;color:var(--muted)">Loading...</div></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-title" style="margin-bottom:14px">Top cities</div>
+          <div id="pgCities"><div style="font-size:11px;color:var(--muted)">Loading...</div></div>
         </div>
       </section>
       </div>
@@ -1178,18 +1194,11 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
               <div class="action-link">—</div>
             </div>
             <div class="team-row">
-              <div class="avatar">DP</div>
-              <div class="member-info"><div class="name">Dino Pereira</div><div class="email">dino@bobentgroup.com</div></div>
-              <div class="role-badge editor">Editor</div>
-              <div class="last-active">2h ago</div>
-              <div class="action-link" onclick="this.textContent=this.textContent==='Remove'?'Removed ✓':'Remove'">Remove</div>
-            </div>
-            <div class="team-row">
-              <div class="avatar">SL</div>
-              <div class="member-info"><div class="name">Sara Lima</div><div class="email">sara@bobentgroup.com</div></div>
-              <div class="role-badge viewer">Viewer</div>
-              <div class="last-active">1d ago</div>
-              <div class="action-link" onclick="this.textContent=this.textContent==='Remove'?'Removed ✓':'Remove'">Remove</div>
+              <div class="avatar" style="background:#8b5cf6">PD</div>
+              <div class="member-info"><div class="name">Pedraw</div><div class="email">hello@pedraw.co.uk</div></div>
+              <div class="role-badge owner">Admin</div>
+              <div class="last-active">Now</div>
+              <div class="action-link">—</div>
             </div>
           </div>
           <div class="invite-form" id="inviteForm">
@@ -1415,6 +1424,72 @@ setInterval(()=>location.reload(),30000);
     var topR=Object.entries(rc).sort(function(a,b){return b[1]-a[1]}).slice(0,8);
     var rl=document.getElementById('pgReferrers');
     if(rl){rl.innerHTML=topR.length>0?topR.map(function(r){return '<div class="row"><div class="ico">'+r[0].slice(0,2).toUpperCase()+'</div><div class="src">'+r[0]+'</div><span class="visits">'+r[1]+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:10px 0">No referrer data yet</div>'}
+
+    // ENGAGEMENT PAGE: scroll depth, section views, outbound clicks
+    var eeRes=await fetch(SB_A+'/engagement_events?select=event_type,event_data&order=created_at.desc&limit=1000',{headers:hdr});
+    var ees=await eeRes.json();
+
+    // Scroll depth
+    var scrollEl=document.getElementById('pgScrollDepth');
+    if(scrollEl){
+      var scrollCounts={'25%':0,'50%':0,'75%':0,'100%':0};
+      ees.filter(function(e){return e.event_type==='scroll'}).forEach(function(e){if(scrollCounts[e.event_data]!==undefined)scrollCounts[e.event_data]++});
+      var maxScroll=Math.max.apply(null,Object.values(scrollCounts).concat([1]));
+      scrollEl.innerHTML=Object.entries(scrollCounts).map(function(s){return '<div style="display:flex;align-items:center;gap:12px;padding:8px 0;font-size:12px"><span style="width:40px;color:#fff;font-weight:500">'+s[0]+'</span><div style="flex:1;height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:#8b5cf6;width:'+Math.round(s[1]/maxScroll*100)+'%"></div></div><span style="width:40px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">'+s[1]+'</span></div>'}).join('')||'<div style="font-size:11px;color:var(--muted)">No data yet</div>';
+    }
+
+    // Section views
+    var secEl=document.getElementById('pgSectionViews');
+    if(secEl){
+      var secCounts={};ees.filter(function(e){return e.event_type==='section_view'}).forEach(function(e){secCounts[e.event_data]=(secCounts[e.event_data]||0)+1});
+      var secSorted=Object.entries(secCounts).sort(function(a,b){return b[1]-a[1]});
+      var maxSec=secSorted.length>0?secSorted[0][1]:1;
+      secEl.innerHTML=secSorted.length>0?secSorted.map(function(s){return '<div style="display:flex;align-items:center;gap:12px;padding:8px 0;font-size:12px"><span style="width:120px;color:#fff;font-weight:500;text-transform:capitalize">'+s[0].replace(/-/g,' ')+'</span><div style="flex:1;height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:#8b5cf6;width:'+Math.round(s[1]/maxSec*100)+'%"></div></div><span style="width:40px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">'+s[1]+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted)">No data yet</div>';
+    }
+
+    // Outbound clicks
+    var outEl=document.getElementById('pgOutboundClicks');
+    if(outEl){
+      var outCounts={};ees.filter(function(e){return e.event_type==='outbound_click'}).forEach(function(e){try{var h=new URL(e.event_data).hostname;outCounts[h]=(outCounts[h]||0)+1}catch(x){}});
+      var outSorted=Object.entries(outCounts).sort(function(a,b){return b[1]-a[1]}).slice(0,10);
+      outEl.innerHTML=outSorted.length>0?outSorted.map(function(o){return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--ink-3);font-size:12px"><span style="color:#fff;font-weight:500">'+o[0]+'</span><span style="color:var(--muted);font-variant-numeric:tabular-nums">'+o[1]+' clicks</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted)">No outbound clicks yet</div>';
+    }
+
+    // AUDIENCE PAGE: countries, cities, new vs returning
+    var countryCounts={};var cityCounts={};var sessionSet=new Set();var returningSessions=0;
+    pvs.forEach(function(p){
+      if(p.country)countryCounts[p.country]=(countryCounts[p.country]||0)+1;
+      if(p.city)cityCounts[p.city]=(cityCounts[p.city]||0)+1;
+      if(p.session_id){
+        if(sessionSet.has(p.session_id))returningSessions++;
+        sessionSet.add(p.session_id);
+      }
+    });
+
+    var countryEl=document.getElementById('pgCountries');
+    if(countryEl){
+      var cSorted=Object.entries(countryCounts).sort(function(a,b){return b[1]-a[1]}).slice(0,10);
+      var maxC=cSorted.length>0?cSorted[0][1]:1;
+      countryEl.innerHTML=cSorted.length>0?cSorted.map(function(c){return '<div style="display:flex;align-items:center;gap:12px;padding:8px 0;font-size:12px"><span style="width:120px;color:#fff;font-weight:500">'+c[0]+'</span><div style="flex:1;height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:#8b5cf6;width:'+Math.round(c[1]/maxC*100)+'%"></div></div><span style="width:40px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">'+c[1]+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted)">No country data yet — waiting for visits</div>';
+    }
+
+    var cityEl=document.getElementById('pgCities');
+    if(cityEl){
+      var citySorted=Object.entries(cityCounts).sort(function(a,b){return b[1]-a[1]}).slice(0,10);
+      var maxCity=citySorted.length>0?citySorted[0][1]:1;
+      cityEl.innerHTML=citySorted.length>0?citySorted.map(function(c){return '<div style="display:flex;align-items:center;gap:12px;padding:8px 0;font-size:12px"><span style="width:120px;color:#fff;font-weight:500">'+c[0]+'</span><div style="flex:1;height:6px;background:var(--ink-3);position:relative"><div style="position:absolute;top:0;left:0;height:100%;background:#a78bfa;width:'+Math.round(c[1]/maxCity*100)+'%"></div></div><span style="width:40px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums">'+c[1]+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted)">No city data yet</div>';
+    }
+
+    var retEl=document.getElementById('pgReturnVsNew');
+    if(retEl){
+      var totalSessions=sessionSet.size;
+      var newS=totalSessions-returningSessions;
+      if(totalSessions>0){
+        var retPct=Math.round(returningSessions/totalSessions*100);
+        var newPct=100-retPct;
+        retEl.innerHTML='<div style="display:flex;gap:24px;margin-bottom:14px"><div><div style="font-size:24px;font-weight:500;color:#8b5cf6;font-variant-numeric:tabular-nums">'+retPct+'%</div><div style="font-size:10px;color:var(--muted);margin-top:4px">Returning</div></div><div><div style="font-size:24px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums">'+newPct+'%</div><div style="font-size:10px;color:var(--muted);margin-top:4px">New</div></div><div><div style="font-size:24px;font-weight:500;color:#fff;font-variant-numeric:tabular-nums">'+totalSessions+'</div><div style="font-size:10px;color:var(--muted);margin-top:4px">Total sessions</div></div></div><div style="height:8px;background:var(--ink-3);display:flex"><div style="width:'+retPct+'%;background:#8b5cf6"></div><div style="width:'+newPct+'%;background:var(--muted-2)"></div></div>';
+      }else{retEl.innerHTML='<div style="font-size:11px;color:var(--muted)">No session data yet</div>'}
+    }
 
   }catch(e){console.error('Sub-pages load error',e)}
 })();
