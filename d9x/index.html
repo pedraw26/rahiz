@@ -1700,40 +1700,72 @@ const SB_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJl
 (async function loadAnalytics(){
   try{
     const hdr={apikey:SB_ANON};
-    // Get date 30 days ago
     const d30=new Date();d30.setDate(d30.getDate()-30);
     const since=d30.toISOString();
 
-    // Visitors (page_views count last 30d)
-    const pvRes=await fetch(SB_ANALYTICS+'/page_views?select=id&created_at=gte.'+since,{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
-    const totalVisitors=parseInt(pvRes.headers.get('content-range')?.split('/')[1]||'0');
+    // Fetch all page_views last 30d (with timestamps for chart)
+    const pvRes=await fetch(SB_ANALYTICS+'/page_views?select=created_at&created_at=gte.'+since+'&order=created_at',{headers:hdr});
+    const pvData=await pvRes.json();
+    const totalVisitors=pvData.length;
 
-    // All-time visitors
-    const pvAllRes=await fetch(SB_ANALYTICS+'/page_views?select=id',{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
-    const allVisitors=parseInt(pvAllRes.headers.get('content-range')?.split('/')[1]||'0');
-
-    // Music plays (last 30d)
-    const mpRes=await fetch(SB_ANALYTICS+'/music_plays?select=id&created_at=gte.'+since,{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
-    const totalPlays=parseInt(mpRes.headers.get('content-range')?.split('/')[1]||'0');
+    // Music plays last 30d
+    const mpRes=await fetch(SB_ANALYTICS+'/music_plays?select=track,created_at&created_at=gte.'+since+'&order=created_at',{headers:hdr});
+    const mpData=await mpRes.json();
+    const totalPlays=mpData.length;
 
     // Top tracks
-    const tracksRes=await fetch(SB_ANALYTICS+'/music_plays?select=track&created_at=gte.'+since,{headers:hdr});
-    const tracksData=await tracksRes.json();
     const trackCounts={};
-    tracksData.forEach(t=>{trackCounts[t.track]=(trackCounts[t.track]||0)+1});
+    mpData.forEach(t=>{trackCounts[t.track]=(trackCounts[t.track]||0)+1});
     const topTracks=Object.entries(trackCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
 
-    // Update Overview numbers
+    // Build daily visitor counts for chart (last 30 days)
+    const dailyCounts={};
+    for(let i=0;i<30;i++){
+      const d=new Date();d.setDate(d.getDate()-29+i);
+      dailyCounts[d.toISOString().slice(0,10)]=0;
+    }
+    pvData.forEach(pv=>{
+      const day=pv.created_at.slice(0,10);
+      if(dailyCounts[day]!==undefined)dailyCounts[day]++;
+    });
+    const dailyArr=Object.values(dailyCounts);
+
+    // Generate real SVG chart
+    const chartEl=document.querySelector('.hero-chart-bg');
+    if(chartEl&&dailyArr.length>0){
+      const W=800,H=120;
+      const max=Math.max(...dailyArr,1);
+      const pts=dailyArr.map((v,i)=>{
+        const x=i/(dailyArr.length-1)*W;
+        const y=H-(v/max)*H*0.85-H*0.05;
+        return x+','+y;
+      }).join(' ');
+      const area='0,'+H+' '+pts+' '+W+','+H;
+      chartEl.innerHTML=`
+        <defs><linearGradient id="heroAreaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b5cf6" stop-opacity=".3"/><stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs>
+        <polygon points="${area}" fill="url(#heroAreaGrad)"/>
+        <polyline points="${pts}" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      `;
+    }
+
+    // Update visitor number
     const visitorEl=document.querySelector('.metric-value');
     if(visitorEl)visitorEl.textContent=totalVisitors.toLocaleString();
     const changeEl=document.querySelector('.metric-change');
-    if(changeEl&&totalVisitors===0)changeEl.textContent='New — tracking started';
+    if(changeEl){
+      if(totalVisitors===0)changeEl.textContent='Tracking started — awaiting data';
+      else changeEl.innerHTML='↗ '+totalVisitors.toLocaleString()+' <span style="color:var(--muted);font-weight:400">visits tracked</span>';
+    }
+    const subEl=document.querySelector('.metric-sub');
+    if(subEl)subEl.textContent='visitors · last 30 days';
 
-    // Update KPI cards
+    // Update music plays KPI
     const kpiValues=document.querySelectorAll('.ov-hero-card .hc-value');
     if(kpiValues[0])kpiValues[0].textContent=totalPlays.toLocaleString();
+    const kpiSubs=document.querySelectorAll('.ov-hero-card .hc-sub');
+    if(kpiSubs[0])kpiSubs[0].textContent=topTracks.length+' tracks played';
 
-    // Update top tracks in overview
+    // Update top tracks
     const trackEls=document.querySelectorAll('.ov-tracks .ov-trk');
     topTracks.forEach((t,i)=>{
       if(trackEls[i]){
@@ -1741,18 +1773,31 @@ const SB_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJl
         trackEls[i].querySelector('.ct').textContent=t[1].toLocaleString();
       }
     });
-    // Hide unused track rows
     for(let i=topTracks.length;i<trackEls.length;i++){if(trackEls[i])trackEls[i].style.display='none'}
+    if(topTracks.length===0){
+      const trkContainer=document.querySelector('.ov-tracks');
+      if(trkContainer)trkContainer.innerHTML='<div style="font-size:11px;color:var(--muted);padding:12px 8px">No plays yet — waiting for listeners</div>';
+    }
 
-    // Update live visitor count (page_views in last 5 min)
+    // Live visitors (page_views in last 5 min)
     const d5=new Date();d5.setMinutes(d5.getMinutes()-5);
-    const liveRes=await fetch(SB_ANALYTICS+'/page_views?select=id&created_at=gte.'+d5.toISOString(),{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
-    const liveCount=parseInt(liveRes.headers.get('content-range')?.split('/')[1]||'0');
+    const liveData=pvData.filter(pv=>new Date(pv.created_at)>=d5);
+    const liveCount=liveData.length;
     const liveEl=document.getElementById('ovLiveCount');
     if(liveEl)liveEl.textContent=liveCount;
 
+    // Update LIVE strip text
+    const liveInfo=document.querySelector('.now-strip .info');
+    if(liveInfo){
+      const topTrack=topTracks.length>0?topTracks[0][0]:'—';
+      const topCount=topTracks.length>0?topTracks[0][1]:0;
+      liveInfo.innerHTML='<b>'+liveCount+'</b> <span>visitors right now</span>'+(topTrack!=='—'?' · <b>"'+topTrack+'"</b> <span>'+topCount+' plays total</span>':'');
+    }
+
   }catch(e){console.error('Analytics load failed',e)}
 })();
+// Refresh analytics every 30s
+setInterval(()=>location.reload(),30000);
 
 /* ———— LIVE COUNTER ———— */
 const liveBig=document.getElementById('liveBig'),ovLiveCount=document.getElementById('ovLiveCount'),topLiveCount=document.getElementById('topLiveCount');
