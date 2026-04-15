@@ -1560,24 +1560,6 @@ async function loadSubPages(){
     }
   }catch(e){console.error('Sub-pages load failed',e)}
 }
-/* Page switcher — data-go anywhere switches body[data-page] */
-const labels={overview:'Overview',activity:'Activity',media:'Media',engagement:'Engagement',acquisition:'Acquisition',newsletter:'Newsletter',audience:'Audience','tour-edit':'Tour dates',tools:'Tools',settings:'Settings'};
-function goToPage(p){
-  if(!labels[p])return;
-  document.body.setAttribute('data-page',p);
-  document.querySelectorAll('.side nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===p));
-  document.querySelector('.breadcrumb').innerHTML='Admin / <b>'+labels[p]+'</b>';
-  window.scrollTo({top:0,behavior:'smooth'});
-  closeSidebar();
-  setTimeout(()=>observeReveals(),100);
-  // Load real data for sub-pages
-  if(['activity','media','acquisition'].includes(p))loadSubPages();
-  if(p==='tour-edit'&&typeof loadTourDates==='function')loadTourDates();
-}
-document.querySelectorAll('[data-go]').forEach(el=>{
-  el.addEventListener('click',e=>{e.preventDefault();goToPage(el.dataset.go)});
-});
-
 /* ———— SIDEBAR COLLAPSE (desktop) ———— */
 document.getElementById('collapseBtn').addEventListener('click',()=>{
   document.querySelector('.shell').classList.toggle('collapsed');
@@ -1589,6 +1571,23 @@ const sideOverlay=document.getElementById('sideOverlay');
 function closeSidebar(){document.body.classList.remove('sidebar-open')}
 sidebarToggle.addEventListener('click',()=>document.body.classList.toggle('sidebar-open'));
 sideOverlay.addEventListener('click',closeSidebar);
+
+/* Page switcher — data-go anywhere switches body[data-page] */
+const labels={overview:'Overview',activity:'Activity',media:'Media',engagement:'Engagement',acquisition:'Acquisition',newsletter:'Newsletter',audience:'Audience','tour-edit':'Tour dates',tools:'Tools',settings:'Settings'};
+function goToPage(p){
+  if(!labels[p])return;
+  document.body.setAttribute('data-page',p);
+  document.querySelectorAll('.side nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===p));
+  document.querySelector('.breadcrumb').innerHTML='Admin / <b>'+labels[p]+'</b>';
+  window.scrollTo({top:0,behavior:'smooth'});
+  closeSidebar();
+  setTimeout(()=>observeReveals(),100);
+  if(['activity','media','acquisition'].includes(p))loadSubPages();
+  if(p==='tour-edit'&&typeof loadTourDates==='function')loadTourDates();
+}
+document.querySelectorAll('[data-go]').forEach(el=>{
+  el.addEventListener('click',e=>{e.preventDefault();goToPage(el.dataset.go)});
+});
 
 /* ———— REAL-TIME CLOCK ———— */
 const topClock=document.getElementById('topClock');
