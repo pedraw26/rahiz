@@ -1530,10 +1530,10 @@ notifClear.addEventListener('click',e=>{e.stopPropagation();notifDrop.innerHTML=
 document.addEventListener('click',()=>notifDrop.classList.remove('open'));
 
 /* ———— COMMAND PALETTE (⌘K) ———— */
-const cmdPalette=document.getElementById('cmdPalette');
-const cmdInput=document.getElementById('cmdInput');
-const cmdResults=document.getElementById('cmdResults');
-const searchTrigger=document.getElementById('searchTrigger');
+var cmdPalette=document.getElementById('cmdPalette');
+var cmdInput=document.getElementById('cmdInput');
+var cmdResults=document.getElementById('cmdResults');
+var searchTrigger=document.getElementById('searchTrigger');
 
 const cmdItems=[
   {label:'Overview',icon:'grid',page:'overview',keys:'⌘1'},
