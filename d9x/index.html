@@ -797,10 +797,10 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
             <div class="metric-row">
               <img class="metric-avatar" src="https://res.cloudinary.com/dqefvaueo/image/upload/v1776266602/Screenshot_2026-04-15_at_16.22.21_vjivh3.png" alt="Celso" />
               <div>
-                <div class="metric-value">12,847</div>
+                <div class="metric-value">—</div>
               </div>
               <div class="metric-detail">
-                <div class="metric-change">↗ +18.4%</div>
+                <div class="metric-change">Loading...</div>
                 <div class="metric-sub">visitors · last 30 days</div>
               </div>
             </div>
@@ -820,28 +820,28 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
           <!-- LIVE strip -->
           <div class="now-strip">
             <span class="live-badge">Live</span>
-            <div class="info"><b id="ovLiveCount">42</b> <span>visitors right now</span> · <b>"4 Kampé"</b> <span>playing for 12 listeners</span></div>
-            <div class="next-show"><span>Next show in</span><b>10 days · Switzerland</b></div>
+            <div class="info"><b id="ovLiveCount">0</b> <span>visitors right now</span></div>
+            <div class="next-show" id="nextShowInfo"></div>
           </div>
 
           <div class="ov-hero-side">
             <div class="ov-hero-card green" data-go="media" style="cursor:pointer">
-              <div class="hc-top"><span class="hc-label">Music plays</span><span class="hc-delta up">↗ 24.1%</span></div>
-              <div class="hc-value">38,402</div>
-              <div class="hc-sub">avg 2.99 per visitor · 11 tracks</div>
-              <div class="hc-bar" style="--w:72%"></div>
+              <div class="hc-top"><span class="hc-label">Music plays</span><span class="hc-delta up" id="playsChange"></span></div>
+              <div class="hc-value" id="playsValue">—</div>
+              <div class="hc-sub" id="playsSub">Loading...</div>
+              <div class="hc-bar" style="--w:0%"></div>
             </div>
             <div class="ov-hero-card yellow" data-go="newsletter" style="cursor:pointer">
-              <div class="hc-top"><span class="hc-label">Newsletter</span><span class="hc-delta up">↗ 12.7%</span></div>
-              <div class="hc-value">4,231</div>
-              <div class="hc-sub">+478 this period · 89% retention</div>
-              <div class="hc-bar" style="--w:89%"></div>
+              <div class="hc-top"><span class="hc-label">Newsletter</span><span class="hc-delta up"></span></div>
+              <div class="hc-value">—</div>
+              <div class="hc-sub">Coming soon</div>
+              <div class="hc-bar" style="--w:0%"></div>
             </div>
             <div class="ov-hero-card red" data-go="tour-edit" style="cursor:pointer">
-              <div class="hc-top"><span class="hc-label">Ticket revenue</span><span class="hc-delta up">↗ 24%</span></div>
-              <div class="hc-value">€8,418</div>
-              <div class="hc-sub">312 sold · 8.1% click→buy</div>
-              <div class="hc-bar" style="--w:58%"></div>
+              <div class="hc-top"><span class="hc-label">Tour dates</span><span class="hc-delta up" id="tourChange"></span></div>
+              <div class="hc-value" id="tourValue">—</div>
+              <div class="hc-sub" id="tourSub">Loading...</div>
+              <div class="hc-bar" style="--w:0%"></div>
             </div>
           </div>
         </div>
@@ -856,12 +856,8 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
               <div class="obc-title"><span class="dot" style="background:#a78bfa"></span>Top tracks</div>
               <span class="obc-link">View all →</span>
             </div>
-            <div class="ov-tracks">
-              <div class="ov-trk"><span class="rk">01</span><span class="name">4 Kampé</span><span class="ct">8,412</span></div>
-              <div class="ov-trk"><span class="rk">02</span><span class="name">Calm Down</span><span class="ct">5,218</span></div>
-              <div class="ov-trk"><span class="rk">03</span><span class="name">Ku Lo Sa</span><span class="ct">3,184</span></div>
-              <div class="ov-trk"><span class="rk">04</span><span class="name">Rush</span><span class="ct">2,847</span></div>
-              <div class="ov-trk"><span class="rk">05</span><span class="name">Last Last</span><span class="ct">2,412</span></div>
+            <div class="ov-tracks" id="topTracksContainer">
+              <div style="font-size:11px;color:var(--muted);padding:12px 8px">Waiting for plays...</div>
             </div>
           </div>
 
@@ -892,26 +888,15 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
               <div class="obc-title"><span class="dot" style="background:var(--cv-yellow)"></span>Recent activity</div>
               <a class="obc-link" data-go="activity" href="#">View all →</a>
             </div>
-            <div class="activity" style="border:0;background:transparent;max-height:none;overflow:hidden">
-              <div class="row ev-buy"><span class="time">14:38</span><span class="dot"></span><span class="msg"><b>Order #1247</b> · €42</span><span class="where">Lisboa</span></div>
-              <div class="row ev-play"><span class="time">14:37</span><span class="dot"></span><span class="msg">Played <b>"4 Kampé"</b></span><span class="where">Mindelo</span></div>
-              <div class="row ev-sub"><span class="time">14:37</span><span class="dot"></span><span class="msg">Newsletter signup</span><span class="where">Paris</span></div>
-              <div class="row ev-click"><span class="time">14:37</span><span class="dot"></span><span class="msg">Clicked <b>Spotify</b></span><span class="where">Stockholm</span></div>
-              <div class="row ev-search"><span class="time">14:37</span><span class="dot"></span><span class="msg">Searched <b>"colhe quem planta"</b></span><span class="where">Praia</span></div>
+            <div class="activity" id="recentActivity" style="border:0;background:transparent;max-height:none;overflow:hidden">
+              <div style="font-size:11px;color:var(--muted);padding:12px 8px">Loading recent activity...</div>
             </div>
           </div>
 
         </div>
 
-        <!-- Alerts / action items strip -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)">
-          <div class="ticket-callout warn" style="margin-top:0">
-            <b>São Vicente needs a link.</b> 487 visitors searched for Cape Verde shows — currently hitting a dead "TBA". <a data-go="tour-edit" href="#" style="color:#C0FF45;text-decoration:underline">Set vendor URL →</a>
-          </div>
-          <div class="ticket-callout info" style="margin-top:0">
-            <b>TikTok is surging.</b> Referrals up 127% from the "4 Kampé challenge" — 12 viral posts driving 3,847 visits. <a data-go="acquisition" href="#" style="color:#a78bfa;text-decoration:underline">See breakdown →</a>
-          </div>
-        </div>
+        <!-- Alerts — generated dynamically -->
+        <div id="alertStrips" style="display:grid;grid-template-columns:1fr;gap:var(--gap)"></div>
 
       </section>
       </div>
@@ -1765,50 +1750,86 @@ const SB_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJl
     const kpiSubs=document.querySelectorAll('.ov-hero-card .hc-sub');
     if(kpiSubs[0])kpiSubs[0].textContent=topTracks.length+' tracks played';
 
-    // Update top tracks
-    const trackEls=document.querySelectorAll('.ov-tracks .ov-trk');
-    topTracks.forEach((t,i)=>{
-      if(trackEls[i]){
-        trackEls[i].querySelector('.name').textContent=t[0];
-        trackEls[i].querySelector('.ct').textContent=t[1].toLocaleString();
+    // Top tracks container
+    const trkC=document.getElementById('topTracksContainer');
+    if(trkC){
+      if(topTracks.length>0){
+        trkC.innerHTML=topTracks.map((t,i)=>`<div class="ov-trk"><span class="rk">${String(i+1).padStart(2,'0')}</span><span class="name">${t[0]}</span><span class="ct">${t[1].toLocaleString()}</span></div>`).join('');
+      }else{
+        trkC.innerHTML='<div style="font-size:11px;color:var(--muted);padding:12px 8px">No plays yet</div>';
       }
-    });
-    for(let i=topTracks.length;i<trackEls.length;i++){if(trackEls[i])trackEls[i].style.display='none'}
-    if(topTracks.length===0){
-      const trkContainer=document.querySelector('.ov-tracks');
-      if(trkContainer)trkContainer.innerHTML='<div style="font-size:11px;color:var(--muted);padding:12px 8px">No plays yet — waiting for listeners</div>';
     }
 
-    // Live visitors (page_views in last 5 min)
+    // Live visitors (last 5 min)
     const d5=new Date();d5.setMinutes(d5.getMinutes()-5);
-    const liveData=pvData.filter(pv=>new Date(pv.created_at)>=d5);
-    const liveCount=liveData.length;
+    const liveCount=pvData.filter(pv=>new Date(pv.created_at)>=d5).length;
     const liveEl=document.getElementById('ovLiveCount');
     if(liveEl)liveEl.textContent=liveCount;
 
-    // Update LIVE strip text
+    // LIVE strip
     const liveInfo=document.querySelector('.now-strip .info');
     if(liveInfo){
-      const topTrack=topTracks.length>0?topTracks[0][0]:'—';
+      const topTrack=topTracks.length>0?topTracks[0][0]:null;
       const topCount=topTracks.length>0?topTracks[0][1]:0;
-      liveInfo.innerHTML='<b>'+liveCount+'</b> <span>visitors right now</span>'+(topTrack!=='—'?' · <b>"'+topTrack+'"</b> <span>'+topCount+' plays total</span>':'');
+      liveInfo.innerHTML='<b>'+liveCount+'</b> <span>visitors right now</span>'+(topTrack?' · <b>"'+topTrack+'"</b> <span>'+topCount+' plays</span>':'');
+    }
+
+    // Next show from tour_dates
+    const tourRes=await fetch(SB_ANALYTICS+'/tour_dates?select=*&status=neq.played&order=sort_order&limit=10',{headers:hdr});
+    const tourDates=await tourRes.json();
+    const nextShow=tourDates.find(d=>d.status==='next')||tourDates[0];
+    const nextEl=document.getElementById('nextShowInfo');
+    if(nextEl&&nextShow){
+      const dt=new Date(nextShow.date+'T12:00:00');
+      const diff=Math.ceil((dt-new Date())/(1000*60*60*24));
+      nextEl.innerHTML='<span>Next show in</span><b>'+diff+' days · '+nextShow.city+'</b>';
+    }
+
+    // Tour dates card
+    const tourVal=document.getElementById('tourValue');
+    const tourSub=document.getElementById('tourSub');
+    if(tourVal)tourVal.textContent=tourDates.length;
+    if(tourSub)tourSub.textContent='upcoming shows';
+
+    // Recent activity (last 10 events from page_views + music_plays merged)
+    const actEl=document.getElementById('recentActivity');
+    if(actEl){
+      const recent=[];
+      pvData.slice(-10).reverse().forEach(pv=>{
+        const t=new Date(pv.created_at);
+        recent.push({time:t,type:'view',msg:'Visited <b>'+pv.path+'</b>'});
+      });
+      mpData.slice(-10).reverse().forEach(mp=>{
+        const t=new Date(mp.created_at);
+        recent.push({time:t,type:'play',msg:'Played <b>"'+mp.track+'"</b>'});
+      });
+      recent.sort((a,b)=>b.time-a.time);
+      const top8=recent.slice(0,8);
+      if(top8.length>0){
+        actEl.innerHTML=top8.map(e=>{
+          const h=String(e.time.getHours()).padStart(2,'0');
+          const m=String(e.time.getMinutes()).padStart(2,'0');
+          const cls=e.type==='play'?'ev-play':'ev-click';
+          return '<div class="row '+cls+'"><span class="time">'+h+':'+m+'</span><span class="dot"></span><span class="msg">'+e.msg+'</span></div>';
+        }).join('');
+      }else{
+        actEl.innerHTML='<div style="font-size:11px;color:var(--muted);padding:12px 8px">No activity yet</div>';
+      }
+    }
+
+    // Alerts — show warnings for tour dates without ticket links
+    const alertEl=document.getElementById('alertStrips');
+    if(alertEl){
+      const noLink=tourDates.filter(d=>!d.ticket_url&&d.status!=='played');
+      alertEl.innerHTML=noLink.map(d=>'<div class="ticket-callout warn" style="margin-top:0"><b>'+d.city+' needs a ticket link.</b> <a data-go="tour-edit" href="#" style="color:#C0FF45;text-decoration:underline">Set vendor URL →</a></div>').join('');
+      // Re-bind data-go links
+      alertEl.querySelectorAll('[data-go]').forEach(el=>{el.addEventListener('click',e=>{e.preventDefault();goToPage(el.dataset.go)})});
     }
 
   }catch(e){console.error('Analytics load failed',e)}
 })();
-// Refresh analytics every 30s
-setInterval(()=>location.reload(),30000);
 
-/* ———— LIVE COUNTER ———— */
-const liveBig=document.getElementById('liveBig'),ovLiveCount=document.getElementById('ovLiveCount'),topLiveCount=document.getElementById('topLiveCount');
-let n=42;
-setInterval(()=>{
-  n+=Math.floor(Math.random()*7)-3;
-  if(n<32)n=32;if(n>62)n=62;
-  if(liveBig)liveBig.textContent=n;
-  if(ovLiveCount)ovLiveCount.textContent=n;
-  if(topLiveCount)topLiveCount.textContent=n;
-},3000);
+/* ———— LIVE COUNTER (real — from Supabase, no fake ticker) ———— */
 
 /* Build heatmap cells */
 (function(){
@@ -1832,26 +1853,7 @@ setInterval(()=>{
   });
 })();
 
-/* Activity feed: prepend new event every 8s */
-const feed=document.getElementById('activityFeed');
-const events=[
-  ['ev-play','Started <b>"Last Last"</b> from the Listen player','Rotterdam, NL'],
-  ['ev-sub','New newsletter signup · interests: <b>Music · Tour</b>','Berlin, DE'],
-  ['ev-buy','<b>Order #1248</b> · Hat — Black &amp; White · €38','Paris, FR'],
-  ['ev-click','Clicked <b>Apple Music</b> link','Mindelo, CV'],
-  ['ev-play','Played <b>"Squid Games"</b> · Descódigo Ep 38','Lisboa, PT'],
-  ['ev-book','Email sent → <b>bobentgroup@gmail.com</b> · "Press" inquiry','Geneva, CH'],
-  ['ev-search','Searched for "<b>4 kampé</b>"','Sal, CV'],
-  ['ev-play','Started <b>"Soso"</b> · completed 62%','Madrid, ES']
-];
-function pad(n){return n<10?'0'+n:n}
-function timeStr(){const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`}
-setInterval(()=>{
-  const e=events[Math.floor(Math.random()*events.length)];
-  const html=`<div class="row ${e[0]}"><span class="time">${timeStr()}</span><span class="dot"></span><span class="msg">${e[1]}</span><span class="where">${e[2]}</span></div>`;
-  feed.insertAdjacentHTML('afterbegin',html);
-  while(feed.children.length>16)feed.removeChild(feed.lastChild);
-},8000);
+/* Fake activity feed removed — real activity is on the overview page */
 
 /* Page switcher — data-go anywhere switches body[data-page] */
 const labels={overview:'Overview',activity:'Activity',media:'Media',engagement:'Engagement',acquisition:'Acquisition',newsletter:'Newsletter',audience:'Audience','tour-edit':'Tour dates',tools:'Tools',settings:'Settings'};
