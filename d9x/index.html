@@ -1675,21 +1675,38 @@ document.getElementById('inviteEmail').addEventListener('keydown',e=>{if(e.key==
   });
 })();
 
-/* ———— OVERVIEW: Mini heatmap ———— */
-(function(){
-  const grid=document.getElementById('ovMiniHeat');
+/* ———— OVERVIEW: Mini heatmap from real Supabase data ———— */
+(async function(){
+  var grid=document.getElementById('ovMiniHeat');
   if(!grid)return;
-  const pattern=[
-    [1,2,2,3,3,4,3],[1,2,2,3,3,3,4],[0,1,2,2,3,4,4],
-    [1,2,2,2,3,3,3],[0,1,2,3,3,4,4],[1,1,2,2,3,3,3]
-  ];
-  pattern.forEach(row=>{
-    row.forEach(v=>{
-      const cell=document.createElement('span');
-      cell.className='mh-cell'+(v>0?' l'+v:'');
-      grid.appendChild(cell);
+  try{
+    var SK2='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
+    var d30=new Date();d30.setDate(d30.getDate()-30);
+    var r=await fetch('https://pyumurjbrannerolhrop.supabase.co/rest/v1/page_views?select=created_at&created_at=gte.'+d30.toISOString(),{headers:{apikey:SK2}});
+    var pvs=await r.json();
+    // Build 6 rows (4h blocks) x 7 cols (days of week)
+    var counts=Array.from({length:6},function(){return Array(7).fill(0)});
+    pvs.forEach(function(p){
+      var dt=new Date(p.created_at);
+      var day=dt.getDay();// 0=Sun
+      var hour=dt.getHours();
+      var block=Math.min(Math.floor(hour/4),5);
+      counts[block][day]++;
     });
-  });
+    var max=1;counts.forEach(function(row){row.forEach(function(v){if(v>max)max=v})});
+    counts.forEach(function(row){
+      row.forEach(function(v){
+        var cell=document.createElement('span');
+        var level=v===0?0:Math.ceil(v/max*4);
+        cell.className='mh-cell'+(level>0?' l'+level:'');
+        cell.title=v+' visits';
+        grid.appendChild(cell);
+      });
+    });
+  }catch(e){
+    // Fallback: empty grid
+    for(var i=0;i<42;i++){var c=document.createElement('span');c.className='mh-cell';grid.appendChild(c)}
+  }
 })();
 
 /* ———— SUPABASE TOUR DATES CRUD ———— */
