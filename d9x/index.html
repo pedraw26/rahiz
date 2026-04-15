@@ -1560,10 +1560,6 @@ async function loadSubPages(){
     }
   }catch(e){console.error('Sub-pages load failed',e)}
 }
-// Load sub-pages when switching to them
-const origGo2=goToPage;
-goToPage=function(p){origGo2(p);if(['activity','media','acquisition'].includes(p))loadSubPages()}
-
 /* Page switcher — data-go anywhere switches body[data-page] */
 const labels={overview:'Overview',activity:'Activity',media:'Media',engagement:'Engagement',acquisition:'Acquisition',newsletter:'Newsletter',audience:'Audience','tour-edit':'Tour dates',tools:'Tools',settings:'Settings'};
 function goToPage(p){
@@ -1573,8 +1569,10 @@ function goToPage(p){
   document.querySelector('.breadcrumb').innerHTML='Admin / <b>'+labels[p]+'</b>';
   window.scrollTo({top:0,behavior:'smooth'});
   closeSidebar();
-  // Re-trigger scroll reveals for new page
   setTimeout(()=>observeReveals(),100);
+  // Load real data for sub-pages
+  if(['activity','media','acquisition'].includes(p))loadSubPages();
+  if(p==='tour-edit'&&typeof loadTourDates==='function')loadTourDates();
 }
 document.querySelectorAll('[data-go]').forEach(el=>{
   el.addEventListener('click',e=>{e.preventDefault();goToPage(el.dataset.go)});
@@ -1850,10 +1848,7 @@ document.getElementById('tourAddBtn').addEventListener('click',async()=>{
   loadTourDates();
 });
 
-// Load on page switch to tour-edit
-const origGoToPage=goToPage;
-goToPage=function(p){origGoToPage(p);if(p==='tour-edit')loadTourDates()};
-// Also load if already on tour-edit
+// Load tour dates if already on that page
 if(document.body.getAttribute('data-page')==='tour-edit')loadTourDates();
 
 /* ———— SEGMENT LABEL TOGGLE (newsletter) ———— */
