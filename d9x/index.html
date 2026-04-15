@@ -766,13 +766,9 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
         </div>
         <button class="icon-btn" id="notifBtn" aria-label="Notifications">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="badge">3</span>
-          <!-- Notification dropdown -->
           <div class="notif-drop" id="notifDrop">
             <div class="notif-head"><span>Notifications</span><span class="clear" id="notifClear">Clear all</span></div>
-            <div class="notif-item"><span class="n-dot" style="background:#8b5cf6"></span><div><div class="n-text"><b>São Vicente</b> needs a ticket vendor URL — 487 visitors searched for CV shows</div><div class="n-time">2 hours ago</div></div></div>
-            <div class="notif-item"><span class="n-dot" style="background:#a78bfa"></span><div><div class="n-text"><b>TikTok</b> referrals up 127% — "4 Kampé challenge" trending</div><div class="n-time">5 hours ago</div></div></div>
-            <div class="notif-item"><span class="n-dot" style="background:var(--cv-yellow)"></span><div><div class="n-text">Weekly cohort retention improved to <b>61%</b> (was 42%)</div><div class="n-time">1 day ago</div></div></div>
+            <div style="padding:24px 16px;text-align:center;font-size:11px;color:var(--muted)">All caught up</div>
           </div>
         </button>
       </div>
@@ -1530,12 +1526,7 @@ notifClear.addEventListener('click',e=>{e.stopPropagation();notifDrop.innerHTML=
 document.addEventListener('click',()=>notifDrop.classList.remove('open'));
 
 /* ———— COMMAND PALETTE (⌘K) ———— */
-var cmdPalette=document.getElementById('cmdPalette');
-var cmdInput=document.getElementById('cmdInput');
-var cmdResults=document.getElementById('cmdResults');
-var searchTrigger=document.getElementById('searchTrigger');
-
-const cmdItems=[
+var cmdItems=[
   {label:'Overview',icon:'grid',page:'overview',keys:'⌘1'},
   {label:'Activity feed',icon:'activity',page:'activity',keys:'⌘2'},
   {label:'Music plays',icon:'music',page:'media',keys:'⌘3'},
@@ -1549,41 +1540,43 @@ const cmdItems=[
 ];
 const cmdIcons={grid:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',activity:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',music:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',bar:'<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>',trend:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',mail:'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',map:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',sliders:'<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/>'};
 
-function openCmd(){var cp=document.getElementById('cmdPalette');var ci=document.getElementById('cmdInput');cp.classList.add('open');ci.value='';renderCmd('');setTimeout(function(){ci.focus()},50)}
+function openCmd(){
+  var p=document.getElementById('cmdPalette');
+  var i=document.getElementById('cmdInput');
+  p.classList.add('open');i.value='';renderCmd('');
+  setTimeout(function(){i.focus()},50);
+}
 function closeCmd(){document.getElementById('cmdPalette').classList.remove('open')}
 function renderCmd(q){
-  const filtered=q?cmdItems.filter(i=>i.label.toLowerCase().includes(q.toLowerCase())):cmdItems;
-  cmdResults.innerHTML=filtered.map((item,i)=>`<div class="cmd-item${i===0?' active':''}" data-page="${item.page}"><div class="cmd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${cmdIcons[item.icon]||''}</svg></div><span>${item.label}</span><span class="cmd-key">${item.keys}</span></div>`).join('');
-  cmdResults.querySelectorAll('.cmd-item').forEach(el=>{
-    el.addEventListener('click',()=>{goToPage(el.dataset.page);closeCmd()});
+  var r=document.getElementById('cmdResults');
+  var filtered=q?cmdItems.filter(function(i){return i.label.toLowerCase().includes(q.toLowerCase())}):cmdItems;
+  r.innerHTML=filtered.map(function(item,i){return '<div class="cmd-item'+(i===0?' active':'')+'" data-page="'+item.page+'"><div class="cmd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+(cmdIcons[item.icon]||'')+'</svg></div><span>'+item.label+'</span><span class="cmd-key">'+item.keys+'</span></div>'}).join('');
+  r.querySelectorAll('.cmd-item').forEach(function(el){
+    el.addEventListener('click',function(){goToPage(el.dataset.page);closeCmd()});
   });
 }
-cmdInput.addEventListener('input',()=>renderCmd(cmdInput.value));
-cmdInput.addEventListener('keydown',e=>{
-  const items=cmdResults.querySelectorAll('.cmd-item');
-  const active=cmdResults.querySelector('.cmd-item.active');
+// Bind after DOM is ready
+document.getElementById('cmdInput').addEventListener('input',function(){renderCmd(this.value)});
+document.getElementById('cmdInput').addEventListener('keydown',function(e){
+  var items=document.getElementById('cmdResults').querySelectorAll('.cmd-item');
+  var active=document.getElementById('cmdResults').querySelector('.cmd-item.active');
   if(e.key==='Escape'){closeCmd();return}
   if(e.key==='Enter'&&active){goToPage(active.dataset.page);closeCmd();return}
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){
     e.preventDefault();
-    const idx=[...items].indexOf(active);
-    const next=e.key==='ArrowDown'?Math.min(idx+1,items.length-1):Math.max(idx-1,0);
-    items.forEach(i=>i.classList.remove('active'));
+    var arr=[].slice.call(items);var idx=arr.indexOf(active);
+    var next=e.key==='ArrowDown'?Math.min(idx+1,items.length-1):Math.max(idx-1,0);
+    items.forEach(function(i){i.classList.remove('active')});
     items[next].classList.add('active');
     items[next].scrollIntoView({block:'nearest'});
   }
 });
-cmdPalette.addEventListener('click',e=>{if(e.target===cmdPalette)closeCmd()});
-searchTrigger.addEventListener('click',openCmd);
-document.addEventListener('keydown',e=>{
-  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();cmdPalette.classList.contains('open')?closeCmd():openCmd()}
-  if(e.key==='Escape'&&cmdPalette.classList.contains('open'))closeCmd();
-  // Number shortcuts
-  if((e.metaKey||e.ctrlKey)&&e.key>='1'&&e.key<='9'){
-    e.preventDefault();
-    const idx=parseInt(e.key)-1;
-    if(cmdItems[idx])goToPage(cmdItems[idx].page);
-  }
+document.getElementById('cmdPalette').addEventListener('click',function(e){if(e.target===document.getElementById('cmdPalette'))closeCmd()});
+document.getElementById('searchTrigger').addEventListener('click',openCmd);
+document.addEventListener('keydown',function(e){
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();document.getElementById('cmdPalette').classList.contains('open')?closeCmd():openCmd()}
+  if(e.key==='Escape'&&document.getElementById('cmdPalette').classList.contains('open'))closeCmd();
+  if((e.metaKey||e.ctrlKey)&&e.key>='1'&&e.key<='9'){e.preventDefault();var idx=parseInt(e.key)-1;if(cmdItems[idx])goToPage(cmdItems[idx].page)}
   if((e.metaKey||e.ctrlKey)&&e.key==='0'){e.preventDefault();goToPage('settings')}
 });
 
