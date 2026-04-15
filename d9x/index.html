@@ -1655,33 +1655,39 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
 </div>
 
 <script>
-/* ———— AUTH GATE (client-side, hashed) ———— */
+/* ———— AUTH GATE (Supabase Auth — server-side secure) ———— */
+const SB_AUTH='https://pyumurjbrannerolhrop.supabase.co/auth/v1';
+const SB_AKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
 (async function(){
   const gate=document.getElementById('loginGate');
   const shell=document.getElementById('dashShell');
-  // SHA-256 hash of "Rahiz:monatestagawd2026."
-  const HASH='a]3f8b2c1d4e5a6b7c8d9e0f1a2b3c4d';
-  async function sha256(str){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-  // Check session
-  if(sessionStorage.getItem('d9x_auth')==='1'){gate.classList.add('hidden');shell.style.display='';gate.remove();return}
-  // Login form
+  // Check existing session
+  const saved=localStorage.getItem('d9x_token');
+  if(saved){
+    try{
+      const r=await fetch(SB_AUTH+'/user',{headers:{apikey:SB_AKEY,Authorization:'Bearer '+saved}});
+      if(r.ok){gate.classList.add('hidden');shell.style.display='';gate.remove();return}
+    }catch{}
+    localStorage.removeItem('d9x_token');
+  }
   const btn=document.getElementById('loginBtn');
   const userIn=document.getElementById('loginUser');
   const passIn=document.getElementById('loginPass');
   const errEl=document.getElementById('loginError');
   async function doLogin(){
     btn.disabled=true;btn.textContent='Signing in...';errEl.textContent='';
-    const hash=await sha256(userIn.value+':'+passIn.value);
-    // Pre-computed hash of "Rahiz:monatestagawd2026."
-    if(hash==='b9a4f0e6c7d8e2f1a3b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7'){
-      // Fallback: direct compare (hash above is placeholder, real check below)
-    }
-    if(userIn.value==='Rahiz'&&passIn.value==='monatestagawd2026.'){
-      sessionStorage.setItem('d9x_auth','1');
-      gate.classList.add('hidden');shell.style.display='';setTimeout(()=>gate.remove(),500);
-    }else{
-      errEl.textContent='Invalid credentials';btn.disabled=false;btn.textContent='Sign in';
-    }
+    try{
+      const email=userIn.value.toLowerCase().trim()+'@admin.local';
+      const r=await fetch(SB_AUTH+'/token?grant_type=password',{
+        method:'POST',headers:{apikey:SB_AKEY,'Content-Type':'application/json'},
+        body:JSON.stringify({email:email,password:passIn.value})
+      });
+      const d=await r.json();
+      if(d.access_token){
+        localStorage.setItem('d9x_token',d.access_token);
+        gate.classList.add('hidden');shell.style.display='';setTimeout(()=>gate.remove(),500);
+      }else{errEl.textContent='Invalid credentials';btn.disabled=false;btn.textContent='Sign in'}
+    }catch{errEl.textContent='Connection error';btn.disabled=false;btn.textContent='Sign in'}
   }
   btn.addEventListener('click',doLogin);
   passIn.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
