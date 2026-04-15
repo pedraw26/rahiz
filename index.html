@@ -1483,5 +1483,36 @@ drawerCheckout.addEventListener('click',async()=>{
   }
 });
 </script>
+<script>
+/* ———— ANALYTICS: page views + music plays → Supabase ———— */
+(function(){
+  const SB='https://pyumurjbrannerolhrop.supabase.co/rest/v1';
+  const K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
+  const H={apikey:K,'Content-Type':'application/json',Prefer:'return=minimal'};
+  // Track page view (once per session per path)
+  const pvKey='pv_'+location.pathname;
+  if(!sessionStorage.getItem(pvKey)){
+    sessionStorage.setItem(pvKey,'1');
+    fetch(SB+'/page_views',{method:'POST',headers:H,body:JSON.stringify({path:location.pathname,referrer:document.referrer||''})}).catch(()=>{});
+  }
+  // Track music plays
+  if(typeof audio!=='undefined'&&typeof TRACKS!=='undefined'){
+    let lastTracked=-1;
+    audio.addEventListener('play',function(){
+      if(currentIdx!==lastTracked){
+        lastTracked=currentIdx;
+        fetch(SB+'/music_plays',{method:'POST',headers:H,body:JSON.stringify({track:TRACKS[currentIdx].title})}).catch(()=>{});
+      }
+    });
+  }
+  // Track hero audio play
+  if(typeof heroAudio!=='undefined'){
+    let heroTracked=false;
+    heroAudio.addEventListener('play',function(){
+      if(!heroTracked){heroTracked=true;fetch(SB+'/music_plays',{method:'POST',headers:H,body:JSON.stringify({track:'Hero audio'})}).catch(()=>{})}
+    });
+  }
+})();
+</script>
 </body>
 </html>

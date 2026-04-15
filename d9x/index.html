@@ -1694,6 +1694,66 @@ const SB_AKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJl
   userIn.addEventListener('keydown',e=>{if(e.key==='Enter')passIn.focus()});
 })();
 
+/* ———— REAL ANALYTICS FROM SUPABASE ———— */
+const SB_ANALYTICS='https://pyumurjbrannerolhrop.supabase.co/rest/v1';
+const SB_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
+(async function loadAnalytics(){
+  try{
+    const hdr={apikey:SB_ANON};
+    // Get date 30 days ago
+    const d30=new Date();d30.setDate(d30.getDate()-30);
+    const since=d30.toISOString();
+
+    // Visitors (page_views count last 30d)
+    const pvRes=await fetch(SB_ANALYTICS+'/page_views?select=id&created_at=gte.'+since,{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
+    const totalVisitors=parseInt(pvRes.headers.get('content-range')?.split('/')[1]||'0');
+
+    // All-time visitors
+    const pvAllRes=await fetch(SB_ANALYTICS+'/page_views?select=id',{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
+    const allVisitors=parseInt(pvAllRes.headers.get('content-range')?.split('/')[1]||'0');
+
+    // Music plays (last 30d)
+    const mpRes=await fetch(SB_ANALYTICS+'/music_plays?select=id&created_at=gte.'+since,{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
+    const totalPlays=parseInt(mpRes.headers.get('content-range')?.split('/')[1]||'0');
+
+    // Top tracks
+    const tracksRes=await fetch(SB_ANALYTICS+'/music_plays?select=track&created_at=gte.'+since,{headers:hdr});
+    const tracksData=await tracksRes.json();
+    const trackCounts={};
+    tracksData.forEach(t=>{trackCounts[t.track]=(trackCounts[t.track]||0)+1});
+    const topTracks=Object.entries(trackCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+    // Update Overview numbers
+    const visitorEl=document.querySelector('.metric-value');
+    if(visitorEl)visitorEl.textContent=totalVisitors.toLocaleString();
+    const changeEl=document.querySelector('.metric-change');
+    if(changeEl&&totalVisitors===0)changeEl.textContent='New — tracking started';
+
+    // Update KPI cards
+    const kpiValues=document.querySelectorAll('.ov-hero-card .hc-value');
+    if(kpiValues[0])kpiValues[0].textContent=totalPlays.toLocaleString();
+
+    // Update top tracks in overview
+    const trackEls=document.querySelectorAll('.ov-tracks .ov-trk');
+    topTracks.forEach((t,i)=>{
+      if(trackEls[i]){
+        trackEls[i].querySelector('.name').textContent=t[0];
+        trackEls[i].querySelector('.ct').textContent=t[1].toLocaleString();
+      }
+    });
+    // Hide unused track rows
+    for(let i=topTracks.length;i<trackEls.length;i++){if(trackEls[i])trackEls[i].style.display='none'}
+
+    // Update live visitor count (page_views in last 5 min)
+    const d5=new Date();d5.setMinutes(d5.getMinutes()-5);
+    const liveRes=await fetch(SB_ANALYTICS+'/page_views?select=id&created_at=gte.'+d5.toISOString(),{headers:{...hdr,Prefer:'count=exact'},method:'HEAD'});
+    const liveCount=parseInt(liveRes.headers.get('content-range')?.split('/')[1]||'0');
+    const liveEl=document.getElementById('ovLiveCount');
+    if(liveEl)liveEl.textContent=liveCount;
+
+  }catch(e){console.error('Analytics load failed',e)}
+})();
+
 /* ———— LIVE COUNTER ———— */
 const liveBig=document.getElementById('liveBig'),ovLiveCount=document.getElementById('ovLiveCount'),topLiveCount=document.getElementById('topLiveCount');
 let n=42;
