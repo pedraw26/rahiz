@@ -1430,104 +1430,21 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
               <span>Venue</span>
               <span>Vendor URL</span>
               <span style="text-align:right">Status</span>
-              <span style="text-align:right">Clicks</span>
-              <span style="text-align:right">Bought</span>
-              <span style="text-align:right">Rate</span>
+              <span style="text-align:right" colspan="3">Actions</span>
             </div>
-
-            <div class="ticket-row">
-              <input class="field date" type="text" value="25 Apr" />
-              <input class="field" type="text" value="Suíça, Switzerland" />
-              <input class="field" type="text" value="" placeholder="TBA" />
-              <input class="field" type="text" value="https://eventim.ch/rahiz-zurich" placeholder="https://..." />
-              <select class="field status-sel"><option>Next</option><option>Upcoming</option><option>Sold out</option><option>Cancelled</option></select>
-              <span class="metric">1,247</span>
-              <span class="metric strong">142</span>
-              <span class="metric rate good">11.4%</span>
-            </div>
-
-            <div class="ticket-row">
-              <input class="field date" type="text" value="27 Jun" />
-              <input class="field" type="text" value="São Vicente, Cabo Verde" />
-              <input class="field" type="text" value="" placeholder="TBA" />
-              <input class="field" type="text" value="" placeholder="No vendor URL set" />
-              <select class="field status-sel"><option>Upcoming</option><option>Next</option><option>Sold out</option><option>Cancelled</option></select>
-              <span class="metric muted">—</span>
-              <span class="metric muted">—</span>
-              <span class="metric rate warn">No link</span>
-            </div>
-
-            <div class="ticket-row">
-              <input class="field date" type="text" value="03 Jul" />
-              <input class="field" type="text" value="Odivelas, Portugal" />
-              <input class="field" type="text" value="Mirage" />
-              <input class="field" type="text" value="https://mirage.pt/events/rahiz-2026" placeholder="https://..." />
-              <select class="field status-sel"><option>Upcoming</option><option>Next</option><option>Sold out</option><option>Cancelled</option></select>
-              <span class="metric">1,802</span>
-              <span class="metric strong">128</span>
-              <span class="metric rate ok">7.1%</span>
-            </div>
-
-            <div class="ticket-row">
-              <input class="field date" type="text" value="18 Jul" />
-              <input class="field" type="text" value="Almada, Portugal" />
-              <input class="field" type="text" value="" placeholder="TBA" />
-              <input class="field" type="text" value="https://bol.pt/comprar/bilhetes/rahiz-almada" placeholder="https://..." />
-              <select class="field status-sel"><option>Upcoming</option><option>Next</option><option>Sold out</option><option>Cancelled</option></select>
-              <span class="metric">798</span>
-              <span class="metric strong">42</span>
-              <span class="metric rate low">5.3%</span>
-            </div>
-
-            <div class="add" style="margin-top:14px;padding:14px;background:transparent;font-size:12px;color:var(--muted);cursor:pointer;border:1px dashed var(--ink-4);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:500;letter-spacing:-.005em;transition:all .25s var(--ease)">+ Add new tour date</div>
+            <div id="tourUpcoming"><!-- Loaded from Supabase --></div>
+            <div class="add" id="tourAddBtn" style="margin-top:14px;padding:14px;background:transparent;font-size:12px;color:var(--muted);cursor:pointer;border:1px dashed var(--ink-4);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:500;letter-spacing:-.005em;transition:all .25s var(--ease)">+ Add new tour date</div>
           </div>
-
-          <div class="ticket-callout warn">
-            <b>São Vicente needs a link.</b> 487 visitors searched for Cape Verde shows in the last 30 days — currently they hit a dead "TBA" with nowhere to buy. Set a vendor URL to start capturing demand.
-          </div>
+          <div id="tourWarnings"></div>
         </div>
 
-        <!-- Played shows reference -->
+        <!-- Played shows -->
         <div class="card" style="margin-top:14px">
           <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
-            <div style="font-size:13px;font-weight:500;color:#fff">Played shows · final conversion benchmarks</div>
-            <div style="font-size:10px;color:var(--muted)">Read-only — for reference</div>
+            <div style="font-size:13px;font-weight:500;color:#fff">Played shows</div>
+            <div style="font-size:10px;color:var(--muted)">Read-only</div>
           </div>
-          <div class="ticket-edit">
-            <div class="ticket-row past">
-              <span class="url-static" style="font-family:var(--sans);font-weight:500;color:#fff">28 Mar</span>
-              <span class="url-static" style="font-family:var(--sans)">Paris, France</span>
-              <span class="url-static" style="font-family:var(--sans)">—</span>
-              <span class="url-static">eventim.fr/rahiz-paris</span>
-              <span class="metric muted" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:right">Played</span>
-              <span class="metric">2,184</span>
-              <span class="metric strong">218</span>
-              <span class="metric rate good">10.0%</span>
-            </div>
-            <div class="ticket-row past">
-              <span class="url-static" style="font-family:var(--sans);font-weight:500;color:#fff">04 Apr</span>
-              <span class="url-static" style="font-family:var(--sans)">Boavista, CV</span>
-              <span class="url-static" style="font-family:var(--sans)">Aniv. Rash</span>
-              <span class="url-static">rashproducoes.cv/aniv</span>
-              <span class="metric muted" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:right">Played</span>
-              <span class="metric">912</span>
-              <span class="metric strong">87</span>
-              <span class="metric rate good">9.5%</span>
-            </div>
-            <div class="ticket-row past">
-              <span class="url-static" style="font-family:var(--sans);font-weight:500;color:#fff">11 Apr</span>
-              <span class="url-static" style="font-family:var(--sans)">Sweden</span>
-              <span class="url-static" style="font-family:var(--sans)">—</span>
-              <span class="url-static">tickster.com/rahiz-sweden</span>
-              <span class="metric muted" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:right">Played</span>
-              <span class="metric">624</span>
-              <span class="metric strong">38</span>
-              <span class="metric rate ok">6.1%</span>
-            </div>
-          </div>
-          <div class="ticket-callout info">
-            <b>Played shows benchmark:</b> avg 8.5% click → buy rate · best performer was Paris at 10.0% (eventim direct vendor link). Aim for ≥8% on upcoming shows.
-          </div>
+          <div class="ticket-edit" id="tourPlayed"><!-- Loaded from Supabase --></div>
         </div>
       </section>
       </div>
@@ -1972,6 +1889,90 @@ document.getElementById('inviteEmail').addEventListener('keydown',e=>{if(e.key==
     });
   });
 })();
+
+/* ———— SUPABASE TOUR DATES CRUD ———— */
+const SB_URL='https://pyumurjbrannerolhrop.supabase.co/rest/v1';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjI3MjgzMiwiZXhwIjoyMDkxODQ4ODMyfQ.rmmLB7k9toFAnvi7_VU6zNfaiQHSJiTLBQf4CCFQPO0';
+const sbHeaders={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'};
+
+async function loadTourDates(){
+  const res=await fetch(SB_URL+'/tour_dates?select=*&order=sort_order',{headers:sbHeaders});
+  const dates=await res.json();
+  const upcoming=dates.filter(d=>d.status!=='played');
+  const played=dates.filter(d=>d.status==='played');
+
+  // Render upcoming (editable)
+  const upEl=document.getElementById('tourUpcoming');
+  upEl.innerHTML=upcoming.map(d=>{
+    const dt=new Date(d.date+'T12:00:00');
+    const label=dt.toLocaleDateString('en',{day:'2-digit',month:'short'});
+    return `<div class="ticket-row" data-id="${d.id}">
+      <input class="field date" type="date" value="${d.date}" />
+      <input class="field" type="text" value="${d.city}" placeholder="City, Country" />
+      <input class="field" type="text" value="${d.venue}" placeholder="Venue (TBA)" />
+      <input class="field" type="text" value="${d.ticket_url}" placeholder="https://..." />
+      <select class="field status-sel">
+        <option value="next"${d.status==='next'?' selected':''}>Next</option>
+        <option value="upcoming"${d.status==='upcoming'?' selected':''}>Upcoming</option>
+        <option value="sold_out"${d.status==='sold_out'?' selected':''}>Sold out</option>
+        <option value="cancelled"${d.status==='cancelled'?' selected':''}>Cancelled</option>
+      </select>
+      <button class="save-btn" onclick="saveTourDate(this)">Save</button>
+      <button class="save-btn" style="color:var(--cv-warn)" onclick="deleteTourDate(this)">Delete</button>
+    </div>`;
+  }).join('');
+
+  // Render played (read-only)
+  const plEl=document.getElementById('tourPlayed');
+  plEl.innerHTML=played.map(d=>{
+    const dt=new Date(d.date+'T12:00:00');
+    const label=dt.toLocaleDateString('en',{day:'2-digit',month:'short'});
+    return `<div class="ticket-row past">
+      <span class="url-static" style="font-family:var(--sans);font-weight:500;color:#fff">${label}</span>
+      <span class="url-static" style="font-family:var(--sans)">${d.city}</span>
+      <span class="url-static" style="font-family:var(--sans)">${d.venue||'—'}</span>
+      <span class="url-static">${d.ticket_url?d.ticket_url.replace('https://',''):'—'}</span>
+      <span class="metric muted" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:right">Played</span>
+    </div>`;
+  }).join('');
+
+  // Warnings
+  const noLink=upcoming.filter(d=>!d.ticket_url);
+  const warnEl=document.getElementById('tourWarnings');
+  warnEl.innerHTML=noLink.map(d=>`<div class="ticket-callout warn"><b>${d.city} needs a ticket link.</b> Set a vendor URL to start capturing demand.</div>`).join('');
+}
+
+async function saveTourDate(btn){
+  const row=btn.closest('.ticket-row');
+  const id=row.dataset.id;
+  const inputs=row.querySelectorAll('.field');
+  const body={date:inputs[0].value,city:inputs[1].value,venue:inputs[2].value,ticket_url:inputs[3].value,status:inputs[4].value,updated_at:new Date().toISOString()};
+  btn.textContent='Saving...';
+  await fetch(SB_URL+'/tour_dates?id=eq.'+id,{method:'PATCH',headers:sbHeaders,body:JSON.stringify(body)});
+  btn.textContent='Saved ✓';
+  setTimeout(()=>{btn.textContent='Save'},1500);
+}
+
+async function deleteTourDate(btn){
+  if(!confirm('Delete this tour date?'))return;
+  const row=btn.closest('.ticket-row');
+  const id=row.dataset.id;
+  await fetch(SB_URL+'/tour_dates?id=eq.'+id,{method:'DELETE',headers:sbHeaders});
+  row.remove();
+}
+
+document.getElementById('tourAddBtn').addEventListener('click',async()=>{
+  const maxOrder=document.querySelectorAll('#tourUpcoming .ticket-row').length+document.querySelectorAll('#tourPlayed .ticket-row').length+1;
+  const body={date:new Date().toISOString().slice(0,10),city:'New City',venue:'',ticket_url:'',status:'upcoming',sort_order:maxOrder};
+  await fetch(SB_URL+'/tour_dates',{method:'POST',headers:sbHeaders,body:JSON.stringify(body)});
+  loadTourDates();
+});
+
+// Load on page switch to tour-edit
+const origGoToPage=goToPage;
+goToPage=function(p){origGoToPage(p);if(p==='tour-edit')loadTourDates()};
+// Also load if already on tour-edit
+if(document.body.getAttribute('data-page')==='tour-edit')loadTourDates();
 
 /* ———— SEGMENT LABEL TOGGLE (newsletter) ———— */
 document.querySelectorAll('.seg-pick label').forEach(label=>{

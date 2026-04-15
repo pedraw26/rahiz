@@ -856,15 +856,35 @@ footer .wordmark img{
     </div>
   </div>
 
-  <div class="rows">
-    <div class="row past"><div class="n">01</div><div class="date">Mar 28<small>Sat</small></div><div class="city">Paris, FR</div><div class="status done" data-en="Completed" data-pt="Concluído">Completed</div><a class="buy" href="#">—</a></div>
-    <div class="row past"><div class="n">02</div><div class="date">Apr 04<small>Sat</small></div><div class="city">Boavista, CV<small>Aniver Rash Produções</small></div><div class="status done" data-en="Completed" data-pt="Concluído">Completed</div><a class="buy" href="#">—</a></div>
-    <div class="row past"><div class="n">03</div><div class="date">Apr 11<small>Sat</small></div><div class="city">Sweden, SE</div><div class="status done" data-en="Completed" data-pt="Concluído">Completed</div><a class="buy" href="#">—</a></div>
-    <div class="row"><div class="n">04</div><div class="date">Apr 25<small data-en="Sat" data-pt="Sáb">Sat</small></div><div class="city">Suíça, CH</div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">05</div><div class="date">Jun 27<small data-en="Sat" data-pt="Sáb">Sat</small></div><div class="city">São Vicente, CV</div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">06</div><div class="date">Jul 03<small data-en="Fri" data-pt="Sex">Fri</small></div><div class="city">Odivelas, PT<small>Mirage</small></div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">07</div><div class="date">Jul 18<small data-en="Sat" data-pt="Sáb">Sat</small></div><div class="city">Almada, PT</div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-  </div>
+  <div class="rows" id="tourRows"><!-- Loaded from Supabase --></div>
+  <script>
+  (async function(){
+    const SB='https://pyumurjbrannerolhrop.supabase.co/rest/v1';
+    const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5dW11cmpicmFubmVyb2xocm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzI4MzIsImV4cCI6MjA5MTg0ODgzMn0.9jZUcOVVVCNkG4Ww6usTZfJFs_plDiY5LCOtHnjLutw';
+    try{
+      const res=await fetch(SB+'/tour_dates?select=*&order=sort_order',{headers:{apikey:KEY}});
+      const dates=await res.json();
+      const el=document.getElementById('tourRows');
+      const lang=document.documentElement.lang||'en';
+      const days={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],pt:['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']};
+      el.innerHTML=dates.map((d,i)=>{
+        const dt=new Date(d.date+'T12:00:00');
+        const mon=dt.toLocaleString('en',{month:'short'});
+        const day=dt.getDate().toString().padStart(2,'0');
+        const dow=days[lang==='pt'?'pt':'en'][dt.getDay()];
+        const isPast=d.status==='played';
+        const isNext=d.status==='next';
+        const statusEn=isPast?'Completed':d.status==='sold_out'?'Sold out':d.status==='cancelled'?'Cancelled':'On sale';
+        const statusPt=isPast?'Concluído':d.status==='sold_out'?'Esgotado':d.status==='cancelled'?'Cancelado':'À venda';
+        const venue=d.venue?'<small>'+d.venue+'</small>':'';
+        const link=isPast?'—':d.ticket_url?'Tickets':'TBA';
+        const href=d.ticket_url||'#';
+        const target=d.ticket_url?' target="_blank" rel="noopener"':'';
+        return '<div class="row'+(isPast?' past':'')+'"><div class="n">'+(i+1).toString().padStart(2,'0')+'</div><div class="date">'+mon+' '+day+'<small data-en="'+dow+'" data-pt="'+dow+'">'+dow+'</small></div><div class="city">'+d.city+venue+'</div><div class="status'+(isPast?' done':'')+'" data-en="'+statusEn+'" data-pt="'+statusPt+'">'+statusEn+'</div><a class="buy" href="'+href+'"'+target+' data-en="'+(isPast?'—':'Tickets')+'" data-pt="'+(isPast?'—':'Bilhetes')+'">'+(isPast?'—':link)+'</a></div>';
+      }).join('');
+    }catch(e){console.error('Tour dates fetch failed',e)}
+  })();
+  </script>
 </section>
 
 <!-- PLAYER -->
