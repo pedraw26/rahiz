@@ -322,22 +322,22 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
   background:var(--ink);color:var(--paper);border-radius:980px;transition:background .25s ease;
 }
 .tour .row .buy:hover{background:var(--ink-2)}
-.tour-map{position:relative;background:var(--paper);border:1px solid var(--rule);padding:clamp(24px,3vw,40px);margin-bottom:64px;overflow:hidden}
+.tour-map{position:relative;background:rgba(255,255,255,.05);border:1px solid #232325;padding:clamp(24px,3vw,40px);margin-bottom:64px;overflow:hidden}
 .tour-map .meta{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:20px}
 .tour-map svg{width:100%;height:auto;display:block;max-height:520px}
-.tour-map .map-bg{fill:#f0f0f1;stroke:var(--rule);stroke-width:.5}
-.tour-map .graticule{stroke:#ebebec;stroke-width:.4;fill:none}
+.tour-map .map-bg{fill:#1a1a1c;stroke:#333;stroke-width:.5}
+.tour-map .graticule{stroke:#222;stroke-width:.4;fill:none}
 .tour-map .route-past{stroke:#c8c8cc;stroke-width:1.4;fill:none;stroke-dasharray:3 3}
-.tour-map .route-upcoming{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-dasharray:6 5;animation:route-draw 60s linear infinite}
+.tour-map .route-upcoming{stroke:#fff;stroke-width:1.6;fill:none;stroke-dasharray:6 5;animation:route-draw 60s linear infinite}
 @keyframes route-draw{to{stroke-dashoffset:-220}}
-.tour-map .dot-past{fill:#c8c8cc;stroke:var(--paper);stroke-width:2.5}
-.tour-map .dot-up{fill:var(--ink);stroke:var(--paper);stroke-width:2.5}
+.tour-map .dot-past{fill:#555;stroke:var(--ink);stroke-width:2.5}
+.tour-map .dot-up{fill:#fff;stroke:var(--ink);stroke-width:2.5}
 .tour-map .dot-up.next{fill:#2ca55e}
 .tour-map .pulse{fill:#2ca55e;opacity:.4;animation:map-pulse 2.4s ease-out infinite}
 @keyframes map-pulse{0%{r:7;opacity:.55}70%{r:22;opacity:0}100%{r:22;opacity:0}}
 .tour-map .label{fill:var(--muted);font-size:10px;font-family:var(--sans);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
-.tour-map .label.live{fill:var(--ink)}
-.tour-map .legend{display:flex;gap:26px;margin-top:20px;padding-top:20px;border-top:1px solid var(--rule);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:500;flex-wrap:wrap}
+.tour-map .label.live{fill:#fff}
+.tour-map .legend{display:flex;gap:26px;margin-top:20px;padding-top:20px;border-top:1px solid #333;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:500;flex-wrap:wrap}
 .tour-map .legend span{display:inline-flex;align-items:center;gap:9px}
 .tour-map .legend span::before{content:"";width:9px;height:9px;display:inline-block}
 .tour-map .legend .pl::before{background:#c8c8cc}
@@ -805,7 +805,7 @@ footer .wordmark img{
 </header>
 
 <!-- TOUR -->
-<section class="tour" id="tour">
+<section class="tour dark" id="tour">
   <div class="section-head">
     <div class="eyebrow" data-en="Live ‘26" data-pt="Ao vivo ‘26">Live ‘26</div>
     <h2 data-en="Tour dates" data-pt="Datas da tour">Tour dates</h2>
