@@ -315,6 +315,8 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .tour .row .city small{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:2px}
 .tour .row .status{font-size:12px;color:var(--muted)}
 .tour .row .status.sold{color:#ff3b30}
+.tour .row .status.done{color:#34c759}
+.tour .row.past{opacity:.5}
 .tour .row .buy{
   font-size:13px;font-weight:500;padding:8px 18px;
   background:var(--ink);color:var(--paper);border-radius:980px;transition:background .25s ease;
@@ -378,6 +380,7 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .player .tracks li .t{font-weight:500;letter-spacing:-.005em}
 .player .tracks li .feat{font-size:13px;color:var(--muted);text-align:right}
 .player .tracks li .dur{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;grid-column:5;text-align:right}
+.pill-ctrl{font-size:11px;font-weight:600;color:#e8456b;background:rgba(232,69,107,.1);padding:3px 10px;border-radius:20px;letter-spacing:.02em;display:inline-block;vertical-align:middle;margin-left:12px}
 
 /* ———— VIDEOS ———— */
 .videos .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
@@ -785,18 +788,17 @@ footer .wordmark img{
   <div class="section-head">
     <div class="eyebrow" data-en="Live ‘26" data-pt="Ao vivo ‘26">Live ‘26</div>
     <h2 data-en="Tour dates" data-pt="Datas da tour">Tour dates</h2>
-    <div class="aside" data-en="Updated 04.08.26" data-pt="Atualizado 04.08.26">Updated 04.08.26</div>
+    <div class="aside" data-en="Updated 15.04.26" data-pt="Atualizado 15.04.26">Updated 15.04.26</div>
   </div>
 
   <div class="rows">
-    <div class="row"><div class="n">01</div><div class="date">May 02<small>Sat · 21:00</small></div><div class="city">Lisboa, PT<small>Musicbox Lisboa</small></div><div class="status sold" data-en="Sold out" data-pt="Esgotado">Sold out</div><a class="buy" href="#" data-en="Waitlist" data-pt="Lista de espera">Waitlist</a></div>
-    <div class="row"><div class="n">02</div><div class="date">May 16<small data-en="Sat · 22:00" data-pt="Sáb · 22:00">Sat · 22:00</small></div><div class="city">Paris, FR<small>La Bellevilloise</small></div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">03</div><div class="date">May 30<small data-en="Sat · 20:30" data-pt="Sáb · 20:30">Sat · 20:30</small></div><div class="city">Rotterdam, NL<small>BIRD</small></div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">04</div><div class="date">Jun 13<small data-en="Sat · 21:00" data-pt="Sáb · 21:00">Sat · 21:00</small></div><div class="city">Luxembourg, LU<small>den Atelier</small></div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">05</div><div class="date">Jun 27<small data-en="Sat · 22:00" data-pt="Sáb · 22:00">Sat · 22:00</small></div><div class="city">Bruxelles, BE<small>Botanique — Orangerie</small></div><div class="status" data-en="Presale" data-pt="Pré-venda">Presale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">06</div><div class="date">Jul 11<small data-en="Sat · 23:00" data-pt="Sáb · 23:00">Sat · 23:00</small></div><div class="city">Mindelo, CV<small>Festival Baía das Gatas</small></div><div class="status">Festival</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">07</div><div class="date">Jul 25<small data-en="Sat · 21:30" data-pt="Sáb · 21:30">Sat · 21:30</small></div><div class="city">Praia, CV<small>Cidadela Cultural</small></div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
-    <div class="row"><div class="n">08</div><div class="date">Aug 15<small data-en="Sat · 20:00" data-pt="Sáb · 20:00">Sat · 20:00</small></div><div class="city">Amsterdam, NL<small>Melkweg — Max</small></div><div class="status sold" data-en="Sold out" data-pt="Esgotado">Sold out</div><a class="buy" href="#" data-en="Waitlist" data-pt="Lista de espera">Waitlist</a></div>
+    <div class="row past"><div class="n">01</div><div class="date">Mar 28<small>Sat</small></div><div class="city">Paris, FR</div><div class="status done" data-en="Completed" data-pt="Concluído">Completed</div><a class="buy" href="#">—</a></div>
+    <div class="row past"><div class="n">02</div><div class="date">Apr 04<small>Sat</small></div><div class="city">Boavista, CV<small>Aniver Rash Produções</small></div><div class="status done" data-en="Completed" data-pt="Concluído">Completed</div><a class="buy" href="#">—</a></div>
+    <div class="row past"><div class="n">03</div><div class="date">Apr 11<small>Sat</small></div><div class="city">Sweden, SE</div><div class="status done" data-en="Completed" data-pt="Concluído">Completed</div><a class="buy" href="#">—</a></div>
+    <div class="row"><div class="n">04</div><div class="date">Apr 25<small data-en="Sat" data-pt="Sáb">Sat</small></div><div class="city">Suíça, CH</div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
+    <div class="row"><div class="n">05</div><div class="date">Jun 27<small data-en="Sat" data-pt="Sáb">Sat</small></div><div class="city">São Vicente, CV</div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
+    <div class="row"><div class="n">06</div><div class="date">Jul 03<small data-en="Fri" data-pt="Sex">Fri</small></div><div class="city">Odivelas, PT<small>Mirage</small></div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
+    <div class="row"><div class="n">07</div><div class="date">Jul 18<small data-en="Sat" data-pt="Sáb">Sat</small></div><div class="city">Almada, PT</div><div class="status" data-en="On sale" data-pt="À venda">On sale</div><a class="buy" href="#" data-en="Tickets" data-pt="Bilhetes">Tickets</a></div>
   </div>
 </section>
 
@@ -814,7 +816,7 @@ footer .wordmark img{
       <div class="corner bot"><span>Rahiz Kwasi</span><span>2025</span></div>
     </div>
     <div class="controls">
-      <h3 id="trackTitle">Dança Roça</h3>
+      <h3 id="trackTitle">Dança Roça</h3><span class="pill-ctrl" id="trackPill">Popular</span>
       <div class="albref" id="trackSub">Rahiz</div>
 
       <div class="bar" id="bar"><div class="fill" id="fill"></div></div>
@@ -1085,16 +1087,16 @@ document.querySelectorAll('[data-lang]').forEach(b=>{
 
 /* Player */
 const TRACKS=[
-  {title:'Dança Roça',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208311/rahiz/01_Dan%C3%A7a_Ro%C3%A7a.mp3'},
+  {title:'Dança Roça',sub:'Rahiz',popular:true,src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208311/rahiz/01_Dan%C3%A7a_Ro%C3%A7a.mp3'},
   {title:'4 Kampé',sub:'cover · Joé Dwét Filé',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208316/rahiz/02_4_Kamp%C3%A9_Cover_in_Capverdean.mp3'},
-  {title:'Dança ma mi',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208324/rahiz/03_Danca_ma_mi.mp3'},
+  {title:'Dança ma mi',sub:'Rahiz',popular:true,src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208324/rahiz/03_Danca_ma_mi.mp3'},
   {title:'Bô ê Tão Boa',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208330/rahiz/04_B%C3%B4_%C3%AA_T%C3%A3o_Boa.mp3'},
-  {title:'Um sonho Kriolu',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208339/rahiz/05_Um_sonho_Kriolu.mp3'},
+  {title:'Um sonho Kriolu',sub:'Rahiz',popular:true,src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208339/rahiz/05_Um_sonho_Kriolu.mp3'},
   {title:'Let Me Love You',sub:'cover · Mario',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208473/rahiz/07_Mario_Let_Me_Love_You.mp3'},
   {title:'Áz Vêz',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208344/rahiz/08_%C3%81z_V%C3%AAz.mp3'},
   {title:'Hoje e Amanhã',sub:'Rahiz',src:'https://res.cloudinary.com/dqefvaueo/video/upload/v1776208353/rahiz/09_-_Rahiz_-_Hoje_e_Amanh%C3%A3.mp3'}
 ];
-const playBtn=document.getElementById('playBtn'),fill=document.getElementById('fill'),curr=document.getElementById('curr'),bar=document.getElementById('bar'),totalTime=document.getElementById('totalTime'),trackTitle=document.getElementById('trackTitle'),trackSub=document.getElementById('trackSub'),trackList=document.getElementById('trackList');
+const playBtn=document.getElementById('playBtn'),fill=document.getElementById('fill'),curr=document.getElementById('curr'),bar=document.getElementById('bar'),totalTime=document.getElementById('totalTime'),trackTitle=document.getElementById('trackTitle'),trackSub=document.getElementById('trackSub'),trackList=document.getElementById('trackList'),trackPill=document.getElementById('trackPill');
 const PLAY_SVG='<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 const PAUSE_SVG='<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
 let currentIdx=0;
@@ -1105,6 +1107,7 @@ function loadTrack(i){
   const t=TRACKS[i];
   audio.src=t.src;
   trackTitle.textContent=t.title;
+  trackPill.style.display=t.popular?'inline-block':'none';
   trackSub.textContent=t.sub;
   fill.style.width='0%';
   curr.textContent='00:00';
