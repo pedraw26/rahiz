@@ -363,9 +363,10 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
   transition:transform .2s ease;
 }
 .player .btns button:hover{transform:scale(1.05)}
-.player .btns .play{width:60px;height:60px;background:var(--ink);color:var(--paper);font-size:18px;border-radius:50%!important;position:relative;z-index:1;overflow:visible}
-.player .btns .play::before{content:"";position:absolute;top:50%;left:50%;width:115%;height:115%;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(hsl(226,81%,64%),hsl(271,81%,64%),hsl(316,81%,64%),hsl(1,81%,64%),hsl(46,81%,64%),hsl(91,81%,64%),hsl(136,81%,64%),hsl(181,81%,64%),hsl(226,81%,64%));animation:glow-spin 2s linear infinite;z-index:-1;filter:blur(8px);opacity:.7;transition:opacity .3s}
-.player .btns .play:hover::before{opacity:1;filter:blur(5px)}
+.player .btns .play{width:60px;height:60px;background:var(--ink);color:var(--paper);font-size:18px;border-radius:50%!important;position:relative;z-index:1;overflow:hidden}
+.player .btns .play::before{content:"";position:absolute;top:50%;left:50%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);background:conic-gradient(hsl(226,81%,64%),hsl(271,81%,64%),hsl(316,81%,64%),hsl(1,81%,64%),hsl(46,81%,64%),hsl(91,81%,64%),hsl(136,81%,64%),hsl(181,81%,64%),hsl(226,81%,64%));animation:glow-spin 2s linear infinite;z-index:0;opacity:.35;transition:opacity .3s}
+.player .btns .play:hover::before{opacity:.5}
+.player .btns .play svg{position:relative;z-index:1}
 @keyframes glow-spin{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
 
 .player .tracks{grid-column:1/13;margin-top:72px}
