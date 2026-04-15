@@ -826,22 +826,22 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
 
           <div class="ov-hero-side">
             <div class="ov-hero-card green" data-go="media" style="cursor:pointer">
-              <div class="hc-top"><span class="hc-label">Music plays</span><span class="hc-delta up">↗ 24.1%</span></div>
-              <div class="hc-value">38,402</div>
-              <div class="hc-sub">avg 2.99 per visitor · 11 tracks</div>
-              <div class="hc-bar" style="--w:72%"></div>
+              <div class="hc-top"><span class="hc-label">Music plays</span><span class="hc-delta up" id="ovPlaysDelta"></span></div>
+              <div class="hc-value" id="ovPlaysVal">—</div>
+              <div class="hc-sub" id="ovPlaysSub">Loading...</div>
+              <div class="hc-bar" style="--w:0%"></div>
             </div>
             <div class="ov-hero-card yellow" data-go="newsletter" style="cursor:pointer">
-              <div class="hc-top"><span class="hc-label">Newsletter</span><span class="hc-delta up">↗ 12.7%</span></div>
-              <div class="hc-value">4,231</div>
-              <div class="hc-sub">+478 this period · 89% retention</div>
-              <div class="hc-bar" style="--w:89%"></div>
+              <div class="hc-top"><span class="hc-label">Newsletter</span></div>
+              <div class="hc-value">—</div>
+              <div class="hc-sub">Coming soon</div>
+              <div class="hc-bar" style="--w:0%"></div>
             </div>
             <div class="ov-hero-card red" data-go="tour-edit" style="cursor:pointer">
-              <div class="hc-top"><span class="hc-label">Ticket revenue</span><span class="hc-delta up">↗ 24%</span></div>
-              <div class="hc-value">€8,418</div>
-              <div class="hc-sub">312 sold · 8.1% click→buy</div>
-              <div class="hc-bar" style="--w:58%"></div>
+              <div class="hc-top"><span class="hc-label">Tour dates</span></div>
+              <div class="hc-value" id="ovTourVal">—</div>
+              <div class="hc-sub" id="ovTourSub">Loading...</div>
+              <div class="hc-bar" style="--w:0%"></div>
             </div>
           </div>
         </div>
@@ -905,12 +905,7 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
 
         <!-- Alerts / action items strip -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)">
-          <div class="ticket-callout warn" style="margin-top:0">
-            <b>São Vicente needs a link.</b> 487 visitors searched for Cape Verde shows — currently hitting a dead "TBA". <a data-go="tour-edit" href="#" style="color:#C0FF45;text-decoration:underline">Set vendor URL →</a>
-          </div>
-          <div class="ticket-callout info" style="margin-top:0">
-            <b>TikTok is surging.</b> Referrals up 127% from the "4 Kampé challenge" — 12 viral posts driving 3,847 visits. <a data-go="acquisition" href="#" style="color:#a78bfa;text-decoration:underline">See breakdown →</a>
-          </div>
+          <!-- Alerts generated dynamically by JS -->
         </div>
 
       </section>
@@ -1023,29 +1018,8 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
           </div>
         </div>
 
-        <!-- Conversion KPI strip -->
-        <div class="kpi-row">
-          <div class="kpi">
-            <div class="lbl">Link clicks <span class="delta up">↗ 32.1%</span></div>
-            <div class="big">3,847</div>
-            <div class="small">across 4 upcoming shows</div>
-          </div>
-          <div class="kpi">
-            <div class="lbl">Confirmed purchases <span class="delta up">↗ 18.6%</span></div>
-            <div class="big">312</div>
-            <div class="small">vendor postback verified</div>
-          </div>
-          <div class="kpi">
-            <div class="lbl">Click → buy rate <span class="delta up">↗ 4pt</span></div>
-            <div class="big">8.1%</div>
-            <div class="small">industry avg 4-6%</div>
-          </div>
-          <div class="kpi">
-            <div class="lbl">Estimated revenue <span class="delta up">↗ 24.0%</span></div>
-            <div class="big">€8,418</div>
-            <div class="small">avg €27 per ticket · 312 sold</div>
-          </div>
-        </div>
+        <!-- Tour dates KPI — populated by JS -->
+        <div class="kpi-row" id="tourKpiStrip"></div>
 
         <!-- Upcoming shows editor with ticket URLs -->
         <div class="card" style="margin-top:14px">
@@ -1337,11 +1311,22 @@ const SB_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJl
     const subEl=document.querySelector('.metric-sub');
     if(subEl)subEl.textContent='visitors · last 30 days';
 
-    // Update music plays KPI
-    const kpiValues=document.querySelectorAll('.ov-hero-card .hc-value');
-    if(kpiValues[0])kpiValues[0].textContent=totalPlays.toLocaleString();
-    const kpiSubs=document.querySelectorAll('.ov-hero-card .hc-sub');
-    if(kpiSubs[0])kpiSubs[0].textContent=topTracks.length+' tracks played';
+    // Update overview KPI cards
+    var pv=document.getElementById('ovPlaysVal');if(pv)pv.textContent=totalPlays.toLocaleString();
+    var ps=document.getElementById('ovPlaysSub');if(ps)ps.textContent=topTracks.length+' tracks · '+totalPlays+' plays';
+    // Tour card
+    var tourRes2=await fetch(SB_ANALYTICS+'/tour_dates?select=*&status=neq.played&order=sort_order',{headers:{apikey:SB_ANON}});
+    var tourDates2=await tourRes2.json();
+    var tv=document.getElementById('ovTourVal');if(tv)tv.textContent=tourDates2.length;
+    var ts2=document.getElementById('ovTourSub');if(ts2)ts2.textContent='upcoming shows';
+    // Tour KPI strip on tour-edit page
+    var tkpi=document.getElementById('tourKpiStrip');
+    if(tkpi){
+      var upcoming=tourDates2.length;
+      var withLink=tourDates2.filter(function(d){return d.ticket_url}).length;
+      var noLink=tourDates2.filter(function(d){return !d.ticket_url}).length;
+      tkpi.innerHTML='<div class="kpi"><div class="lbl">Upcoming shows</div><div class="big">'+upcoming+'</div><div class="small">total scheduled</div></div><div class="kpi"><div class="lbl">With ticket link</div><div class="big">'+withLink+'</div><div class="small">ready to sell</div></div><div class="kpi"><div class="lbl">Missing link</div><div class="big" style="color:#C0FF45">'+noLink+'</div><div class="small">need vendor URL</div></div>';
+    }
 
     // Update top tracks
     const trackEls=document.querySelectorAll('.ov-tracks .ov-trk');
