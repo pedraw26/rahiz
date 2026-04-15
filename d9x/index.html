@@ -892,12 +892,8 @@ body[data-page="settings"] .page[data-page="settings"]{display:flex}
               <div class="obc-title"><span class="dot" style="background:var(--cv-yellow)"></span>Recent activity</div>
               <a class="obc-link" data-go="activity" href="#">View all →</a>
             </div>
-            <div class="activity" style="border:0;background:transparent;max-height:none;overflow:hidden">
-              <div class="row ev-buy"><span class="time">14:38</span><span class="dot"></span><span class="msg"><b>Order #1247</b> · €42</span><span class="where">Lisboa</span></div>
-              <div class="row ev-play"><span class="time">14:37</span><span class="dot"></span><span class="msg">Played <b>"4 Kampé"</b></span><span class="where">Mindelo</span></div>
-              <div class="row ev-sub"><span class="time">14:37</span><span class="dot"></span><span class="msg">Newsletter signup</span><span class="where">Paris</span></div>
-              <div class="row ev-click"><span class="time">14:37</span><span class="dot"></span><span class="msg">Clicked <b>Spotify</b></span><span class="where">Stockholm</span></div>
-              <div class="row ev-search"><span class="time">14:37</span><span class="dot"></span><span class="msg">Searched <b>"colhe quem planta"</b></span><span class="where">Praia</span></div>
+            <div class="activity" id="ovRecentActivity" style="border:0;background:transparent;max-height:none;overflow:hidden">
+              <div style="font-size:11px;color:var(--muted);padding:12px 8px">Loading...</div>
             </div>
           </div>
 
@@ -1383,6 +1379,15 @@ setInterval(()=>location.reload(),30000);
       mps.slice(0,15).forEach(function(m){all.push({t:new Date(m.created_at),cls:'ev-play',msg:'Played <b>"'+m.track+'"</b>'})});
       all.sort(function(a,b){return b.t-a.t});
       feedEl.innerHTML=all.length>0?all.slice(0,16).map(function(e){return '<div class="row '+e.cls+'"><span class="time">'+pad2(e.t.getHours())+':'+pad2(e.t.getMinutes())+':'+pad2(e.t.getSeconds())+'</span><span class="dot"></span><span class="msg">'+e.msg+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:16px 18px">No activity yet</div>';
+    }
+    // Overview recent activity (same data, fewer items)
+    var ovRA=document.getElementById('ovRecentActivity');
+    if(ovRA){
+      var all2=[];
+      pvs.slice(0,8).forEach(function(p){all2.push({t:new Date(p.created_at),cls:'ev-click',msg:'Visited <b>'+p.path+'</b>'})});
+      mps.slice(0,8).forEach(function(m){all2.push({t:new Date(m.created_at),cls:'ev-play',msg:'Played <b>"'+m.track+'"</b>'})});
+      all2.sort(function(a,b){return b.t-a.t});
+      ovRA.innerHTML=all2.length>0?all2.slice(0,5).map(function(e){return '<div class="row '+e.cls+'"><span class="time">'+pad2(e.t.getHours())+':'+pad2(e.t.getMinutes())+'</span><span class="dot"></span><span class="msg">'+e.msg+'</span></div>'}).join(''):'<div style="font-size:11px;color:var(--muted);padding:12px 8px">No activity yet</div>';
     }
 
     // LIVE PAGE: concurrent + plays + pages
