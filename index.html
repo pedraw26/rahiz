@@ -514,8 +514,11 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
   background:#f5f5f7 center/103% no-repeat;
   transform:scale(1.02);
   transition:transform .6s cubic-bezier(.2,.8,.2,1);
+  position:relative;overflow:hidden;
 }
 .pmodal.open .pmodal-big{transform:scale(1)}
+.pmodal-big .pslide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;background-size:cover;background-position:center;background-repeat:no-repeat}
+.pmodal-big .pslide.active{opacity:1}
 .pmodal-cap{
   position:absolute;bottom:24px;left:28px;right:28px;
   display:flex;justify-content:space-between;font-size:11px;color:var(--muted);
@@ -1338,6 +1341,8 @@ const PRODUCTS={
     desc:'Heavyweight 400gsm fleece hoodie. Embroidered Rahiz mark on the chest, tonal stitching throughout. Kangaroo pocket, drawstring hood. Made in Portugal.',
     cap:'Shot by Rahiz',
     img:'url("/img/hoodie-black.webp") center/cover no-repeat,#d9d9d9',
+    slides:['/img/hoodie-black.webp','/img/hoodie-back.webp','/img/hoodie-shirt.webp'],
+    slidesBg:'#d9d9d9',
     sizes:['S','M','L','XL','XXL'],
     defaultSize:'M'
   }
@@ -1354,10 +1359,31 @@ const pQty=document.getElementById('pmodalQty');
 const pCart=document.getElementById('pmodalCart');
 const pClose=document.querySelector('.pmodal-close');
 let pqty=1;
+let pModalSlide=null;
 
 function openProduct(key){
   const p=PRODUCTS[key];if(!p)return;
-  pBig.style.background=p.img;
+  if(pModalSlide){clearInterval(pModalSlide);pModalSlide=null;}
+  pBig.innerHTML='';
+  if(p.slides&&p.slides.length>1){
+    p.slides.forEach(function(url,i){
+      var d=document.createElement('div');
+      d.className='pslide'+(i===0?' active':'');
+      d.style.backgroundImage='url("'+url+'")';
+      d.style.backgroundColor=p.slidesBg||'#f5f5f7';
+      pBig.appendChild(d);
+    });
+    pBig.style.background='none';
+    var si=0;
+    var sls=pBig.querySelectorAll('.pslide');
+    pModalSlide=setInterval(function(){
+      sls[si].classList.remove('active');
+      si=(si+1)%sls.length;
+      sls[si].classList.add('active');
+    },3000);
+  } else {
+    pBig.style.background=p.img;
+  }
   pCap.textContent=p.cap;
   pNum.textContent=p.num;
   pTitle.innerHTML=p.title;
@@ -1378,6 +1404,7 @@ function openProduct(key){
   document.body.style.overflow='hidden';
 }
 function closeProduct(){
+  if(pModalSlide){clearInterval(pModalSlide);pModalSlide=null;}
   pmodal.classList.remove('open');
   document.body.style.overflow='';
 }
