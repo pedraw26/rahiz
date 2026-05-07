@@ -206,22 +206,30 @@ nav.primary.on-hero .cart-badge{background:#fff;color:var(--ink)}
 .menu .menu-lang button.on{opacity:1}
 .menu .menu-lang .sep{color:rgba(255,255,255,.3)}
 
-/* ———— HERO — FULLSCREEN IMAGE ———— */
+/* ———— HERO — FULLSCREEN VIDEO ———— */
 .hero{
   position:relative;min-height:100vh;
-  padding:120px var(--pad) 80px;
-  display:flex;align-items:center;justify-content:center;
   border-bottom:1px solid var(--rule);
   overflow:hidden;color:#fff;
 }
 .hero .bgvid{
   position:absolute;inset:0;z-index:0;
-  background:#000 url('https://res.cloudinary.com/dzgqzeebg/image/upload/v1775685096/image-9_efc1z8.webp') center/cover no-repeat;
+  background:#000;
+  overflow:hidden;
 }
-.hero .bgvid video{display:none}
+/* Full-bleed YouTube iframe cover */
+.hero .bgvid iframe{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:max(100%,177.78vh);
+  height:max(100%,56.25vw);
+  border:none;
+  pointer-events:none;
+}
 .hero .bgvid::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%);
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%);
 }
 /* HIDDEN — new cover (kept for future use)
 .hero .bgvid-alt{
@@ -280,17 +288,22 @@ nav.primary.on-hero .cart-badge{background:#fff;color:var(--ink)}
 
 .hero h1,.hero .kicker,.hero .ctas,.hero .videoframe{display:none}
 .hero .rings,.hero .playbtn,.hero .bio{display:none}
-/* YouTube embed in hero */
+/* Watch on YouTube button — bottom right of hero */
 .hero-yt{
-  position:relative;z-index:2;
-  width:min(720px,88vw);
-  margin:auto;
-  aspect-ratio:16/9;
-  border-radius:6px;
-  overflow:hidden;
-  box-shadow:0 16px 56px rgba(0,0,0,.6);
+  position:absolute;bottom:40px;right:var(--pad);
+  z-index:2;
 }
-.hero-yt iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.hero-yt a{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:2px;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#fff;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;
+  border:1px solid rgba(255,255,255,.25);
+  transition:background .2s,border-color .2s;
+}
+.hero-yt a:hover{background:rgba(0,0,0,.8);border-color:rgba(255,255,255,.5)}
+.hero-yt a svg{width:16px;height:16px;flex-shrink:0}
 /* Hide tour map, keep tour date rows */
 .tour-map{display:none!important}
 
@@ -799,13 +812,18 @@ footer .wordmark img{
 
 <!-- HERO -->
 <header class="hero">
-  <div class="bgvid"></div>
+  <div class="bgvid">
+    <iframe src="https://www.youtube.com/embed/L_2e9NLLhEI?autoplay=1&mute=1&loop=1&playlist=L_2e9NLLhEI&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1" title="Rahiz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy"></iframe>
+  </div>
 
   <div class="rings"></div>
   <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
 
   <div class="hero-yt">
-    <iframe src="https://www.youtube.com/embed/L_2e9NLLhEI?rel=0&modestbranding=1" title="Rahiz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    <a href="https://youtu.be/L_2e9NLLhEI" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+      Watch on YouTube
+    </a>
   </div>
 
   <div class="bio">
