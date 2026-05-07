@@ -214,18 +214,7 @@ nav.primary.on-hero .cart-badge{background:#fff;color:var(--ink)}
 }
 .hero .bgvid{
   position:absolute;inset:0;z-index:0;
-  background:#000;
-  overflow:hidden;
-}
-/* Full-bleed YouTube iframe cover */
-.hero .bgvid iframe{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:max(100%,177.78vh);
-  height:max(100%,56.25vw);
-  border:none;
-  pointer-events:none;
+  background:#000 center/cover no-repeat;
 }
 .hero .bgvid::after{
   content:"";position:absolute;inset:0;z-index:1;
@@ -812,9 +801,7 @@ footer .wordmark img{
 
 <!-- HERO -->
 <header class="hero">
-  <div class="bgvid">
-    <iframe src="https://www.youtube.com/embed/L_2e9NLLhEI?autoplay=1&mute=1&loop=1&playlist=L_2e9NLLhEI&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1" title="Rahiz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy"></iframe>
-  </div>
+  <div class="bgvid" style="background-image:url('https://img.youtube.com/vi/L_2e9NLLhEI/maxresdefault.jpg');background-size:cover;background-position:center"></div>
 
   <div class="rings"></div>
   <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
