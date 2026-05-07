@@ -422,43 +422,40 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 
 /* ———— VIDEOS ———— */
 .videos .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
-.videos .main{
-  grid-column:1/9;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#000;position:relative;
-}
-.videos .main video{width:100%;height:100%;object-fit:cover}
-.videos .main{cursor:pointer}
-.videos .main .play{
-  position:absolute;inset:0;display:grid;place-items:center;
-  opacity:0;transition:opacity .35s ease;
-  background:rgba(0,0,0,.15);
-}
-.videos .main:hover .play{opacity:1}
-.videos .main .play .btn{
-  width:72px;height:72px;border-radius:50%!important;
-  background:rgba(20,20,20,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.3);
-  display:grid;place-items:center;transition:transform .3s ease, background .3s ease;
-}
-.videos .main:hover .play .btn:hover{background:rgba(20,20,20,.7);transform:scale(1.06)}
-.videos .main .play .btn svg{width:24px;height:24px;fill:#fff;display:none}
-.videos .main .play .btn .play-ic{margin-left:3px}
-.videos .main.paused .play .btn .play-ic{display:block}
-.videos .main.playing .play .btn .pause{display:block}
-.videos .main .play span{
-  padding:12px 24px;background:rgba(0,0,0,.5);backdrop-filter:blur(12px);color:#fff;
-  border-radius:980px;font-size:13px;font-weight:500;transition:background .25s ease;
-}
-.videos .main:hover .play span{background:rgba(0,0,0,.7)}
-
-.videos .side{grid-column:9/13;display:flex;flex-direction:column;gap:var(--gap)}
-.videos .side .item{
-  flex:1;min-height:110px;padding:18px;border-radius:12px;
-  background:#1a1a1c;display:flex;flex-direction:column;justify-content:space-between;
-  transition:background .25s ease;cursor:pointer;
-}
-.videos .side .item:hover{background:#232325}
-.videos .side .item h4{font-size:15px;font-weight:500;letter-spacing:-.005em;line-height:1.3;max-width:22ch}
-.videos .side .item .t{display:flex;justify-content:space-between;font-size:11px;color:#86868b}
+/* Main player */
+.videos .main{grid-column:1/9;aspect-ratio:16/9;overflow:hidden;background:#000;position:relative;border-radius:var(--r)}
+/* YouTube facade */
+.yt-facade,.yt-card{width:100%;height:100%;position:relative;cursor:pointer}
+.yt-facade img,.yt-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease,filter .3s ease;display:block}
+.yt-facade:hover img,.yt-card:hover img{transform:scale(1.03);filter:brightness(.7)}
+.yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.yt-play span{width:62px;height:62px;border-radius:50%!important;background:rgba(10,10,10,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,.28);display:grid;place-items:center;transition:transform .25s,background .25s}
+.yt-facade:hover .yt-play span,.yt-card:hover .yt-play span{transform:scale(1.1);background:rgba(10,10,10,.8)}
+.yt-play svg{width:20px;height:20px;fill:#fff;margin-left:3px}
+.yt-label{position:absolute;bottom:0;left:0;right:0;padding:32px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff;font-size:14px;font-weight:500;letter-spacing:-.01em;pointer-events:none}
+.yt-facade iframe,.yt-card iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+/* Side list */
+.videos .side{grid-column:9/13;display:flex;flex-direction:column;gap:10px}
+.yt-side{display:flex;gap:0;cursor:pointer;background:#1a1a1c;border-radius:var(--r);overflow:hidden;transition:background .2s;flex:1}
+.yt-side:hover{background:#252527}
+.yt-side .thumb{width:130px;flex-shrink:0;position:relative;overflow:hidden;background:#111}
+.yt-side .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:filter .2s}
+.yt-side:hover .thumb img{filter:brightness(.75)}
+.yt-side .thumb .yt-play{inset:0}
+.yt-side .thumb .yt-play span{width:36px;height:36px}
+.yt-side .thumb .yt-play svg{width:14px;height:14px;margin-left:2px}
+.yt-side .info{padding:12px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.yt-side .info h4{font-size:13px;font-weight:500;color:#fff;line-height:1.35}
+.yt-side .info span{font-size:11px;color:#86868b}
+.yt-side iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+/* More grid */
+.videos .more{grid-column:1/13;display:none;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:4px}
+.videos .more.open{display:grid}
+.videos .more .yt-card{aspect-ratio:16/9;overflow:hidden;border-radius:var(--r);background:#111}
+/* See all */
+.videos .see-all{grid-column:1/13;display:flex;justify-content:center;padding-top:4px}
+.videos .see-all button{background:none;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.75);padding:10px 32px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:var(--sans);transition:border-color .2s,color .2s}
+.videos .see-all button:hover{border-color:rgba(255,255,255,.45);color:#fff}
 
 /* ———— MERCH ———— */
 .merch .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
@@ -549,9 +546,17 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .pmodal-qty span{width:44px;text-align:center;font-size:14px;font-variant-numeric:tabular-nums}
 .pmodal-cart{
   width:100%;padding:18px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;
-  letter-spacing:.05em;text-transform:uppercase;transition:transform .25s ease;
+  letter-spacing:.05em;text-transform:uppercase;
+  position:relative;overflow:hidden;cursor:default;
+  transition:background .3s ease;
 }
-.pmodal-cart:hover{transform:translateY(-2px)}
+.pmodal-cart::after{
+  content:"Coming soon";
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:#c0392b;color:#fff;font-size:13px;font-weight:600;letter-spacing:.1em;
+  opacity:0;transition:opacity .25s ease;
+}
+.pmodal-cart:hover::after{opacity:1}
 .pmodal-cart.added{background:#30a46c}
 .pmodal-meta{
   font-size:11px;color:var(--muted);margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;
@@ -954,25 +959,66 @@ footer .wordmark img{
   <div class="section-head">
     <div class="eyebrow" data-en="Film &amp; visuals" data-pt="Filmes &amp; visuais">Film &amp; visuals</div>
     <h2 data-en="Watch" data-pt="Ver">Watch</h2>
-    <div class="aside" data-en="Selected works" data-pt="Trabalhos selecionados">Selected works</div>
+    <div class="aside">7 films</div>
   </div>
 
   <div class="grid">
-    <div class="main playing" id="vidMain">
-      <video autoplay muted loop playsinline preload="metadata" id="vidEl">
-        <source src="https://res.cloudinary.com/dzgqzeebg/video/upload/v1775679965/Oh_ya_ya_-_Da_savage_ft_Rahiz_bfs3ti.mp4" type="video/mp4">
-      </video>
-      <div class="play">
-        <div class="btn">
-          <svg class="play-ic" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>
-          <svg class="pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15"/><rect x="14" y="4.5" width="4" height="15"/></svg>
-        </div>
+    <!-- Main featured -->
+    <div class="main" id="vidMain">
+      <div class="yt-facade" data-id="kDU2l0wjnvc">
+        <img src="https://img.youtube.com/vi/kDU2l0wjnvc/maxresdefault.jpg" alt="4 Kampé" loading="lazy">
+        <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        <div class="yt-label">4 Kampé</div>
       </div>
     </div>
+
+    <!-- Side 3 -->
     <div class="side">
-      <div class="item"><div class="t"><span>Film 02</span><span>03:58</span></div><h4 data-en="Calm Down — Kriolu version" data-pt="Calm Down — versão Kriolu">Calm Down — Kriolu version</h4></div>
-      <div class="item"><div class="t"><span>Film 03</span><span>05:11</span></div><h4 data-en="Live from Musicbox Lisboa" data-pt="Ao vivo no Musicbox Lisboa">Live from Musicbox Lisboa</h4></div>
-      <div class="item"><div class="t"><span>Film 04</span><span>06:04</span></div><h4 data-en="Making of Covers LP" data-pt="Making of Covers LP">Making of Covers LP</h4></div>
+      <div class="yt-side" data-id="X1IFkZUdd1s">
+        <div class="thumb">
+          <img src="https://img.youtube.com/vi/X1IFkZUdd1s/mqdefault.jpg" alt="Olim li" loading="lazy">
+          <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        </div>
+        <div class="info"><h4>Olim li</h4><span>Music video</span></div>
+      </div>
+      <div class="yt-side" data-id="GExW8qgfNWw">
+        <div class="thumb">
+          <img src="https://img.youtube.com/vi/GExW8qgfNWw/mqdefault.jpg" alt="I love u jah" loading="lazy">
+          <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        </div>
+        <div class="info"><h4>I love u jah</h4><span>Music video</span></div>
+      </div>
+      <div class="yt-side" data-id="yEwr5O6uUnA">
+        <div class="thumb">
+          <img src="https://img.youtube.com/vi/yEwr5O6uUnA/mqdefault.jpg" alt="Vibes" loading="lazy">
+          <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        </div>
+        <div class="info"><h4>Vibes</h4><span>Music video</span></div>
+      </div>
+    </div>
+
+    <!-- More videos (hidden) -->
+    <div class="more" id="moreVids">
+      <div class="yt-card" data-id="cK5TJ5NSKyY">
+        <img src="https://img.youtube.com/vi/cK5TJ5NSKyY/maxresdefault.jpg" alt="Moda bo e so bo" loading="lazy">
+        <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        <div class="yt-label">Moda bo e so bo</div>
+      </div>
+      <div class="yt-card" data-id="jTTU1Y_5Y_o">
+        <img src="https://img.youtube.com/vi/jTTU1Y_5Y_o/maxresdefault.jpg" alt="Kriola" loading="lazy">
+        <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        <div class="yt-label">Kriola</div>
+      </div>
+      <div class="yt-card" data-id="6oKq_6GNHr8">
+        <img src="https://img.youtube.com/vi/6oKq_6GNHr8/maxresdefault.jpg" alt="Materia Negra" loading="lazy">
+        <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        <div class="yt-label">Materia Negra</div>
+      </div>
+    </div>
+
+    <!-- See all toggle -->
+    <div class="see-all">
+      <button id="seeAllBtn" onclick="toggleMoreVids()">See all 7 films</button>
     </div>
   </div>
 </section>
@@ -1118,19 +1164,39 @@ gateInput.addEventListener('keydown',(e)=>{if(e.key==='Enter')tryGate()});
 gateBtn.addEventListener('click',tryGate);
 </script>
 <script>
-/* Video play/pause */
-const vidMain=document.getElementById('vidMain'),vidEl=document.getElementById('vidEl');
-function syncVid(){
-  if(vidEl.paused){vidMain.classList.add('paused');vidMain.classList.remove('playing')}
-  else{vidMain.classList.add('playing');vidMain.classList.remove('paused')}
+/* YouTube facade — click thumbnail to load player (views count on YouTube) */
+function ytEmbed(id){
+  return '<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&color=white" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe>';
 }
-vidEl.addEventListener('play',syncVid);
-vidEl.addEventListener('pause',syncVid);
-vidMain.addEventListener('click',(e)=>{
-  e.preventDefault();
-  if(vidEl.paused)vidEl.play();else vidEl.pause();
+/* Main facade click */
+document.querySelector('.videos .main').addEventListener('click',function(){
+  var facade=this.querySelector('.yt-facade');
+  if(facade&&facade.dataset.id&&!facade.querySelector('iframe')){
+    facade.innerHTML=ytEmbed(facade.dataset.id);
+  }
 });
-syncVid();
+/* Side items — load in main player */
+document.querySelectorAll('.yt-side').forEach(function(el){
+  el.addEventListener('click',function(){
+    var id=this.dataset.id;
+    var mainFacade=document.querySelector('.videos .main .yt-facade');
+    if(mainFacade){mainFacade.innerHTML=ytEmbed(id);}
+    document.querySelector('.videos .main').scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+});
+/* More grid cards */
+document.querySelectorAll('.videos .more .yt-card').forEach(function(el){
+  el.addEventListener('click',function(){
+    if(!this.querySelector('iframe'))this.innerHTML+=ytEmbed(this.dataset.id);
+  });
+});
+/* Toggle more */
+function toggleMoreVids(){
+  var more=document.getElementById('moreVids');
+  var btn=document.getElementById('seeAllBtn');
+  more.classList.toggle('open');
+  btn.textContent=more.classList.contains('open')?'Show less':'See all 7 films';
+}
 
 /* Hero play button → audio */
 const heroBtn=document.querySelector('.hero .playbtn');
