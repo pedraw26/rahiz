@@ -545,19 +545,11 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .pmodal-qty button:hover{background:var(--bg-2)}
 .pmodal-qty span{width:44px;text-align:center;font-size:14px;font-variant-numeric:tabular-nums}
 .pmodal-cart{
-  width:100%;padding:18px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;
-  letter-spacing:.05em;text-transform:uppercase;
-  position:relative;overflow:hidden;cursor:default;
-  transition:background .3s ease;
+  width:100%;padding:18px;background:#c0392b;color:#fff;font-size:13px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:not-allowed;opacity:.85;
 }
-.pmodal-cart::after{
-  content:"Coming soon";
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:#c0392b;color:#fff;font-size:13px;font-weight:600;letter-spacing:.1em;
-  opacity:0;transition:opacity .25s ease;
-}
-.pmodal-cart:hover::after{opacity:1}
-.pmodal-cart.added{background:#30a46c}
+.pmodal-cart.added{background:#c0392b}
 .pmodal-meta{
   font-size:11px;color:var(--muted);margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;
 }
@@ -1382,7 +1374,7 @@ function openProduct(key){
     });
   });
   pqty=1;pQty.textContent='1';
-  pCart.textContent=`Add to cart — €${p.priceNum}`;
+  pCart.textContent=`Coming soon`;
   pCart.classList.remove('added');
   pCart.dataset.price=p.priceNum;
   pmodal.classList.add('open');
@@ -1405,7 +1397,7 @@ document.querySelectorAll('.pmodal-qty button').forEach(btn=>{
     pqty=Math.max(1,pqty+delta);
     pQty.textContent=pqty;
     const price=parseInt(pCart.dataset.price||42);
-    pCart.textContent=`Add to cart — €${price*pqty}`;
+    pCart.textContent=`Coming soon`;
   });
 });
 /* ———— Cart system ———— */
@@ -1505,18 +1497,8 @@ function renderDrawer(){
 
 // "Add to cart" in product modal
 pCart.addEventListener('click',()=>{
-  const activeSize=pSizes.querySelector('.on');
-  const size=activeSize?activeSize.textContent:'M';
-  const price=parseInt(pCart.dataset.price||42);
-
-  // Check if same product+size already in cart
-  const existing=cart.find(i=>i.id===currentProductKey&&i.size===size);
-  if(existing){existing.qty+=pqty}
-  else{cart.push({id:currentProductKey,size,qty:pqty,price})}
-
-  updateBadge();
-  pCart.classList.add('added');
-  pCart.textContent='✓ Added to cart';
+  // Store coming soon — purchases disabled
+  return;
   setTimeout(()=>{
     closeProduct();
     openDrawer();
