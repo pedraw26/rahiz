@@ -222,13 +222,7 @@ nav.primary.on-hero .nav-socials a{color:#fff}
 }
 .hero .bgvid{
   position:absolute;inset:0;z-index:0;
-  background:#000;overflow:hidden;
-}
-.hero .bgvid iframe{
-  position:absolute;top:50%;left:50%;border:none;pointer-events:none;
-  width:100vw;height:56.25vw;
-  min-height:100vh;min-width:177.78vh;
-  transform:translate(-50%,-50%);
+  background:#000 center/cover no-repeat;
 }
 .hero .bgvid::after{
   content:"";position:absolute;inset:0;z-index:1;
@@ -816,9 +810,7 @@ footer .wordmark img{
 
 <!-- HERO -->
 <header class="hero">
-  <div class="bgvid">
-    <iframe src="https://www.youtube.com/embed/GExW8qgfNWw?autoplay=1&loop=1&mute=1&playlist=GExW8qgfNWw&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://iamrahiz.com" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </div>
+  <div class="bgvid" style="background-image:url('/img/hero-bg.webp');background-size:cover;background-position:center"></div>
 
   <div class="rings"></div>
   <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
