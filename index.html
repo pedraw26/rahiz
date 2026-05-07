@@ -436,15 +436,15 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .yt-facade iframe,.yt-card iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 /* Side list */
 .videos .side{grid-column:9/13;display:flex;flex-direction:column;gap:10px}
-.yt-side{display:flex;flex-direction:column;cursor:pointer;background:#1a1a1c;border-radius:var(--r);overflow:hidden;transition:background .2s}
+.yt-side{display:flex;gap:0;cursor:pointer;background:#1a1a1c;border-radius:var(--r);overflow:hidden;transition:background .2s;flex:1}
 .yt-side:hover{background:#252527}
-.yt-side .thumb{width:100%;aspect-ratio:16/9;flex-shrink:0;position:relative;overflow:hidden;background:#111}
-.yt-side .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:filter .2s,transform .3s}
-.yt-side:hover .thumb img{filter:brightness(.75);transform:scale(1.03)}
+.yt-side .thumb{width:130px;flex-shrink:0;position:relative;overflow:hidden;background:#111}
+.yt-side .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:filter .2s}
+.yt-side:hover .thumb img{filter:brightness(.75)}
 .yt-side .thumb .yt-play{inset:0}
-.yt-side .thumb .yt-play span{width:40px;height:40px}
-.yt-side .thumb .yt-play svg{width:15px;height:15px;margin-left:2px}
-.yt-side .info{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px}
+.yt-side .thumb .yt-play span{width:36px;height:36px}
+.yt-side .thumb .yt-play svg{width:14px;height:14px;margin-left:2px}
+.yt-side .info{padding:12px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px}
 .yt-side .info h4{font-size:13px;font-weight:500;color:#fff;line-height:1.35}
 .yt-side .info span{font-size:11px;color:#86868b}
 .yt-side iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
@@ -1180,10 +1180,8 @@ document.querySelectorAll('.yt-side').forEach(function(el){
   el.addEventListener('click',function(){
     var id=this.dataset.id;
     var mainFacade=document.querySelector('.videos .main .yt-facade');
-    if(mainFacade){
-      mainFacade.innerHTML=ytEmbed(id);
-      document.querySelector('.videos .main').scrollIntoView({behavior:'smooth',block:'nearest'});
-    }
+    if(mainFacade){mainFacade.innerHTML=ytEmbed(id);}
+    document.querySelector('.videos .main').scrollIntoView({behavior:'smooth',block:'nearest'});
   });
 });
 /* More grid cards */
