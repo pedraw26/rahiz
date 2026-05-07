@@ -456,7 +456,7 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .yt-side .info span{font-size:10px;color:rgba(255,255,255,.55);margin-top:2px;display:block}
 .yt-side iframe{position:absolute;inset:0;width:100%;height:100%;border:none;z-index:3}
 /* More grid */
-.videos .more{grid-column:1/13;display:none;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:4px}
+.videos .more{grid-column:1/13;display:none;grid-template-columns:repeat(4,1fr);gap:var(--gap);margin-top:4px}
 .videos .more.open{display:grid}
 .videos .more .yt-card{aspect-ratio:16/9;overflow:hidden;border-radius:var(--r);background:#111}
 /* See all */
@@ -957,16 +957,16 @@ footer .wordmark img{
   <div class="section-head">
     <div class="eyebrow" data-en="Film &amp; visuals" data-pt="Filmes &amp; visuais">Film &amp; visuals</div>
     <h2 data-en="Watch" data-pt="Ver">Watch</h2>
-    <div class="aside">7 films</div>
+    <div class="aside">8 films</div>
   </div>
 
   <div class="grid">
     <!-- Main featured -->
     <div class="main" id="vidMain">
-      <div class="yt-facade" data-id="kDU2l0wjnvc">
-        <img src="https://img.youtube.com/vi/kDU2l0wjnvc/maxresdefault.jpg" alt="4 Kampé" loading="lazy">
+      <div class="yt-facade" data-id="GExW8qgfNWw">
+        <img src="https://img.youtube.com/vi/GExW8qgfNWw/maxresdefault.jpg" alt="I love u jah" loading="lazy">
         <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
-        <div class="yt-label">4 Kampé</div>
+        <div class="yt-label">I love u jah</div>
       </div>
     </div>
 
@@ -997,6 +997,11 @@ footer .wordmark img{
 
     <!-- More videos (hidden) -->
     <div class="more" id="moreVids">
+      <div class="yt-card" data-id="kDU2l0wjnvc">
+        <img src="https://img.youtube.com/vi/kDU2l0wjnvc/maxresdefault.jpg" alt="4 Kampé" loading="lazy">
+        <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
+        <div class="yt-label">4 Kampé</div>
+      </div>
       <div class="yt-card" data-id="cK5TJ5NSKyY">
         <img src="https://img.youtube.com/vi/cK5TJ5NSKyY/maxresdefault.jpg" alt="Moda bo e so bo" loading="lazy">
         <div class="yt-play"><span><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div>
@@ -1016,7 +1021,7 @@ footer .wordmark img{
 
     <!-- See all toggle -->
     <div class="see-all">
-      <button id="seeAllBtn" onclick="toggleMoreVids()">See all 7 films</button>
+      <button id="seeAllBtn" onclick="toggleMoreVids()">See all 8 films</button>
     </div>
   </div>
 </section>
@@ -1183,7 +1188,7 @@ function toggleMoreVids(){
   var more=document.getElementById('moreVids');
   var btn=document.getElementById('seeAllBtn');
   more.classList.toggle('open');
-  btn.textContent=more.classList.contains('open')?'Show less':'See all 7 films';
+  btn.textContent=more.classList.contains('open')?'Show less':'See all 8 films';
 }
 
 /* Hero play button → audio */
