@@ -209,8 +209,8 @@ nav.primary.on-hero .cart-badge{background:#fff;color:var(--ink)}
 /* ———— HERO — FULLSCREEN IMAGE ———— */
 .hero{
   position:relative;min-height:100vh;
-  padding:140px var(--pad) 56px;
-  display:block;
+  padding:140px var(--pad) 80px;
+  display:flex;align-items:center;justify-content:center;
   border-bottom:1px solid var(--rule);
   overflow:hidden;color:#fff;
 }
@@ -279,6 +279,20 @@ nav.primary.on-hero .cart-badge{background:#fff;color:var(--ink)}
 .hero .bio p + p{margin-top:10px;color:rgba(255,255,255,.68)}
 
 .hero h1,.hero .kicker,.hero .ctas,.hero .videoframe{display:none}
+.hero .rings,.hero .playbtn,.hero .bio{display:none}
+/* YouTube embed in hero */
+.hero-yt{
+  position:relative;z-index:2;
+  width:min(900px,90vw);
+  margin:auto;
+  aspect-ratio:16/9;
+  border-radius:4px;
+  overflow:hidden;
+  box-shadow:0 12px 64px rgba(0,0,0,.55);
+}
+.hero-yt iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+/* Hide tour map, keep tour date rows */
+.tour-map{display:none!important}
 
 
 /* ———— SECTION ———— */
@@ -790,9 +804,9 @@ footer .wordmark img{
   <div class="rings"></div>
   <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
 
-  
-
-  
+  <div class="hero-yt">
+    <iframe src="https://www.youtube.com/embed/L_2e9NLLhEI?rel=0&modestbranding=1" title="Rahiz" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
 
   <div class="bio">
     <p data-en="Rahiz — born Celso de Jesus Morais, Lisboa, 1980 — is a Luso-Cape Verdean author, composer, producer &amp; host. Grand-nephew of the late Luís Morais." data-pt="Rahiz — nascido Celso de Jesus Morais, Lisboa, 1980 — é um autor, compositor, produtor e apresentador luso-cabo-verdiano. Sobrinho-neto do falecido Luís Morais.">Rahiz — born Celso de Jesus Morais, Lisboa, 1980 — is a Luso-Cape Verdean author, composer, producer &amp; host. Grand-nephew of the late Luís Morais.</p>
