@@ -222,7 +222,13 @@ nav.primary.on-hero .nav-socials a{color:#fff}
 }
 .hero .bgvid{
   position:absolute;inset:0;z-index:0;
-  background:#000 center/cover no-repeat;
+  background:#000;overflow:hidden;
+}
+.hero .bgvid iframe{
+  position:absolute;top:50%;left:50%;border:none;pointer-events:none;
+  width:100vw;height:56.25vw;
+  min-height:100vh;min-width:177.78vh;
+  transform:translate(-50%,-50%);
 }
 .hero .bgvid::after{
   content:"";position:absolute;inset:0;z-index:1;
@@ -807,17 +813,12 @@ footer .wordmark img{
 
 <!-- HERO -->
 <header class="hero">
-  <div class="bgvid" style="background-image:url('https://img.youtube.com/vi/GExW8qgfNWw/maxresdefault.jpg');background-size:cover;background-position:center"></div>
+  <div class="bgvid">
+    <iframe src="https://www.youtube.com/embed/GExW8qgfNWw?autoplay=1&loop=1&mute=1&playlist=GExW8qgfNWw&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
 
   <div class="rings"></div>
   <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
-
-  <div class="hero-yt">
-    <a href="https://youtu.be/GExW8qgfNWw" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
-      Watch on YouTube
-    </a>
-  </div>
 
   <div class="bio">
     <p data-en="Rahiz — born Celso de Jesus Morais, Lisboa, 1980 — is a Luso-Cape Verdean author, composer, producer &amp; host. Grand-nephew of the late Luís Morais." data-pt="Rahiz — nascido Celso de Jesus Morais, Lisboa, 1980 — é um autor, compositor, produtor e apresentador luso-cabo-verdiano. Sobrinho-neto do falecido Luís Morais.">Rahiz — born Celso de Jesus Morais, Lisboa, 1980 — is a Luso-Cape Verdean author, composer, producer &amp; host. Grand-nephew of the late Luís Morais.</p>
