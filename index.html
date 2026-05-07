@@ -482,6 +482,9 @@ section{padding:100px var(--pad);border-bottom:1px solid var(--rule)}
 .merch .info h3{font-size:16px;font-weight:500;letter-spacing:-.005em}
 .merch .info .price{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
 .merch .info .sub{grid-column:1/3;font-size:12px;color:var(--muted);margin-top:2px}
+.hoodie-slider{background:#0a0a0a}
+.hoodie-slider .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+.hoodie-slider .slide.active{opacity:1}
 
 /* ———— PRODUCT MODAL ———— */
 .pmodal{
@@ -1039,7 +1042,11 @@ footer .wordmark img{
       <div class="info"><h3>RAHIZ Hat — Black &amp; White</h3><div class="price">Price TBA</div><div class="sub" data-en="Embroidered · One size · Cotton twill" data-pt="Bordado · Tamanho único · Sarja de algodão">Embroidered · One size · Cotton twill</div></div>
     </div>
     <div class="item" data-product="hoodie">
-      <div class="ph" style="background:#0a0a0a url('/img/hoodie-black.webp') center/cover no-repeat"></div>
+      <div class="ph hoodie-slider">
+        <img class="slide active" src="/img/hoodie-black.webp" alt="Kriolu Hoodie front">
+        <img class="slide" src="/img/hoodie-back.webp" alt="Kriolu Hoodie back">
+        <img class="slide" src="/img/hoodie-shirt.webp" alt="Kriolu Hoodie shirt back">
+      </div>
       <div class="info"><h3>Kriolu Hoodie — Black</h3><div class="price">Price TBA</div><div class="sub" data-en="400gsm fleece · Embroidered · Made in Portugal" data-pt="Fleece 400gsm · Bordado · Fabricado em Portugal">400gsm fleece · Embroidered · Made in Portugal</div></div>
     </div>
   </div>
@@ -1538,6 +1545,18 @@ drawerCheckout.addEventListener('click',async()=>{
     setTimeout(()=>renderDrawer(),2000);
   }
 });
+
+/* Hoodie image slideshow */
+(function(){
+  var slides=document.querySelectorAll('.hoodie-slider .slide');
+  if(slides.length<2)return;
+  var idx=0;
+  setInterval(function(){
+    slides[idx].classList.remove('active');
+    idx=(idx+1)%slides.length;
+    slides[idx].classList.add('active');
+  },3000);
+})();
 </script>
 <script>
 /* ———— ANALYTICS: full tracking → Supabase ———— */
