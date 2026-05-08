@@ -740,6 +740,12 @@ footer .wordmark img{
   .hero .bio,.hero .ctas{grid-column:1/13}
   .hero .bio{grid-row:4}
   .hero .ctas{grid-row:5}
+  .hero .bgvid{background-position:20% center!important}
+  .hero .bio{
+    position:static;right:auto;bottom:auto;
+    text-align:center;max-width:100%;
+    padding:0 var(--pad) 48px;
+  }
   .tour .row{grid-template-columns:40px 1fr auto;row-gap:4px}
   .tour .row .date{display:none}
   .tour .row .status{display:none}
@@ -811,7 +817,7 @@ footer .wordmark img{
 
 <!-- HERO -->
 <header class="hero">
-  <div class="bgvid" style="background-image:url('/img/hero-bg.webp');background-size:cover;background-position:center"></div>
+  <div class="bgvid" style="background-image:url('/img/hero-bg.webp');background-size:cover;background-position:center top"></div>
 
   <div class="rings"></div>
   <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
@@ -1038,6 +1044,7 @@ footer .wordmark img{
     <div class="item" data-product="tee">
       <div class="ph hoodie-slider" style="background:#f5f5f7">
         <img class="slide active" src="https://res.cloudinary.com/dzgqzeebg/image/upload/v1775725104/Asset_2_cxrimm.webp" alt="RAHIZ Tour Tee front">
+        <img class="slide" src="https://res.cloudinary.com/dzgqzeebg/image/upload/v1778201277/rahiz/tshirt_front_II.webp" alt="RAHIZ Tour Tee front II">
         <img class="slide" src="/img/tee-back.webp" alt="RAHIZ Tour Tee back">
       </div>
       <div class="info"><h3>RAHIZ Tour Tee — Bone</h3><div class="price">Price TBA</div><div class="sub" data-en="Garment-dyed · 260gsm" data-pt="Tingimento peça · 260gsm">Garment-dyed · 260gsm</div></div>
@@ -1119,7 +1126,7 @@ footer .wordmark img{
   <div class="bk-cta">
     <div class="bk-cta-left">
       <div class="bk-eb" data-en="Direct contact" data-pt="Contacto directo">Direct contact</div>
-      <h4 data-en="B.O.B Entertainment Group — Paris, France" data-pt="B.O.B Entertainment Group — Paris, França">B.O.B Entertainment Group &mdash; Paris, France</h4>
+      <h4 data-en="B.O.B Entertainment Group — MD | USA  Maryland" data-pt="B.O.B Entertainment Group — MD | USA  Maryland">B.O.B Entertainment Group &mdash; MD | USA &nbsp; Maryland</h4>
       <p data-en="Mon – Fri · 09:00 – 18:00 CET · Response within 48 hours" data-pt="Seg – Sex · 09:00 – 18:00 CET · Resposta em 48 horas">Mon &ndash; Fri &middot; 09:00 &ndash; 18:00 CET &middot; Response within 48 hours</p>
     </div>
     <a href="mailto:bobentgroup@gmail.com">bobentgroup@gmail.com <span>&rarr;</span></a>
@@ -1320,7 +1327,7 @@ const PRODUCTS={
     desc:'Garment-dyed 260gsm heavyweight cotton. Screen-printed front graphic, embroidered Rahiz mark on the back neck. Made in Portugal. Limited run of 200.',
     cap:'Shot by Rahiz',
     img:'linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),url("https://res.cloudinary.com/dzgqzeebg/image/upload/v1775725104/Asset_2_cxrimm.webp") center/103% no-repeat,#f5f5f7',
-    slides:['https://res.cloudinary.com/dzgqzeebg/image/upload/v1775725104/Asset_2_cxrimm.webp','/img/tee-back.webp'],
+    slides:['https://res.cloudinary.com/dzgqzeebg/image/upload/v1775725104/Asset_2_cxrimm.webp','https://res.cloudinary.com/dzgqzeebg/image/upload/v1778200894/rahiz/tshirt_front.webp','/img/tee-back.webp'],
     slidesBg:'#f5f5f7',
     sizes:['XS','S','M','L','XL','XXL'],
     defaultSize:'M'
