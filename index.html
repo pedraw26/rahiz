@@ -285,7 +285,6 @@ nav.primary.on-hero .nav-socials a{color:#fff}
 .hero .bio p + p{margin-top:10px;color:rgba(255,255,255,.68)}
 
 .hero h1,.hero .kicker,.hero .ctas,.hero .videoframe{display:none}
-.hero .rings,.hero .playbtn{display:none}
 /* Watch on YouTube button — bottom right of hero */
 .hero-yt{
   position:absolute;bottom:40px;right:var(--pad);
@@ -814,18 +813,10 @@ footer .wordmark img{
 
 <!-- HERO -->
 <header class="hero">
-  <div class="bgvid" style="background:#000"></div>
-  <div style="position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;padding:72px var(--pad) 140px">
-    <div style="width:100%;max-width:min(90vw,130vh);aspect-ratio:16/9">
-      <iframe src="https://www.youtube.com/embed/L_2e9NLLhEI?rel=0"
-              style="width:100%;height:100%;border:0;display:block"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen title="RAHIZ"></iframe>
-    </div>
-  </div>
+  <div class="bgvid" style="background-image:url('/img/hero-bg.webp');background-size:cover;background-position:center top"></div>
 
-  <div class="rings" style="display:none"></div>
-  <button class="playbtn" aria-label="Play" style="display:none"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
+  <div class="rings"></div>
+  <button class="playbtn" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
 
   <div class="bio">
     <p data-en="Rahiz — born Celso de Jesus Morais, Lisboa, 1980 — is a Luso-Cape Verdean author, composer, producer &amp; host. Grand-nephew of the late Luís Morais." data-pt="Rahiz — nascido Celso de Jesus Morais, Lisboa, 1980 — é um autor, compositor, produtor e apresentador luso-cabo-verdiano. Sobrinho-neto do falecido Luís Morais.">Rahiz — born Celso de Jesus Morais, Lisboa, 1980 — is a Luso-Cape Verdean author, composer, producer &amp; host. Grand-nephew of the late Luís Morais.</p>
@@ -1203,7 +1194,7 @@ function toggleMoreVids(){
 
 /* Hero play button → audio */
 const heroBtn=document.querySelector('.hero .playbtn');
-const heroAudio=new Audio('https://res.cloudinary.com/dzgqzeebg/video/upload/v1775726341/Rahiz_-_Feita_em_Cabo_Verde_yrt497.mp3');
+const heroAudio=new Audio('/assets/audio/01_Danca_Roca.mp3');
 heroAudio.preload='none';
 const PLAY_ICON='<svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>';
 const PAUSE_ICON='<svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
